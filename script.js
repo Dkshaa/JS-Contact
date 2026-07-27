@@ -1,27 +1,26 @@
-//Get Input Element
-let filterInput=document.getElementById('filterInput')
-//Add Event Listener
-filterInput.addEventListener('keyup',filterNames)
+const filterInput = document.getElementById('filterInput');
+const searchStatus = document.getElementById('searchStatus');
 
-function filterNames(){
-    //Get value of input
-    let filterValue = 
-    document.getElementById('filterInput').value.toUpperCase();
+filterInput.addEventListener('input', filterNames);
 
-    //Get names from ul
-    let ul=document.getElementById('names');
+function filterNames() {
+    const filterValue = filterInput.value.toUpperCase();
+    const namesList = document.getElementById('names');
+    const contactItems = namesList.querySelectorAll('li.collection-item');
+    let visibleCount = 0;
 
-    //Get li from ul
-    let li =ul.querySelectorAll('li.collection-item');
+    contactItems.forEach((item) => {
+        const contactLink = item.getElementsByTagName('a')[0];
+        const isMatch = contactLink.textContent.toUpperCase().includes(filterValue);
 
-    //Loop through collection-item li
-    for(let i =0;i<li.length;i++){
-        let a=li[i].getElementsByTagName('a')[0];
-        //If Matched
-        if(a.innerHTML.toUpperCase().indexOf(filterValue) > -1){
-            li[i].style.display= '';
-        }else{
-            li[i].style.display= 'none';
+        item.style.display = isMatch ? '' : 'none';
+
+        if (isMatch) {
+            visibleCount += 1;
         }
-    }
+    });
+
+    searchStatus.textContent = filterValue
+        ? `${visibleCount} contact${visibleCount === 1 ? '' : 's'} found.`
+        : 'Showing all contacts.';
 }

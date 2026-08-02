@@ -1,27 +1,36 @@
-//Get Input Element
-let filterInput=document.getElementById('filterInput')
-//Add Event Listener
-filterInput.addEventListener('keyup',filterNames)
+const filterInput = document.getElementById('filterInput');
+const contactList = document.getElementById('names');
+const noResults = document.getElementById('noResults');
 
-function filterNames(){
-    //Get value of input
-    let filterValue = 
-    document.getElementById('filterInput').value.toUpperCase();
+filterInput.addEventListener('input', filterNames);
 
-    //Get names from ul
-    let ul=document.getElementById('names');
+function filterNames() {
+  const query = filterInput.value.trim().toLocaleLowerCase();
+  const contacts = contactList.querySelectorAll('.collection-item');
+  const headers = contactList.querySelectorAll('.collection-header');
+  let visibleCount = 0;
 
-    //Get li from ul
-    let li =ul.querySelectorAll('li.collection-item');
+  contacts.forEach((contact) => {
+    const name = contact.textContent.trim().toLocaleLowerCase();
+    const isMatch = name.includes(query);
 
-    //Loop through collection-item li
-    for(let i =0;i<li.length;i++){
-        let a=li[i].getElementsByTagName('a')[0];
-        //If Matched
-        if(a.innerHTML.toUpperCase().indexOf(filterValue) > -1){
-            li[i].style.display= '';
-        }else{
-            li[i].style.display= 'none';
-        }
+    contact.hidden = !isMatch;
+    visibleCount += Number(isMatch);
+  });
+
+  headers.forEach((header) => {
+    let item = header.nextElementSibling;
+    let hasVisibleContact = false;
+
+    while (item && !item.classList.contains('collection-header')) {
+      if (item.classList.contains('collection-item') && !item.hidden) {
+        hasVisibleContact = true;
+      }
+      item = item.nextElementSibling;
     }
+
+    header.hidden = !hasVisibleContact;
+  });
+
+  noResults.hidden = visibleCount !== 0;
 }

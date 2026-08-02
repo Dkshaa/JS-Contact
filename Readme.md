@@ -1,8 +1,22 @@
-<h1>Mini Contact App<h1><hr>
+# Mini Contact App
 
-<h5>This is a mini contact app using basic html and js along with some basic concepts of DOM manipulation</h5><hr>
+A small, dependency-free contact directory built with HTML and JavaScript. It
+demonstrates DOM selection, event handling, and live filtering while Materialize
+provides the page styling.
 
+## Features
 
-<h4>Contact</h4>
-<p>email: dikshakarki22@gmail.com</p>
+- Filters contacts as you type
+- Matches names without case sensitivity
+- Hides alphabetic sections that have no matching contacts
+- Displays a clear message when no contacts match
 
+## Run locally
+
+Clone the repository and open `index.html` in a browser. No build step or package
+installation is required.
+
+## Project files
+
+- `index.html` contains the contact list and search interface.
+- `script.js` contains the filtering behavior.

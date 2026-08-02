@@ -15,8 +15,15 @@
   <body>
     <div class="container">
       <h1 class="center-align">My Contacts</h1>
-      <input type="text" id="filterInput" placeholder="search names">
-      <ul id="names" class="collection with header">
+      <label for="filterInput">Search contacts</label>
+      <input
+        type="search"
+        id="filterInput"
+        placeholder="Search names"
+        autocomplete="off"
+      />
+      <p id="noResults" class="center-align" hidden>No contacts found.</p>
+      <ul id="names" class="collection with-header">
         <li class="collection-header">
           <h5>A</h5>
         </li>
@@ -69,7 +76,7 @@
             <a href="#">Chamel</a>
         </li>
         <li class="collection-item">
-            <a href="#">Ananth</a>
+            <a href="#">Chandra</a>
         </li>
         <li class="collection-header">
             <h5>D</h5>
@@ -102,7 +109,7 @@
             <a href="#">Vaishnavi</a>
         </li>
         <li class="collection-item">
-            <a href="#">VImal</a>
+            <a href="#">Vimal</a>
         </li>
         <li class="collection-item">
             <a href="#">Vikram</a>

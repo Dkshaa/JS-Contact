@@ -17,12 +17,17 @@
     <main class="container contact-app">
       <h1 class="center-align">My Contacts</h1>
       <label for="filterInput">Search contacts</label>
-      <input
-        type="search"
-        id="filterInput"
-        placeholder="Search names"
-        autocomplete="off"
-      />
+      <div class="search-controls">
+        <input
+          type="search"
+          id="filterInput"
+          placeholder="Search names"
+          autocomplete="off"
+        />
+        <button id="clearFilter" class="btn-flat" type="button" disabled>
+          Clear
+        </button>
+      </div>
       <p id="noResults" class="center-align" hidden>No contacts found.</p>
       <ul id="names" class="collection with-header">
         <li class="collection-header">

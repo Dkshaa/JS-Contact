@@ -10,13 +10,26 @@ provides the page styling.
 - Matches names without case sensitivity
 - Hides alphabetic sections that have no matching contacts
 - Displays a clear message when no contacts match
+- Adapts the layout for phones, tablets, and desktop screens
+- Clears a search with either the Clear button or the Escape key
 
 ## Run locally
 
 Clone the repository and open `index.html` in a browser. No build step or package
 installation is required.
 
+## Using the search
+
+Start typing a name in the search field and the contact groups update immediately.
+Choose **Clear** to restore the full directory. Keyboard users can press `Escape`
+while the search field is focused to clear the current query without leaving the
+keyboard.
+
+The Clear button is disabled when there is no active query, and visible focus
+styles make keyboard navigation easier to follow.
+
 ## Project files
 
 - `index.html` contains the contact list and search interface.
 - `script.js` contains the filtering behavior.
+- `styles.css` contains the responsive layout and focus styles.

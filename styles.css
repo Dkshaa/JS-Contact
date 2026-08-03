@@ -1,0 +1,64 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f4f7fb;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 2rem 1rem;
+  background: linear-gradient(145deg, #e8f5e9, #e3f2fd);
+}
+
+.contact-app {
+  width: min(100%, 46rem);
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  border-radius: 1.25rem;
+  background: #fff;
+  box-shadow: 0 1rem 3rem rgb(30 55 90 / 12%);
+}
+
+.contact-app h1 {
+  margin: 0 0 1.5rem;
+  color: #17324d;
+  font-size: clamp(2rem, 6vw, 3.25rem);
+}
+
+.contact-app label {
+  color: #455a64;
+  font-size: 1rem;
+}
+
+.contact-app input[type="search"]:focus {
+  border-bottom-color: #1976d2 !important;
+  box-shadow: 0 1px 0 0 #1976d2 !important;
+}
+
+.contact-app .collection {
+  overflow: hidden;
+  border: 0;
+  border-radius: 0.75rem;
+}
+
+.contact-app .collection-header {
+  color: #17324d;
+  background: #eef5fb;
+}
+
+.contact-app .collection-item a {
+  display: block;
+  color: #1565c0;
+}
+
+@media (max-width: 37.5rem) {
+  body {
+    padding: 0;
+    background: #fff;
+  }
+
+  .contact-app {
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

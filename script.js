@@ -1,8 +1,15 @@
 const filterInput = document.getElementById('filterInput');
+const clearFilter = document.getElementById('clearFilter');
 const contactList = document.getElementById('names');
 const noResults = document.getElementById('noResults');
 
 filterInput.addEventListener('input', filterNames);
+filterInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && filterInput.value) {
+    clearSearch();
+  }
+});
+clearFilter.addEventListener('click', clearSearch);
 
 function filterNames() {
   const query = filterInput.value.trim().toLocaleLowerCase();
@@ -33,4 +40,11 @@ function filterNames() {
   });
 
   noResults.hidden = visibleCount !== 0;
+  clearFilter.disabled = query.length === 0;
+}
+
+function clearSearch() {
+  filterInput.value = '';
+  filterNames();
+  filterInput.focus();
 }

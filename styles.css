@@ -35,6 +35,26 @@ body {
   box-shadow: 0 1px 0 0 #1976d2 !important;
 }
 
+.search-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.search-controls input[type="search"] {
+  margin-bottom: 0;
+}
+
+.search-controls button {
+  color: #1565c0;
+}
+
+.search-controls button:focus-visible {
+  outline: 3px solid #90caf9;
+  outline-offset: 2px;
+}
+
 .contact-app .collection {
   overflow: hidden;
   border: 0;

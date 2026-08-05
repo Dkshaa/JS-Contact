@@ -12,6 +12,7 @@ provides the page styling.
 - Displays a clear message when no contacts match
 - Adapts the layout for phones, tablets, and desktop screens
 - Clears a search with either the Clear button or the Escape key
+- Stores the current search in the URL so filtered views can be bookmarked or shared
 
 ## Run locally
 
@@ -24,6 +25,9 @@ Start typing a name in the search field and the contact groups update immediatel
 Choose **Clear** to restore the full directory. Keyboard users can press `Escape`
 while the search field is focused to clear the current query without leaving the
 keyboard.
+
+The page URL updates with a `q` parameter while filtering. Opening a shared URL,
+such as `index.html?q=chris`, restores that search automatically.
 
 The Clear button is disabled when there is no active query, and visible focus
 styles make keyboard navigation easier to follow.

@@ -3,15 +3,18 @@ const clearFilter = document.getElementById('clearFilter');
 const contactList = document.getElementById('names');
 const noResults = document.getElementById('noResults');
 
-filterInput.addEventListener('input', filterNames);
+filterInput.addEventListener('input', () => filterNames());
 filterInput.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && filterInput.value) {
     clearSearch();
   }
 });
 clearFilter.addEventListener('click', clearSearch);
+window.addEventListener('popstate', restoreSearchFromUrl);
 
-function filterNames() {
+restoreSearchFromUrl();
+
+function filterNames(syncUrl = true) {
   const query = filterInput.value.trim().toLocaleLowerCase();
   const contacts = contactList.querySelectorAll('.collection-item');
   const headers = contactList.querySelectorAll('.collection-header');
@@ -41,10 +44,33 @@ function filterNames() {
 
   noResults.hidden = visibleCount !== 0;
   clearFilter.disabled = query.length === 0;
+
+  if (syncUrl) {
+    updateSearchUrl(query);
+  }
 }
 
 function clearSearch() {
   filterInput.value = '';
   filterNames();
   filterInput.focus();
+}
+
+function updateSearchUrl(query) {
+  const url = new URL(window.location.href);
+
+  if (query) {
+    url.searchParams.set('q', filterInput.value.trim());
+  } else {
+    url.searchParams.delete('q');
+  }
+
+  window.history.replaceState({}, '', url);
+}
+
+function restoreSearchFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+
+  filterInput.value = params.get('q') ?? '';
+  filterNames(false);
 }

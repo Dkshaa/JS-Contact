@@ -66,9 +66,9 @@ body {
   background: #eef5fb;
 }
 
-.contact-app .collection-item a {
+.contact-app .contact-name {
   display: block;
-  color: #1565c0;
+  color: #263238;
 }
 
 @media (max-width: 37.5rem) {

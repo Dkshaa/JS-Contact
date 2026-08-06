@@ -12,7 +12,30 @@ filterInput.addEventListener('keydown', (event) => {
 clearFilter.addEventListener('click', clearSearch);
 window.addEventListener('popstate', restoreSearchFromUrl);
 
+sortContactSections();
 restoreSearchFromUrl();
+
+function sortContactSections() {
+  const headers = contactList.querySelectorAll('.collection-header');
+
+  headers.forEach((header) => {
+    const contacts = [];
+    let item = header.nextElementSibling;
+
+    while (item && !item.classList.contains('collection-header')) {
+      contacts.push(item);
+      item = item.nextElementSibling;
+    }
+
+    contacts
+      .sort((first, second) =>
+        first.textContent.trim().localeCompare(second.textContent.trim(), undefined, {
+          sensitivity: 'base',
+        }),
+      )
+      .forEach((contact) => contactList.insertBefore(contact, item));
+  });
+}
 
 function filterNames(syncUrl = true) {
   const query = filterInput.value.trim().toLocaleLowerCase();

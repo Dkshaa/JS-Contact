@@ -44,9 +44,13 @@ function filterNames(syncUrl = true) {
   let visibleCount = 0;
 
   contacts.forEach((contact) => {
-    const name = contact.textContent.trim().toLocaleLowerCase();
-    const isMatch = name.includes(query);
+    const nameElement = contact.querySelector('.contact-name');
+    const originalName = nameElement.dataset.name ?? nameElement.textContent.trim();
+    const normalizedName = originalName.toLocaleLowerCase();
+    const isMatch = normalizedName.includes(query);
 
+    nameElement.dataset.name = originalName;
+    renderMatch(nameElement, originalName, query, isMatch);
     contact.hidden = !isMatch;
     visibleCount += Number(isMatch);
   });
@@ -71,6 +75,24 @@ function filterNames(syncUrl = true) {
   if (syncUrl) {
     updateSearchUrl(query);
   }
+}
+
+function renderMatch(nameElement, name, query, isMatch) {
+  nameElement.replaceChildren(name);
+
+  if (!query || !isMatch) {
+    return;
+  }
+
+  const matchStart = name.toLocaleLowerCase().indexOf(query);
+  const mark = document.createElement('mark');
+
+  mark.textContent = name.slice(matchStart, matchStart + query.length);
+  nameElement.replaceChildren(
+    name.slice(0, matchStart),
+    mark,
+    name.slice(matchStart + query.length),
+  );
 }
 
 function clearSearch() {

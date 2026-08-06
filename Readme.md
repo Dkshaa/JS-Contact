@@ -9,6 +9,7 @@ provides the page styling.
 - Filters contacts as you type
 - Sorts names alphabetically within each contact section
 - Matches names without case sensitivity
+- Highlights the matching part of each visible name
 - Hides alphabetic sections that have no matching contacts
 - Displays a clear message when no contacts match
 - Adapts the layout for phones, tablets, and desktop screens

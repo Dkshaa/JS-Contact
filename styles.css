@@ -71,6 +71,13 @@ body {
   color: #263238;
 }
 
+.contact-app mark {
+  padding: 0 0.1em;
+  border-radius: 0.2em;
+  color: inherit;
+  background: #fff59d;
+}
+
 @media (max-width: 37.5rem) {
   body {
     padding: 0;

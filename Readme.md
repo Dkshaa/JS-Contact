@@ -10,6 +10,7 @@ provides the page styling.
 - Sorts names alphabetically within each contact section
 - Matches names without case sensitivity
 - Highlights the matching part of each visible name
+- Saves contacts added in the browser for future visits
 - Hides alphabetic sections that have no matching contacts
 - Displays a clear message when no contacts match
 - Adapts the layout for phones, tablets, and desktop screens

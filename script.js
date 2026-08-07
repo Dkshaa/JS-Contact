@@ -5,6 +5,7 @@ const contactNameInput = document.getElementById('contactName');
 const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
 const noResults = document.getElementById('noResults');
+const customContactsKey = 'mini-contact-app.custom-contacts';
 
 addContactForm.addEventListener('submit', handleAddContact);
 filterInput.addEventListener('input', () => filterNames());
@@ -16,6 +17,7 @@ filterInput.addEventListener('keydown', (event) => {
 clearFilter.addEventListener('click', clearSearch);
 window.addEventListener('popstate', restoreSearchFromUrl);
 
+loadSavedContacts();
 sortContactSections();
 restoreSearchFromUrl();
 
@@ -42,7 +44,7 @@ function handleAddContact(event) {
   addContactStatus.textContent = `${name} was added.`;
 }
 
-function addContact(name) {
+function addContact(name, { persist = true } = {}) {
   const sectionLetter = name[0].toLocaleUpperCase();
   let header = [...contactList.querySelectorAll('.collection-header')].find(
     (item) => item.textContent.trim() === sectionLetter,
@@ -62,6 +64,7 @@ function addContact(name) {
   const nameElement = document.createElement('span');
 
   contact.className = 'collection-item';
+  contact.dataset.custom = 'true';
   nameElement.className = 'contact-name';
   nameElement.textContent = name;
   contact.append(nameElement);
@@ -69,6 +72,46 @@ function addContact(name) {
 
   sortContactSections();
   filterNames();
+
+  if (persist) {
+    saveCustomContacts();
+  }
+}
+
+function loadSavedContacts() {
+  try {
+    const savedContacts = JSON.parse(localStorage.getItem(customContactsKey) ?? '[]');
+
+    if (!Array.isArray(savedContacts)) {
+      return;
+    }
+
+    savedContacts.forEach((name) => {
+      const normalizedName = typeof name === 'string' ? name.trim() : '';
+      const alreadyExists = [...contactList.querySelectorAll('.contact-name')].some(
+        (contact) =>
+          contact.textContent.trim().toLocaleLowerCase() === normalizedName.toLocaleLowerCase(),
+      );
+
+      if (normalizedName && !alreadyExists) {
+        addContact(normalizedName, { persist: false });
+      }
+    });
+  } catch {
+    addContactStatus.textContent = 'Saved contacts could not be loaded.';
+  }
+}
+
+function saveCustomContacts() {
+  const customContacts = [...contactList.querySelectorAll('[data-custom="true"]')].map(
+    (contact) => contact.querySelector('.contact-name').dataset.name,
+  );
+
+  try {
+    localStorage.setItem(customContactsKey, JSON.stringify(customContacts));
+  } catch {
+    addContactStatus.textContent = 'This contact could not be saved for your next visit.';
+  }
 }
 
 function sortContactSections() {

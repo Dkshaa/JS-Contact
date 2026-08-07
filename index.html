@@ -16,6 +16,21 @@
   <body>
     <main class="container contact-app">
       <h1 class="center-align">My Contacts</h1>
+      <form id="addContactForm" class="add-contact-form">
+        <label for="contactName">Add a contact</label>
+        <div class="add-contact-controls">
+          <input
+            id="contactName"
+            name="contactName"
+            type="text"
+            placeholder="Contact name"
+            maxlength="60"
+            required
+          />
+          <button class="btn" type="submit">Add</button>
+        </div>
+        <p id="addContactStatus" class="helper-text" aria-live="polite"></p>
+      </form>
       <label for="filterInput">Search contacts</label>
       <div class="search-controls">
         <input

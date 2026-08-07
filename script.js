@@ -1,8 +1,12 @@
 const filterInput = document.getElementById('filterInput');
 const clearFilter = document.getElementById('clearFilter');
+const addContactForm = document.getElementById('addContactForm');
+const contactNameInput = document.getElementById('contactName');
+const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
 const noResults = document.getElementById('noResults');
 
+addContactForm.addEventListener('submit', handleAddContact);
 filterInput.addEventListener('input', () => filterNames());
 filterInput.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && filterInput.value) {
@@ -14,6 +18,58 @@ window.addEventListener('popstate', restoreSearchFromUrl);
 
 sortContactSections();
 restoreSearchFromUrl();
+
+function handleAddContact(event) {
+  event.preventDefault();
+
+  const name = contactNameInput.value.trim().replace(/\s+/g, ' ');
+  const isDuplicate = [...contactList.querySelectorAll('.contact-name')].some(
+    (contact) => contact.textContent.trim().toLocaleLowerCase() === name.toLocaleLowerCase(),
+  );
+
+  if (!name) {
+    addContactStatus.textContent = 'Enter a contact name.';
+    return;
+  }
+
+  if (isDuplicate) {
+    addContactStatus.textContent = `${name} is already in the contact list.`;
+    return;
+  }
+
+  addContact(name);
+  addContactForm.reset();
+  addContactStatus.textContent = `${name} was added.`;
+}
+
+function addContact(name) {
+  const sectionLetter = name[0].toLocaleUpperCase();
+  let header = [...contactList.querySelectorAll('.collection-header')].find(
+    (item) => item.textContent.trim() === sectionLetter,
+  );
+
+  if (!header) {
+    header = document.createElement('li');
+    const heading = document.createElement('h5');
+
+    header.className = 'collection-header';
+    heading.textContent = sectionLetter;
+    header.append(heading);
+    contactList.append(header);
+  }
+
+  const contact = document.createElement('li');
+  const nameElement = document.createElement('span');
+
+  contact.className = 'collection-item';
+  nameElement.className = 'contact-name';
+  nameElement.textContent = name;
+  contact.append(nameElement);
+  header.after(contact);
+
+  sortContactSections();
+  filterNames();
+}
 
 function sortContactSections() {
   const headers = contactList.querySelectorAll('.collection-header');

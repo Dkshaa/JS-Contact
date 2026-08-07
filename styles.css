@@ -94,6 +94,26 @@ body {
   color: #263238;
 }
 
+.contact-app [data-custom="true"] {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.contact-app .remove-contact {
+  height: auto;
+  padding: 0.35rem 0.65rem;
+  color: #c62828;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.contact-app .remove-contact:focus-visible {
+  outline: 3px solid #ef9a9a;
+  outline-offset: 2px;
+}
+
 .contact-app mark {
   padding: 0 0.1em;
   border-radius: 0.2em;

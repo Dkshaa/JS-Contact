@@ -62,12 +62,18 @@ function addContact(name, { persist = true } = {}) {
 
   const contact = document.createElement('li');
   const nameElement = document.createElement('span');
+  const removeButton = document.createElement('button');
 
   contact.className = 'collection-item';
   contact.dataset.custom = 'true';
   nameElement.className = 'contact-name';
   nameElement.textContent = name;
-  contact.append(nameElement);
+  removeButton.className = 'btn-flat remove-contact';
+  removeButton.type = 'button';
+  removeButton.textContent = 'Remove';
+  removeButton.setAttribute('aria-label', `Remove ${name}`);
+  removeButton.addEventListener('click', removeCustomContact);
+  contact.append(nameElement, removeButton);
   header.after(contact);
 
   sortContactSections();
@@ -100,6 +106,26 @@ function loadSavedContacts() {
   } catch {
     addContactStatus.textContent = 'Saved contacts could not be loaded.';
   }
+}
+
+function removeCustomContact(event) {
+  const contact = event.currentTarget.closest('[data-custom="true"]');
+  const name = contact.querySelector('.contact-name').dataset.name;
+  let header = contact.previousElementSibling;
+
+  while (header && !header.classList.contains('collection-header')) {
+    header = header.previousElementSibling;
+  }
+
+  contact.remove();
+
+  if (header && (!header.nextElementSibling || header.nextElementSibling.matches('.collection-header'))) {
+    header.remove();
+  }
+
+  saveCustomContacts();
+  filterNames();
+  addContactStatus.textContent = `${name} was removed.`;
 }
 
 function saveCustomContacts() {

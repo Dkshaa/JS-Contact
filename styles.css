@@ -30,6 +30,29 @@ body {
   font-size: 1rem;
 }
 
+.add-contact-form {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: #f7fafc;
+}
+
+.add-contact-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.add-contact-controls input[type="text"] {
+  margin-bottom: 0;
+}
+
+.add-contact-form .helper-text {
+  min-height: 1.25rem;
+  margin: 0.5rem 0 0;
+}
+
 .contact-app input[type="search"]:focus {
   border-bottom-color: #1976d2 !important;
   box-shadow: 0 1px 0 0 #1976d2 !important;

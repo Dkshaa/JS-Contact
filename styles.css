@@ -107,14 +107,28 @@ body {
   gap: 0.75rem;
 }
 
+.contact-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.contact-app .edit-contact,
 .contact-app .remove-contact {
   height: auto;
   padding: 0.35rem 0.65rem;
-  color: #c62828;
   line-height: 1.5;
   text-transform: none;
 }
 
+.contact-app .edit-contact {
+  color: #1565c0;
+}
+
+.contact-app .remove-contact {
+  color: #c62828;
+}
+
+.contact-app .edit-contact:focus-visible,
 .contact-app .remove-contact:focus-visible {
   outline: 3px solid #ef9a9a;
   outline-offset: 2px;

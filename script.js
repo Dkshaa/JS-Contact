@@ -2,10 +2,12 @@ const filterInput = document.getElementById('filterInput');
 const clearFilter = document.getElementById('clearFilter');
 const addContactForm = document.getElementById('addContactForm');
 const contactNameInput = document.getElementById('contactName');
+const addContactSubmit = document.getElementById('addContactSubmit');
 const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
 const searchStatus = document.getElementById('searchStatus');
 const customContactsKey = 'mini-contact-app.custom-contacts';
+let contactBeingEdited = null;
 
 addContactForm.addEventListener('submit', handleAddContact);
 filterInput.addEventListener('input', () => filterNames());
@@ -26,7 +28,9 @@ function handleAddContact(event) {
 
   const name = contactNameInput.value.trim().replace(/\s+/g, ' ');
   const isDuplicate = [...contactList.querySelectorAll('.contact-name')].some(
-    (contact) => contact.textContent.trim().toLocaleLowerCase() === name.toLocaleLowerCase(),
+    (nameElement) =>
+      nameElement.closest('.collection-item') !== contactBeingEdited &&
+      nameElement.textContent.trim().toLocaleLowerCase() === name.toLocaleLowerCase(),
   );
 
   if (!name) {
@@ -36,6 +40,11 @@ function handleAddContact(event) {
 
   if (isDuplicate) {
     addContactStatus.textContent = `${name} is already in the contact list.`;
+    return;
+  }
+
+  if (contactBeingEdited) {
+    updateCustomContact(contactBeingEdited, name);
     return;
   }
 
@@ -62,18 +71,27 @@ function addContact(name, { persist = true } = {}) {
 
   const contact = document.createElement('li');
   const nameElement = document.createElement('span');
+  const actions = document.createElement('span');
+  const editButton = document.createElement('button');
   const removeButton = document.createElement('button');
 
   contact.className = 'collection-item';
   contact.dataset.custom = 'true';
   nameElement.className = 'contact-name';
   nameElement.textContent = name;
+  actions.className = 'contact-actions';
+  editButton.className = 'btn-flat edit-contact';
+  editButton.type = 'button';
+  editButton.textContent = 'Edit';
+  editButton.setAttribute('aria-label', `Edit ${name}`);
+  editButton.addEventListener('click', editCustomContact);
   removeButton.className = 'btn-flat remove-contact';
   removeButton.type = 'button';
   removeButton.textContent = 'Remove';
   removeButton.setAttribute('aria-label', `Remove ${name}`);
   removeButton.addEventListener('click', removeCustomContact);
-  contact.append(nameElement, removeButton);
+  actions.append(editButton, removeButton);
+  contact.append(nameElement, actions);
   header.after(contact);
 
   sortContactSections();
@@ -108,24 +126,66 @@ function loadSavedContacts() {
   }
 }
 
+function editCustomContact(event) {
+  const contact = event.currentTarget.closest('[data-custom="true"]');
+  const currentName = contact.querySelector('.contact-name').dataset.name;
+
+  contactBeingEdited = contact;
+  contactNameInput.value = currentName;
+  addContactSubmit.textContent = 'Update';
+  addContactStatus.textContent = `Editing ${currentName}.`;
+  contactNameInput.focus();
+}
+
+function updateCustomContact(contact, updatedName) {
+  const currentName = contact.querySelector('.contact-name').dataset.name;
+  const previousHeader = findSectionHeader(contact);
+
+  contact.remove();
+  removeHeaderWhenEmpty(previousHeader);
+  addContact(updatedName, { persist: false });
+  saveCustomContacts();
+  resetContactForm();
+  addContactStatus.textContent = `${currentName} was updated to ${updatedName}.`;
+}
+
 function removeCustomContact(event) {
   const contact = event.currentTarget.closest('[data-custom="true"]');
   const name = contact.querySelector('.contact-name').dataset.name;
+  const header = findSectionHeader(contact);
+
+  if (contact === contactBeingEdited) {
+    resetContactForm();
+  }
+
+  contact.remove();
+  removeHeaderWhenEmpty(header);
+
+  saveCustomContacts();
+  filterNames();
+  addContactStatus.textContent = `${name} was removed.`;
+}
+
+function resetContactForm() {
+  contactBeingEdited = null;
+  addContactForm.reset();
+  addContactSubmit.textContent = 'Add';
+}
+
+function findSectionHeader(contact) {
   let header = contact.previousElementSibling;
 
   while (header && !header.classList.contains('collection-header')) {
     header = header.previousElementSibling;
   }
 
-  contact.remove();
+  return header;
+}
 
+function removeHeaderWhenEmpty(header) {
   if (header && (!header.nextElementSibling || header.nextElementSibling.matches('.collection-header'))) {
     header.remove();
   }
-
-  saveCustomContacts();
-  filterNames();
-  addContactStatus.textContent = `${name} was removed.`;
 }
 
 function saveCustomContacts() {

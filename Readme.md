@@ -12,6 +12,7 @@ provides the page styling.
 - Highlights the matching part of each visible name
 - Announces the number of visible results as the search changes
 - Saves contacts added in the browser for future visits
+- Allows saved contacts to be renamed and automatically regrouped
 - Lets users remove contacts they added without changing the built-in directory
 - Hides alphabetic sections that have no matching contacts
 - Displays a clear message when no contacts match

@@ -38,12 +38,13 @@
           id="filterInput"
           placeholder="Search names"
           autocomplete="off"
+          aria-describedby="searchStatus"
         />
         <button id="clearFilter" class="btn-flat" type="button" disabled>
           Clear
         </button>
       </div>
-      <p id="noResults" class="center-align" hidden>No contacts found.</p>
+      <p id="searchStatus" class="search-status" aria-live="polite"></p>
       <ul id="names" class="collection with-header">
         <li class="collection-header">
           <h5>A</h5>

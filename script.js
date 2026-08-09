@@ -4,7 +4,7 @@ const addContactForm = document.getElementById('addContactForm');
 const contactNameInput = document.getElementById('contactName');
 const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
-const noResults = document.getElementById('noResults');
+const searchStatus = document.getElementById('searchStatus');
 const customContactsKey = 'mini-contact-app.custom-contacts';
 
 addContactForm.addEventListener('submit', handleAddContact);
@@ -194,7 +194,9 @@ function filterNames(syncUrl = true) {
     header.hidden = !hasVisibleContact;
   });
 
-  noResults.hidden = visibleCount !== 0;
+  searchStatus.textContent = query
+    ? `${visibleCount} contact${visibleCount === 1 ? '' : 's'} found.`
+    : `Showing all ${visibleCount} contacts.`;
   clearFilter.disabled = query.length === 0;
 
   if (syncUrl) {

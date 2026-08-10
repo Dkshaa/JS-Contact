@@ -100,7 +100,7 @@ body {
   color: #263238;
 }
 
-.contact-app [data-custom="true"] {
+.contact-app .collection-item {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
@@ -110,6 +110,19 @@ body {
 .contact-actions {
   display: flex;
   gap: 0.25rem;
+}
+
+.contact-app .favorite-contact {
+  height: auto;
+  padding: 0.2rem 0.45rem;
+  color: #f57f17;
+  font-size: 1.35rem;
+  line-height: 1.5;
+}
+
+.contact-app .favorite-contact:focus-visible {
+  outline: 3px solid #ffe082;
+  outline-offset: 2px;
 }
 
 .contact-app .edit-contact,

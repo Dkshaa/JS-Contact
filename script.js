@@ -1,5 +1,6 @@
 const filterInput = document.getElementById('filterInput');
 const clearFilter = document.getElementById('clearFilter');
+const favoritesOnlyButton = document.getElementById('favoritesOnly');
 const addContactForm = document.getElementById('addContactForm');
 const contactNameInput = document.getElementById('contactName');
 const addContactSubmit = document.getElementById('addContactSubmit');
@@ -10,6 +11,7 @@ const customContactsKey = 'mini-contact-app.custom-contacts';
 const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
 const favoriteNames = new Set();
 let contactBeingEdited = null;
+let showFavoritesOnly = false;
 
 addContactForm.addEventListener('submit', handleAddContact);
 filterInput.addEventListener('input', () => filterNames());
@@ -19,6 +21,7 @@ filterInput.addEventListener('keydown', (event) => {
   }
 });
 clearFilter.addEventListener('click', clearSearch);
+favoritesOnlyButton.addEventListener('click', toggleFavoritesOnly);
 window.addEventListener('popstate', restoreSearchFromUrl);
 
 loadSavedContacts();
@@ -149,6 +152,10 @@ function toggleFavorite(event) {
 
   updateFavoriteButton(event.currentTarget, name);
   saveFavoriteNames();
+
+  if (showFavoritesOnly) {
+    filterNames();
+  }
 }
 
 function updateFavoriteButton(button, name) {
@@ -238,6 +245,7 @@ function updateCustomContact(contact, updatedName) {
 
   saveCustomContacts();
   saveFavoriteNames();
+  filterNames();
   resetContactForm();
   addContactStatus.textContent = `${currentName} was updated to ${updatedName}.`;
 }
@@ -328,7 +336,9 @@ function filterNames(syncUrl = true) {
     const nameElement = contact.querySelector('.contact-name');
     const originalName = nameElement.dataset.name ?? nameElement.textContent.trim();
     const normalizedName = originalName.toLocaleLowerCase();
-    const isMatch = normalizedName.includes(query);
+    const matchesQuery = normalizedName.includes(query);
+    const matchesFavoriteFilter = !showFavoritesOnly || favoriteNames.has(originalName);
+    const isMatch = matchesQuery && matchesFavoriteFilter;
 
     nameElement.dataset.name = originalName;
     renderMatch(nameElement, originalName, query, isMatch);
@@ -350,9 +360,11 @@ function filterNames(syncUrl = true) {
     header.hidden = !hasVisibleContact;
   });
 
-  searchStatus.textContent = query
-    ? `${visibleCount} contact${visibleCount === 1 ? '' : 's'} found.`
-    : `Showing all ${visibleCount} contacts.`;
+  searchStatus.textContent = showFavoritesOnly && !query
+    ? `Showing ${visibleCount} favorite contact${visibleCount === 1 ? '' : 's'}.`
+    : query
+      ? `${visibleCount} contact${visibleCount === 1 ? '' : 's'} found.`
+      : `Showing all ${visibleCount} contacts.`;
   clearFilter.disabled = query.length === 0;
 
   if (syncUrl) {
@@ -384,6 +396,17 @@ function clearSearch() {
   filterInput.focus();
 }
 
+function toggleFavoritesOnly() {
+  showFavoritesOnly = !showFavoritesOnly;
+  updateFavoritesFilterButton();
+  filterNames();
+}
+
+function updateFavoritesFilterButton() {
+  favoritesOnlyButton.setAttribute('aria-pressed', String(showFavoritesOnly));
+  favoritesOnlyButton.textContent = showFavoritesOnly ? 'Show all' : 'Favorites';
+}
+
 function updateSearchUrl(query) {
   const url = new URL(window.location.href);
 
@@ -393,6 +416,12 @@ function updateSearchUrl(query) {
     url.searchParams.delete('q');
   }
 
+  if (showFavoritesOnly) {
+    url.searchParams.set('favorites', '1');
+  } else {
+    url.searchParams.delete('favorites');
+  }
+
   window.history.replaceState({}, '', url);
 }
 
@@ -400,5 +429,7 @@ function restoreSearchFromUrl() {
   const params = new URLSearchParams(window.location.search);
 
   filterInput.value = params.get('q') ?? '';
+  showFavoritesOnly = params.get('favorites') === '1';
+  updateFavoritesFilterButton();
   filterNames(false);
 }

@@ -60,9 +60,14 @@ body {
 
 .search-controls {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
   align-items: center;
   gap: 0.75rem;
+}
+
+#favoritesOnly[aria-pressed="true"] {
+  color: #fff;
+  background: #f9a825;
 }
 
 .search-controls input[type="search"] {
@@ -88,6 +93,10 @@ body {
   overflow: hidden;
   border: 0;
   border-radius: 0.75rem;
+}
+
+.contact-app [hidden] {
+  display: none !important;
 }
 
 .contact-app .collection-header {
@@ -163,5 +172,13 @@ body {
   .contact-app {
     border-radius: 0;
     box-shadow: none;
+  }
+
+  .search-controls {
+    grid-template-columns: 1fr auto;
+  }
+
+  #favoritesOnly {
+    grid-column: 1 / -1;
   }
 }

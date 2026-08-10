@@ -7,6 +7,7 @@ const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
 const searchStatus = document.getElementById('searchStatus');
 const customContactsKey = 'mini-contact-app.custom-contacts';
+const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
 const favoriteNames = new Set();
 let contactBeingEdited = null;
 
@@ -21,6 +22,7 @@ clearFilter.addEventListener('click', clearSearch);
 window.addEventListener('popstate', restoreSearchFromUrl);
 
 loadSavedContacts();
+loadFavoriteNames();
 initializeFavoriteControls();
 sortContactSections();
 restoreSearchFromUrl();
@@ -146,6 +148,7 @@ function toggleFavorite(event) {
   }
 
   updateFavoriteButton(event.currentTarget, name);
+  saveFavoriteNames();
 }
 
 function updateFavoriteButton(button, name) {
@@ -157,6 +160,31 @@ function updateFavoriteButton(button, name) {
     'aria-label',
     `${isFavorite ? 'Remove' : 'Add'} ${name} ${isFavorite ? 'from' : 'to'} favorites`,
   );
+}
+
+function loadFavoriteNames() {
+  try {
+    const savedFavorites = JSON.parse(localStorage.getItem(favoriteContactsKey) ?? '[]');
+    const availableNames = new Set(
+      [...contactList.querySelectorAll('.contact-name')].map((contact) => contact.textContent.trim()),
+    );
+
+    if (Array.isArray(savedFavorites)) {
+      savedFavorites
+        .filter((name) => typeof name === 'string' && availableNames.has(name))
+        .forEach((name) => favoriteNames.add(name));
+    }
+  } catch {
+    addContactStatus.textContent = 'Saved favorites could not be loaded.';
+  }
+}
+
+function saveFavoriteNames() {
+  try {
+    localStorage.setItem(favoriteContactsKey, JSON.stringify([...favoriteNames]));
+  } catch {
+    addContactStatus.textContent = 'Favorite changes could not be saved.';
+  }
 }
 
 function loadSavedContacts() {
@@ -209,6 +237,7 @@ function updateCustomContact(contact, updatedName) {
   }
 
   saveCustomContacts();
+  saveFavoriteNames();
   resetContactForm();
   addContactStatus.textContent = `${currentName} was updated to ${updatedName}.`;
 }
@@ -219,6 +248,7 @@ function removeCustomContact(event) {
   const header = findSectionHeader(contact);
 
   favoriteNames.delete(name);
+  saveFavoriteNames();
 
   if (contact === contactBeingEdited) {
     resetContactForm();

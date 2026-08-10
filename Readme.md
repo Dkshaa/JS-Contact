@@ -15,6 +15,7 @@ provides the page styling.
 - Allows saved contacts to be renamed and automatically regrouped
 - Lets users remove contacts they added without changing the built-in directory
 - Lets users mark built-in or custom contacts as favorites
+- Remembers favorite contacts between browser visits
 - Hides alphabetic sections that have no matching contacts
 - Displays a clear message when no contacts match
 - Adapts the layout for phones, tablets, and desktop screens

@@ -7,6 +7,7 @@ const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
 const searchStatus = document.getElementById('searchStatus');
 const customContactsKey = 'mini-contact-app.custom-contacts';
+const favoriteNames = new Set();
 let contactBeingEdited = null;
 
 addContactForm.addEventListener('submit', handleAddContact);
@@ -20,6 +21,7 @@ clearFilter.addEventListener('click', clearSearch);
 window.addEventListener('popstate', restoreSearchFromUrl);
 
 loadSavedContacts();
+initializeFavoriteControls();
 sortContactSections();
 restoreSearchFromUrl();
 
@@ -92,6 +94,7 @@ function addContact(name, { persist = true } = {}) {
   removeButton.addEventListener('click', removeCustomContact);
   actions.append(editButton, removeButton);
   contact.append(nameElement, actions);
+  attachFavoriteButton(contact);
   header.after(contact);
 
   sortContactSections();
@@ -100,6 +103,60 @@ function addContact(name, { persist = true } = {}) {
   if (persist) {
     saveCustomContacts();
   }
+
+  return contact;
+}
+
+function initializeFavoriteControls() {
+  contactList.querySelectorAll('.collection-item').forEach(attachFavoriteButton);
+}
+
+function attachFavoriteButton(contact) {
+  if (contact.querySelector('.favorite-contact')) {
+    return;
+  }
+
+  const nameElement = contact.querySelector('.contact-name');
+  const name = nameElement.dataset.name ?? nameElement.textContent.trim();
+  let actions = contact.querySelector('.contact-actions');
+
+  if (!actions) {
+    actions = document.createElement('span');
+    actions.className = 'contact-actions';
+    contact.append(actions);
+  }
+
+  const favoriteButton = document.createElement('button');
+
+  favoriteButton.className = 'btn-flat favorite-contact';
+  favoriteButton.type = 'button';
+  favoriteButton.addEventListener('click', toggleFavorite);
+  actions.prepend(favoriteButton);
+  updateFavoriteButton(favoriteButton, name);
+}
+
+function toggleFavorite(event) {
+  const contact = event.currentTarget.closest('.collection-item');
+  const name = contact.querySelector('.contact-name').dataset.name;
+
+  if (favoriteNames.has(name)) {
+    favoriteNames.delete(name);
+  } else {
+    favoriteNames.add(name);
+  }
+
+  updateFavoriteButton(event.currentTarget, name);
+}
+
+function updateFavoriteButton(button, name) {
+  const isFavorite = favoriteNames.has(name);
+
+  button.textContent = isFavorite ? '★' : '☆';
+  button.setAttribute('aria-pressed', String(isFavorite));
+  button.setAttribute(
+    'aria-label',
+    `${isFavorite ? 'Remove' : 'Add'} ${name} ${isFavorite ? 'from' : 'to'} favorites`,
+  );
 }
 
 function loadSavedContacts() {
@@ -140,10 +197,17 @@ function editCustomContact(event) {
 function updateCustomContact(contact, updatedName) {
   const currentName = contact.querySelector('.contact-name').dataset.name;
   const previousHeader = findSectionHeader(contact);
+  const wasFavorite = favoriteNames.delete(currentName);
 
   contact.remove();
   removeHeaderWhenEmpty(previousHeader);
-  addContact(updatedName, { persist: false });
+  const updatedContact = addContact(updatedName, { persist: false });
+
+  if (wasFavorite) {
+    favoriteNames.add(updatedName);
+    updateFavoriteButton(updatedContact.querySelector('.favorite-contact'), updatedName);
+  }
+
   saveCustomContacts();
   resetContactForm();
   addContactStatus.textContent = `${currentName} was updated to ${updatedName}.`;
@@ -153,6 +217,8 @@ function removeCustomContact(event) {
   const contact = event.currentTarget.closest('[data-custom="true"]');
   const name = contact.querySelector('.contact-name').dataset.name;
   const header = findSectionHeader(contact);
+
+  favoriteNames.delete(name);
 
   if (contact === contactBeingEdited) {
     resetContactForm();

@@ -7,6 +7,8 @@ const addContactSubmit = document.getElementById('addContactSubmit');
 const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
 const searchStatus = document.getElementById('searchStatus');
+const exportDataButton = document.getElementById('exportData');
+const dataStatus = document.getElementById('dataStatus');
 const customContactsKey = 'mini-contact-app.custom-contacts';
 const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
 const favoriteNames = new Set();
@@ -22,6 +24,7 @@ filterInput.addEventListener('keydown', (event) => {
 });
 clearFilter.addEventListener('click', clearSearch);
 favoritesOnlyButton.addEventListener('click', toggleFavoritesOnly);
+exportDataButton.addEventListener('click', exportContactData);
 window.addEventListener('popstate', restoreSearchFromUrl);
 
 loadSavedContacts();
@@ -29,6 +32,31 @@ loadFavoriteNames();
 initializeFavoriteControls();
 sortContactSections();
 restoreSearchFromUrl();
+
+function exportContactData() {
+  const customContacts = [...contactList.querySelectorAll('[data-custom="true"]')].map(
+    (contact) => contact.querySelector('.contact-name').dataset.name,
+  );
+  const backup = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    customContacts,
+    favorites: [...favoriteNames],
+  };
+  const file = new Blob([`${JSON.stringify(backup, null, 2)}\n`], {
+    type: 'application/json',
+  });
+  const downloadUrl = URL.createObjectURL(file);
+  const downloadLink = document.createElement('a');
+
+  downloadLink.href = downloadUrl;
+  downloadLink.download = `contact-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.append(downloadLink);
+  downloadLink.click();
+  downloadLink.remove();
+  window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 0);
+  dataStatus.textContent = `Backup downloaded with ${customContacts.length} custom contact${customContacts.length === 1 ? '' : 's'}.`;
+}
 
 function handleAddContact(event) {
   event.preventDefault();
@@ -117,12 +145,15 @@ function initializeFavoriteControls() {
 }
 
 function attachFavoriteButton(contact) {
-  if (contact.querySelector('.favorite-contact')) {
+  const nameElement = contact.querySelector('.contact-name');
+  const name = nameElement.dataset.name ?? nameElement.textContent.trim();
+  const existingButton = contact.querySelector('.favorite-contact');
+
+  if (existingButton) {
+    updateFavoriteButton(existingButton, name);
     return;
   }
 
-  const nameElement = contact.querySelector('.contact-name');
-  const name = nameElement.dataset.name ?? nameElement.textContent.trim();
   let actions = contact.querySelector('.contact-actions');
 
   if (!actions) {

@@ -66,6 +66,15 @@
             accept="application/json,.json"
             hidden
           />
+          <button id="clearSavedData" class="btn-flat danger-button" type="button">
+            Clear saved data
+          </button>
+          <span id="clearDataConfirmation" class="confirmation-actions" hidden>
+            <button id="confirmClearData" class="btn-flat danger-button" type="button">
+              Confirm clear
+            </button>
+            <button id="cancelClearData" class="btn-flat" type="button">Cancel</button>
+          </span>
         </div>
         <p id="dataStatus" class="helper-text" aria-live="polite"></p>
       </details>

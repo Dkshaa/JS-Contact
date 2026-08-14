@@ -9,6 +9,10 @@ const contactList = document.getElementById('names');
 const searchStatus = document.getElementById('searchStatus');
 const exportDataButton = document.getElementById('exportData');
 const importDataInput = document.getElementById('importData');
+const clearSavedDataButton = document.getElementById('clearSavedData');
+const clearDataConfirmation = document.getElementById('clearDataConfirmation');
+const confirmClearDataButton = document.getElementById('confirmClearData');
+const cancelClearDataButton = document.getElementById('cancelClearData');
 const dataStatus = document.getElementById('dataStatus');
 const customContactsKey = 'mini-contact-app.custom-contacts';
 const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
@@ -27,6 +31,9 @@ clearFilter.addEventListener('click', clearSearch);
 favoritesOnlyButton.addEventListener('click', toggleFavoritesOnly);
 exportDataButton.addEventListener('click', exportContactData);
 importDataInput.addEventListener('change', importContactData);
+clearSavedDataButton.addEventListener('click', showClearDataConfirmation);
+confirmClearDataButton.addEventListener('click', clearSavedData);
+cancelClearDataButton.addEventListener('click', hideClearDataConfirmation);
 window.addEventListener('popstate', restoreSearchFromUrl);
 
 loadSavedContacts();
@@ -168,6 +175,31 @@ function updateAllFavoriteButtons() {
 
     updateFavoriteButton(contact.querySelector('.favorite-contact'), name);
   });
+}
+
+function showClearDataConfirmation() {
+  clearSavedDataButton.hidden = true;
+  clearDataConfirmation.hidden = false;
+  confirmClearDataButton.focus();
+}
+
+function hideClearDataConfirmation() {
+  clearDataConfirmation.hidden = true;
+  clearSavedDataButton.hidden = false;
+  clearSavedDataButton.focus();
+}
+
+function clearSavedData() {
+  removeCustomContactsFromPage();
+  favoriteNames.clear();
+  showFavoritesOnly = false;
+  updateAllFavoriteButtons();
+  updateFavoritesFilterButton();
+  saveCustomContacts();
+  saveFavoriteNames();
+  filterNames();
+  hideClearDataConfirmation();
+  dataStatus.textContent = 'Saved contacts and favorites were cleared.';
 }
 
 function handleAddContact(event) {

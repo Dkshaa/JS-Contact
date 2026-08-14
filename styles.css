@@ -89,6 +89,32 @@ body {
   color: #546e7a;
 }
 
+.data-tools {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid #dce6ee;
+  border-radius: 0.75rem;
+  background: #fafcfe;
+}
+
+.data-tools summary {
+  color: #17324d;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.data-tool-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.data-tools .helper-text {
+  min-height: 1.25rem;
+  margin: 0.5rem 0 0;
+}
+
 .contact-app .collection {
   overflow: hidden;
   border: 0;

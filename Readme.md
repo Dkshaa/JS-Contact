@@ -17,6 +17,7 @@ provides the page styling.
 - Lets users mark built-in or custom contacts as favorites
 - Remembers favorite contacts between browser visits
 - Filters the directory to favorite contacts while preserving shareable URLs
+- Downloads custom contacts and favorites as a portable JSON backup
 - Hides alphabetic sections that have no matching contacts
 - Displays a clear message when no contacts match
 - Adapts the layout for phones, tablets, and desktop screens

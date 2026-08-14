@@ -59,6 +59,13 @@
           <button id="exportData" class="btn-flat" type="button">
             Download backup
           </button>
+          <label class="btn-flat file-button" for="importData">Restore backup</label>
+          <input
+            id="importData"
+            type="file"
+            accept="application/json,.json"
+            hidden
+          />
         </div>
         <p id="dataStatus" class="helper-text" aria-live="polite"></p>
       </details>

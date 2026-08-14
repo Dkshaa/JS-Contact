@@ -110,6 +110,19 @@ body {
   margin-top: 0.75rem;
 }
 
+.data-tools .file-button {
+  display: inline-flex;
+  align-items: center;
+  color: #1565c0;
+  cursor: pointer;
+}
+
+.data-tools .file-button:focus-within,
+.data-tools .file-button:focus-visible {
+  outline: 3px solid #90caf9;
+  outline-offset: 2px;
+}
+
 .data-tools .helper-text {
   min-height: 1.25rem;
   margin: 0.5rem 0 0;

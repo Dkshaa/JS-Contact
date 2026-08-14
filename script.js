@@ -8,6 +8,7 @@ const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
 const searchStatus = document.getElementById('searchStatus');
 const exportDataButton = document.getElementById('exportData');
+const importDataInput = document.getElementById('importData');
 const dataStatus = document.getElementById('dataStatus');
 const customContactsKey = 'mini-contact-app.custom-contacts';
 const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
@@ -25,6 +26,7 @@ filterInput.addEventListener('keydown', (event) => {
 clearFilter.addEventListener('click', clearSearch);
 favoritesOnlyButton.addEventListener('click', toggleFavoritesOnly);
 exportDataButton.addEventListener('click', exportContactData);
+importDataInput.addEventListener('change', importContactData);
 window.addEventListener('popstate', restoreSearchFromUrl);
 
 loadSavedContacts();
@@ -56,6 +58,116 @@ function exportContactData() {
   downloadLink.remove();
   window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 0);
   dataStatus.textContent = `Backup downloaded with ${customContacts.length} custom contact${customContacts.length === 1 ? '' : 's'}.`;
+}
+
+async function importContactData() {
+  const [file] = importDataInput.files;
+
+  if (!file) {
+    return;
+  }
+
+  try {
+    const backup = validateBackup(JSON.parse(await file.text()));
+
+    restoreBackup(backup);
+    dataStatus.textContent = `Backup restored with ${backup.customContacts.length} custom contact${backup.customContacts.length === 1 ? '' : 's'}.`;
+  } catch {
+    dataStatus.textContent = 'This file is not a valid contact backup.';
+  } finally {
+    importDataInput.value = '';
+  }
+}
+
+function validateBackup(value) {
+  if (
+    !value ||
+    value.version !== 1 ||
+    !Array.isArray(value.customContacts) ||
+    !Array.isArray(value.favorites)
+  ) {
+    throw new Error('Unsupported backup format');
+  }
+
+  const normalizeNames = (names) =>
+    names.map((name) => {
+      if (typeof name !== 'string') {
+        throw new Error('Invalid contact name');
+      }
+
+      const normalizedName = name.trim().replace(/\s+/g, ' ');
+
+      if (!normalizedName || normalizedName.length > 60) {
+        throw new Error('Invalid contact name');
+      }
+
+      return normalizedName;
+    });
+
+  return {
+    customContacts: [...new Map(
+      normalizeNames(value.customContacts).map((name) => [name.toLocaleLowerCase(), name]),
+    ).values()],
+    favorites: [...new Map(
+      normalizeNames(value.favorites).map((name) => [name.toLocaleLowerCase(), name]),
+    ).values()],
+  };
+}
+
+function restoreBackup(backup) {
+  removeCustomContactsFromPage();
+
+  const existingNames = new Set(
+    [...contactList.querySelectorAll('.contact-name')].map((contact) =>
+      contact.dataset.name.toLocaleLowerCase(),
+    ),
+  );
+
+  backup.customContacts.forEach((name) => {
+    if (!existingNames.has(name.toLocaleLowerCase())) {
+      addContact(name, { persist: false });
+      existingNames.add(name.toLocaleLowerCase());
+    }
+  });
+
+  const availableNames = new Map(
+    [...contactList.querySelectorAll('.contact-name')].map((contact) => [
+      contact.dataset.name.toLocaleLowerCase(),
+      contact.dataset.name,
+    ]),
+  );
+
+  favoriteNames.clear();
+  backup.favorites.forEach((name) => {
+    const availableName = availableNames.get(name.toLocaleLowerCase());
+
+    if (availableName) {
+      favoriteNames.add(availableName);
+    }
+  });
+
+  updateAllFavoriteButtons();
+  saveCustomContacts();
+  saveFavoriteNames();
+  filterNames();
+}
+
+function removeCustomContactsFromPage() {
+  contactList.querySelectorAll('[data-custom="true"]').forEach((contact) => {
+    const header = findSectionHeader(contact);
+
+    contact.remove();
+    removeHeaderWhenEmpty(header);
+  });
+  resetContactForm();
+}
+
+function updateAllFavoriteButtons() {
+  contactList.querySelectorAll('.collection-item').forEach((contact) => {
+    const name = contact.querySelector('.contact-name').dataset.name;
+
+    updateFavoriteButton(contact.querySelector('.favorite-contact'), name);
+  });
 }
 
 function handleAddContact(event) {

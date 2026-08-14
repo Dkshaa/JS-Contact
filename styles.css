@@ -123,6 +123,20 @@ body {
   outline-offset: 2px;
 }
 
+.confirmation-actions {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+.data-tools .danger-button {
+  color: #c62828;
+}
+
+.data-tools .danger-button:focus-visible {
+  outline: 3px solid #ef9a9a;
+  outline-offset: 2px;
+}
+
 .data-tools .helper-text {
   min-height: 1.25rem;
   margin: 0.5rem 0 0;

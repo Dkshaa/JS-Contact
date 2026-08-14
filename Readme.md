@@ -49,3 +49,7 @@ styles make keyboard navigation easier to follow.
 - `index.html` contains the contact list and search interface.
 - `script.js` contains the filtering behavior.
 - `styles.css` contains the responsive layout and focus styles.
+- `BACKUP_FORMAT.md` documents the portable backup schema and validation rules.
+
+See [Backup format](./BACKUP_FORMAT.md) before generating or editing backup files
+outside the app.

@@ -42,6 +42,9 @@ npx playwright install chromium
 npm test
 ```
 
+GitHub Actions also runs this suite automatically for pull requests and pushes to
+`main`.
+
 ## Using the search
 
 Start typing a name in the search field and the contact groups update immediately.

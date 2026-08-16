@@ -31,6 +31,17 @@ provides the page styling.
 Clone the repository and open `index.html` in a browser. No build step or package
 installation is required.
 
+## Run tests
+
+Install the development dependencies and browser once, then run the automated
+browser tests:
+
+```bash
+npm install
+npx playwright install chromium
+npm test
+```
+
 ## Using the search
 
 Start typing a name in the search field and the contact groups update immediately.

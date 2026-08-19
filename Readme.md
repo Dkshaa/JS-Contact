@@ -21,6 +21,7 @@ provides the page styling.
 - Remembers favorite contacts between browser visits
 - Filters the directory to favorite contacts while preserving shareable URLs
 - Downloads custom contacts and favorites as a portable JSON backup
+- Shows the number of custom contacts currently saved
 - Restores validated JSON backups without duplicating built-in contacts
 - Clears saved contacts and favorites through an explicit confirmation step
 - Hides alphabetic sections that have no matching contacts

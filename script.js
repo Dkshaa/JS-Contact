@@ -15,6 +15,7 @@ const clearDataConfirmation = document.getElementById('clearDataConfirmation');
 const confirmClearDataButton = document.getElementById('confirmClearData');
 const cancelClearDataButton = document.getElementById('cancelClearData');
 const dataStatus = document.getElementById('dataStatus');
+const savedContactStatus = document.getElementById('savedContactStatus');
 const customContactsKey = 'mini-contact-app.custom-contacts';
 const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
 const favoriteNames = new Set();
@@ -45,6 +46,7 @@ window.addEventListener('popstate', restoreSearchFromUrl);
 document.addEventListener('keydown', focusSearchWithShortcut);
 
 loadSavedContacts();
+updateSavedContactStatus();
 loadFavoriteNames();
 initializeFavoriteControls();
 sortContactSections();
@@ -494,9 +496,16 @@ function saveCustomContacts() {
 
   try {
     localStorage.setItem(customContactsKey, JSON.stringify(customContacts));
+    updateSavedContactStatus(customContacts.length);
   } catch {
     addContactStatus.textContent = 'This contact could not be saved for your next visit.';
   }
+}
+
+function updateSavedContactStatus(count = contactList.querySelectorAll('[data-custom="true"]').length) {
+  savedContactStatus.textContent = count === 0
+    ? 'No custom contacts saved.'
+    : `${count} custom contact${count === 1 ? '' : 's'} saved.`;
 }
 
 function sortContactSections() {

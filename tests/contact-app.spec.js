@@ -96,3 +96,15 @@ test('normalizes saved contacts and ignores invalid entries', async ({ page }) =
   await expect(page.getByText('Zara Jane', { exact: true })).toHaveCount(1);
   await expect(page.locator('[data-custom="true"]')).toHaveCount(1);
 });
+
+test('shows how many custom contacts are saved', async ({ page }) => {
+  await page.getByText('Backup and restore').click();
+  await expect(page.locator('#savedContactStatus')).toHaveText('No custom contacts saved.');
+
+  await page.getByLabel('Add a contact').fill('Zara');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await expect(page.locator('#savedContactStatus')).toHaveText('1 custom contact saved.');
+
+  await page.getByRole('button', { name: 'Remove Zara' }).click();
+  await expect(page.locator('#savedContactStatus')).toHaveText('No custom contacts saved.');
+});

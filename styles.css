@@ -112,6 +112,11 @@ body {
   cursor: pointer;
 }
 
+.saved-contact-status {
+  margin: 0.6rem 0 0;
+  color: #546e7a;
+}
+
 .data-tool-actions {
   display: flex;
   flex-wrap: wrap;

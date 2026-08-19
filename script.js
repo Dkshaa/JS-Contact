@@ -4,6 +4,7 @@ const favoritesOnlyButton = document.getElementById('favoritesOnly');
 const addContactForm = document.getElementById('addContactForm');
 const contactNameInput = document.getElementById('contactName');
 const addContactSubmit = document.getElementById('addContactSubmit');
+const cancelContactEditButton = document.getElementById('cancelContactEdit');
 const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
 const searchStatus = document.getElementById('searchStatus');
@@ -21,6 +22,7 @@ let contactBeingEdited = null;
 let showFavoritesOnly = false;
 
 addContactForm.addEventListener('submit', handleAddContact);
+cancelContactEditButton.addEventListener('click', cancelContactEdit);
 filterInput.addEventListener('input', () => filterNames());
 filterInput.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && filterInput.value) {
@@ -401,7 +403,16 @@ function editCustomContact(event) {
   contactBeingEdited = contact;
   contactNameInput.value = currentName;
   addContactSubmit.textContent = 'Update';
+  cancelContactEditButton.hidden = false;
   addContactStatus.textContent = `Editing ${currentName}.`;
+  contactNameInput.focus();
+}
+
+function cancelContactEdit() {
+  const name = contactBeingEdited.querySelector('.contact-name').dataset.name;
+
+  resetContactForm();
+  addContactStatus.textContent = `Editing ${name} was canceled.`;
   contactNameInput.focus();
 }
 
@@ -450,6 +461,7 @@ function resetContactForm() {
   contactBeingEdited = null;
   addContactForm.reset();
   addContactSubmit.textContent = 'Add';
+  cancelContactEditButton.hidden = true;
 }
 
 function findSectionHeader(contact) {

@@ -42,3 +42,16 @@ test('persists favorites and edited custom contacts', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Remove Maria from favorites' })).toBeVisible();
   await expect(page.getByText('Zara', { exact: true })).toHaveCount(0);
 });
+
+test('cancels a custom contact edit without changing the contact', async ({ page }) => {
+  await page.getByLabel('Add a contact').fill('Zara');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await page.getByRole('button', { name: 'Edit Zara' }).click();
+  await page.getByLabel('Add a contact').fill('Maria');
+  await page.getByRole('button', { name: 'Cancel', exact: true }).click();
+
+  await expect(page.getByText('Zara', { exact: true })).toBeVisible();
+  await expect(page.getByText('Maria', { exact: true })).toHaveCount(0);
+  await expect(page.locator('#addContactStatus')).toHaveText('Editing Zara was canceled.');
+  await expect(page.getByRole('button', { name: 'Add', exact: true })).toBeVisible();
+});

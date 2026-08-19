@@ -13,6 +13,7 @@ provides the page styling.
 - Announces the number of visible results as the search changes
 - Saves contacts added in the browser for future visits
 - Allows saved contacts to be renamed and automatically regrouped
+- Lets users cancel a rename without changing the saved contact
 - Lets users remove contacts they added without changing the built-in directory
 - Lets users mark built-in or custom contacts as favorites
 - Remembers favorite contacts between browser visits

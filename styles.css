@@ -48,6 +48,15 @@ body {
   margin-bottom: 0;
 }
 
+#cancelContactEdit {
+  color: #546e7a;
+}
+
+#cancelContactEdit:focus-visible {
+  outline: 3px solid #b0bec5;
+  outline-offset: 2px;
+}
+
 .add-contact-form .helper-text {
   min-height: 1.25rem;
   margin: 0.5rem 0 0;

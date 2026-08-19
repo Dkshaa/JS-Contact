@@ -17,6 +17,12 @@ test('filters contacts and reports the visible result count', async ({ page }) =
   await expect(page).toHaveURL(/\?q=chris$/);
 });
 
+test('focuses search with the slash keyboard shortcut', async ({ page }) => {
+  await page.keyboard.press('/');
+
+  await expect(page.getByRole('searchbox', { name: 'Search contacts' })).toBeFocused();
+});
+
 test('persists favorites and edited custom contacts', async ({ page }) => {
   await page.getByLabel('Add a contact').fill('Zara');
   await page.getByRole('button', { name: 'Add', exact: true }).click();

@@ -25,6 +25,7 @@ provides the page styling.
 - Adapts the layout for phones, tablets, and desktop screens
 - Clears a search with either the Clear button or the Escape key
 - Stores the current search in the URL so filtered views can be bookmarked or shared
+- Focuses search from anywhere on the page with the `/` keyboard shortcut
 
 ## Run locally
 
@@ -50,7 +51,7 @@ GitHub Actions also runs this suite automatically for pull requests and pushes t
 Start typing a name in the search field and the contact groups update immediately.
 Choose **Clear** to restore the full directory. Keyboard users can press `Escape`
 while the search field is focused to clear the current query without leaving the
-keyboard.
+keyboard, or press `/` from elsewhere on the page to focus the search field.
 
 The page URL updates with a `q` parameter while filtering. Opening a shared URL,
 such as `index.html?q=chris`, restores that search automatically.

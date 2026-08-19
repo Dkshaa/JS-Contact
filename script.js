@@ -35,6 +35,7 @@ clearSavedDataButton.addEventListener('click', showClearDataConfirmation);
 confirmClearDataButton.addEventListener('click', clearSavedData);
 cancelClearDataButton.addEventListener('click', hideClearDataConfirmation);
 window.addEventListener('popstate', restoreSearchFromUrl);
+document.addEventListener('keydown', focusSearchWithShortcut);
 
 loadSavedContacts();
 loadFavoriteNames();
@@ -569,6 +570,16 @@ function clearSearch() {
   filterInput.value = '';
   filterNames();
   filterInput.focus();
+}
+
+function focusSearchWithShortcut(event) {
+  const target = event.target;
+  const isTyping = target.matches('input, textarea, select, [contenteditable="true"]');
+
+  if (event.key === '/' && !isTyping && !event.metaKey && !event.ctrlKey && !event.altKey) {
+    event.preventDefault();
+    filterInput.focus();
+  }
 }
 
 function toggleFavoritesOnly() {

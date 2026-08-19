@@ -26,6 +26,7 @@ provides the page styling.
 - Clears saved contacts and favorites through an explicit confirmation step
 - Hides alphabetic sections that have no matching contacts
 - Displays a clear message when no contacts match
+- Offers a one-click filter reset when no contacts match
 - Adapts the layout for phones, tablets, and desktop screens
 - Clears a search with either the Clear button or the Escape key
 - Stores the current search in the URL so filtered views can be bookmarked or shared

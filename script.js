@@ -8,6 +8,8 @@ const cancelContactEditButton = document.getElementById('cancelContactEdit');
 const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
 const searchStatus = document.getElementById('searchStatus');
+const emptyState = document.getElementById('emptyState');
+const resetFiltersButton = document.getElementById('resetFilters');
 const exportDataButton = document.getElementById('exportData');
 const importDataInput = document.getElementById('importData');
 const clearSavedDataButton = document.getElementById('clearSavedData');
@@ -36,6 +38,7 @@ filterInput.addEventListener('keydown', (event) => {
   }
 });
 clearFilter.addEventListener('click', clearSearch);
+resetFiltersButton.addEventListener('click', resetFilters);
 favoritesOnlyButton.addEventListener('click', toggleFavoritesOnly);
 exportDataButton.addEventListener('click', exportContactData);
 importDataInput.addEventListener('change', importContactData);
@@ -590,10 +593,19 @@ function filterNames(syncUrl = true) {
       ? `${visibleCount} contact${visibleCount === 1 ? '' : 's'} found.`
       : `Showing all ${visibleCount} contacts.`;
   clearFilter.disabled = query.length === 0;
+  emptyState.hidden = visibleCount !== 0;
 
   if (syncUrl) {
     updateSearchUrl(query);
   }
+}
+
+function resetFilters() {
+  filterInput.value = '';
+  showFavoritesOnly = false;
+  updateFavoritesFilterButton();
+  filterNames();
+  filterInput.focus();
 }
 
 function normalizeForSearch(value) {

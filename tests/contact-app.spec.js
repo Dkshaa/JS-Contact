@@ -108,3 +108,14 @@ test('shows how many custom contacts are saved', async ({ page }) => {
   await page.getByRole('button', { name: 'Remove Zara' }).click();
   await expect(page.locator('#savedContactStatus')).toHaveText('No custom contacts saved.');
 });
+
+test('offers to reset filters when no contacts match', async ({ page }) => {
+  await page.getByRole('searchbox', { name: 'Search contacts' }).fill('not-a-contact');
+
+  await expect(page.locator('#emptyState')).toBeVisible();
+  await page.getByRole('button', { name: 'Reset filters' }).click();
+
+  await expect(page.locator('#emptyState')).toBeHidden();
+  await expect(page.locator('#searchStatus')).toHaveText('Showing all 25 contacts.');
+  await expect(page.getByRole('searchbox', { name: 'Search contacts' })).toBeFocused();
+});

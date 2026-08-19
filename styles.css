@@ -98,6 +98,24 @@ body {
   color: #546e7a;
 }
 
+.empty-state {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px dashed #90a4ae;
+  border-radius: 0.75rem;
+  text-align: center;
+  color: #546e7a;
+  background: #f7fafc;
+}
+
+.empty-state p {
+  margin: 0 0 0.5rem;
+}
+
+.empty-state button {
+  color: #1565c0;
+}
+
 .data-tools {
   margin: 1rem 0;
   padding: 0.85rem 1rem;

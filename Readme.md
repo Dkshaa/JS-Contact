@@ -7,7 +7,7 @@ provides the page styling.
 ## Features
 
 - Filters contacts as you type
-- Sorts names alphabetically within each contact section
+- Sorts contact sections and the names within them alphabetically
 - Matches names without case sensitivity
 - Highlights the matching part of each visible name
 - Announces the number of visible results as the search changes

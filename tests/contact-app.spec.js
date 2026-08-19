@@ -55,3 +55,10 @@ test('cancels a custom contact edit without changing the contact', async ({ page
   await expect(page.locator('#addContactStatus')).toHaveText('Editing Zara was canceled.');
   await expect(page.getByRole('button', { name: 'Add', exact: true })).toBeVisible();
 });
+
+test('keeps letter sections alphabetized when a new section is added', async ({ page }) => {
+  await page.getByLabel('Add a contact').fill('Maria');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+
+  await expect(page.locator('.collection-header h5')).toHaveText(['A', 'B', 'C', 'D', 'M', 'V']);
+});

@@ -493,7 +493,7 @@ function saveCustomContacts() {
 }
 
 function sortContactSections() {
-  const headers = contactList.querySelectorAll('.collection-header');
+  const headers = [...contactList.querySelectorAll('.collection-header')];
 
   headers.forEach((header) => {
     const contacts = [];
@@ -512,6 +512,26 @@ function sortContactSections() {
       )
       .forEach((contact) => contactList.insertBefore(contact, item));
   });
+
+  const sections = headers.map((header) => {
+    const items = [header];
+    let item = header.nextElementSibling;
+
+    while (item && !item.classList.contains('collection-header')) {
+      items.push(item);
+      item = item.nextElementSibling;
+    }
+
+    return items;
+  });
+
+  sections
+    .sort((first, second) =>
+      first[0].textContent.trim().localeCompare(second[0].textContent.trim(), undefined, {
+        sensitivity: 'base',
+      }),
+    )
+    .forEach((section) => contactList.append(...section));
 }
 
 function filterNames(syncUrl = true) {

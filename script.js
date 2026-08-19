@@ -386,13 +386,15 @@ function loadSavedContacts() {
     }
 
     savedContacts.forEach((name) => {
-      const normalizedName = typeof name === 'string' ? name.trim() : '';
+      const normalizedName = typeof name === 'string'
+        ? name.trim().replace(/\s+/g, ' ')
+        : '';
       const alreadyExists = [...contactList.querySelectorAll('.contact-name')].some(
         (contact) =>
           contact.textContent.trim().toLocaleLowerCase() === normalizedName.toLocaleLowerCase(),
       );
 
-      if (normalizedName && !alreadyExists) {
+      if (normalizedName && normalizedName.length <= 60 && !alreadyExists) {
         addContact(normalizedName, { persist: false });
       }
     });

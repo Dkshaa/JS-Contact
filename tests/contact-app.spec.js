@@ -83,3 +83,16 @@ test('finds contacts without requiring accent marks', async ({ page }) => {
   await expect(page.locator('.collection-item:not([hidden]) .contact-name')).toHaveText(['José']);
   await expect(page.locator('#searchStatus')).toHaveText('1 contact found.');
 });
+
+test('normalizes saved contacts and ignores invalid entries', async ({ page }) => {
+  await page.evaluate(() => {
+    localStorage.setItem(
+      'mini-contact-app.custom-contacts',
+      JSON.stringify(['  Zara   Jane  ', 'ZARA JANE', 'x'.repeat(61), 42]),
+    );
+  });
+  await page.reload();
+
+  await expect(page.getByText('Zara Jane', { exact: true })).toHaveCount(1);
+  await expect(page.locator('[data-custom="true"]')).toHaveCount(1);
+});

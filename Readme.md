@@ -13,6 +13,7 @@ provides the page styling.
 - Highlights the matching part of each visible name
 - Announces the number of visible results as the search changes
 - Saves contacts added in the browser for future visits
+- Normalizes saved names and safely ignores malformed browser data
 - Allows saved contacts to be renamed and automatically regrouped
 - Lets users cancel a rename with the Cancel button or `Escape` key
 - Lets users remove contacts they added without changing the built-in directory

@@ -74,3 +74,12 @@ test('keeps letter sections alphabetized when a new section is added', async ({ 
 
   await expect(page.locator('.collection-header h5')).toHaveText(['A', 'B', 'C', 'D', 'M', 'V']);
 });
+
+test('finds contacts without requiring accent marks', async ({ page }) => {
+  await page.getByLabel('Add a contact').fill('José');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await page.getByRole('searchbox', { name: 'Search contacts' }).fill('jose');
+
+  await expect(page.locator('.collection-item:not([hidden]) .contact-name')).toHaveText(['José']);
+  await expect(page.locator('#searchStatus')).toHaveText('1 contact found.');
+});

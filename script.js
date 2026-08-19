@@ -540,7 +540,7 @@ function sortContactSections() {
 }
 
 function filterNames(syncUrl = true) {
-  const query = filterInput.value.trim().toLocaleLowerCase();
+  const query = normalizeForSearch(filterInput.value.trim());
   const contacts = contactList.querySelectorAll('.collection-item');
   const headers = contactList.querySelectorAll('.collection-header');
   let visibleCount = 0;
@@ -548,7 +548,7 @@ function filterNames(syncUrl = true) {
   contacts.forEach((contact) => {
     const nameElement = contact.querySelector('.contact-name');
     const originalName = nameElement.dataset.name ?? nameElement.textContent.trim();
-    const normalizedName = originalName.toLocaleLowerCase();
+    const normalizedName = normalizeForSearch(originalName);
     const matchesQuery = normalizedName.includes(query);
     const matchesFavoriteFilter = !showFavoritesOnly || favoriteNames.has(originalName);
     const isMatch = matchesQuery && matchesFavoriteFilter;
@@ -585,6 +585,13 @@ function filterNames(syncUrl = true) {
   }
 }
 
+function normalizeForSearch(value) {
+  return value
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLocaleLowerCase();
+}
+
 function renderMatch(nameElement, name, query, isMatch) {
   nameElement.replaceChildren(name);
 
@@ -592,7 +599,7 @@ function renderMatch(nameElement, name, query, isMatch) {
     return;
   }
 
-  const matchStart = name.toLocaleLowerCase().indexOf(query);
+  const matchStart = normalizeForSearch(name).indexOf(query);
   const mark = document.createElement('mark');
 
   mark.textContent = name.slice(matchStart, matchStart + query.length);

@@ -9,6 +9,7 @@ provides the page styling.
 - Filters contacts as you type
 - Sorts contact sections and the names within them alphabetically
 - Matches names without case sensitivity
+- Matches names even when accent marks are omitted
 - Highlights the matching part of each visible name
 - Announces the number of visible results as the search changes
 - Saves contacts added in the browser for future visits

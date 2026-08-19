@@ -23,6 +23,11 @@ let showFavoritesOnly = false;
 
 addContactForm.addEventListener('submit', handleAddContact);
 cancelContactEditButton.addEventListener('click', cancelContactEdit);
+contactNameInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && contactBeingEdited) {
+    cancelContactEdit();
+  }
+});
 filterInput.addEventListener('input', () => filterNames());
 filterInput.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && filterInput.value) {

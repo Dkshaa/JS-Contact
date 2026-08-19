@@ -56,6 +56,18 @@ test('cancels a custom contact edit without changing the contact', async ({ page
   await expect(page.getByRole('button', { name: 'Add', exact: true })).toBeVisible();
 });
 
+test('cancels contact editing with the Escape key', async ({ page }) => {
+  await page.getByLabel('Add a contact').fill('Zara');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await page.getByRole('button', { name: 'Edit Zara' }).click();
+  await page.getByLabel('Add a contact').fill('Maria');
+  await page.getByLabel('Add a contact').press('Escape');
+
+  await expect(page.getByLabel('Add a contact')).toHaveValue('');
+  await expect(page.getByText('Zara', { exact: true })).toBeVisible();
+  await expect(page.locator('#addContactStatus')).toHaveText('Editing Zara was canceled.');
+});
+
 test('keeps letter sections alphabetized when a new section is added', async ({ page }) => {
   await page.getByLabel('Add a contact').fill('Maria');
   await page.getByRole('button', { name: 'Add', exact: true }).click();

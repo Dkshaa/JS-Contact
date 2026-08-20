@@ -19,6 +19,7 @@ provides the page styling.
 - Lets users remove contacts they added without changing the built-in directory
 - Lets users mark built-in or custom contacts as favorites
 - Remembers favorite contacts between browser visits
+- Displays the current favorite count in the Favorites filter
 - Filters the directory to favorite contacts while preserving shareable URLs
 - Downloads custom contacts and favorites as a portable JSON backup
 - Shows the number of custom contacts currently saved

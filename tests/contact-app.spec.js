@@ -119,3 +119,13 @@ test('offers to reset filters when no contacts match', async ({ page }) => {
   await expect(page.locator('#searchStatus')).toHaveText('Showing all 25 contacts.');
   await expect(page.getByRole('searchbox', { name: 'Search contacts' })).toBeFocused();
 });
+
+test('shows the number of favorite contacts in the filter', async ({ page }) => {
+  await expect(page.locator('#favoritesOnly')).toHaveText('Favorites (0)');
+
+  await page.getByRole('button', { name: 'Add Anna to favorites' }).click();
+  await expect(page.locator('#favoritesOnly')).toHaveText('Favorites (1)');
+
+  await page.locator('#favoritesOnly').click();
+  await expect(page.locator('#favoritesOnly')).toHaveText('Show all (1 favorite)');
+});

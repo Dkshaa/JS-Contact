@@ -377,6 +377,7 @@ function loadFavoriteNames() {
 function saveFavoriteNames() {
   try {
     localStorage.setItem(favoriteContactsKey, JSON.stringify([...favoriteNames]));
+    updateFavoritesFilterButton();
   } catch {
     addContactStatus.textContent = 'Favorite changes could not be saved.';
   }
@@ -657,7 +658,15 @@ function toggleFavoritesOnly() {
 
 function updateFavoritesFilterButton() {
   favoritesOnlyButton.setAttribute('aria-pressed', String(showFavoritesOnly));
-  favoritesOnlyButton.textContent = showFavoritesOnly ? 'Show all' : 'Favorites';
+  favoritesOnlyButton.textContent = showFavoritesOnly
+    ? `Show all (${favoriteNames.size} favorite${favoriteNames.size === 1 ? '' : 's'})`
+    : `Favorites (${favoriteNames.size})`;
+  favoritesOnlyButton.setAttribute(
+    'aria-label',
+    showFavoritesOnly
+      ? `Show all contacts; ${favoriteNames.size} favorite${favoriteNames.size === 1 ? '' : 's'} selected`
+      : `Show ${favoriteNames.size} favorite contact${favoriteNames.size === 1 ? '' : 's'}`,
+  );
 }
 
 function updateSearchUrl(query) {

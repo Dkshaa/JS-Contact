@@ -6,6 +6,7 @@ const contactNameInput = document.getElementById('contactName');
 const addContactSubmit = document.getElementById('addContactSubmit');
 const cancelContactEditButton = document.getElementById('cancelContactEdit');
 const contactNameCount = document.getElementById('contactNameCount');
+const undoRemoveButton = document.getElementById('undoRemove');
 const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
 const searchStatus = document.getElementById('searchStatus');
@@ -24,6 +25,7 @@ const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
 const favoriteNames = new Set();
 let contactBeingEdited = null;
 let showFavoritesOnly = false;
+let lastRemovedContact = null;
 
 addContactForm.addEventListener('submit', handleAddContact);
 cancelContactEditButton.addEventListener('click', cancelContactEdit);
@@ -33,6 +35,7 @@ contactNameInput.addEventListener('keydown', (event) => {
   }
 });
 contactNameInput.addEventListener('input', updateContactNameCount);
+undoRemoveButton.addEventListener('click', undoRemovedContact);
 filterInput.addEventListener('input', () => filterNames());
 filterInput.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && filterInput.value) {
@@ -459,7 +462,7 @@ function removeCustomContact(event) {
   const name = contact.querySelector('.contact-name').dataset.name;
   const header = findSectionHeader(contact);
 
-  favoriteNames.delete(name);
+  const wasFavorite = favoriteNames.delete(name);
   saveFavoriteNames();
 
   if (contact === contactBeingEdited) {
@@ -471,7 +474,39 @@ function removeCustomContact(event) {
 
   saveCustomContacts();
   filterNames();
+  lastRemovedContact = { name, wasFavorite };
+  undoRemoveButton.hidden = false;
   addContactStatus.textContent = `${name} was removed.`;
+}
+
+function undoRemovedContact() {
+  if (!lastRemovedContact) {
+    return;
+  }
+
+  const { name, wasFavorite } = lastRemovedContact;
+  const alreadyExists = [...contactList.querySelectorAll('.contact-name')].some(
+    (contact) => contact.dataset.name.toLocaleLowerCase() === name.toLocaleLowerCase(),
+  );
+
+  if (!alreadyExists) {
+    const restoredContact = addContact(name, { persist: false });
+
+    if (wasFavorite) {
+      favoriteNames.add(name);
+      updateFavoriteButton(restoredContact.querySelector('.favorite-contact'), name);
+    }
+
+    saveCustomContacts();
+    saveFavoriteNames();
+    filterNames();
+    addContactStatus.textContent = `${name} was restored.`;
+  } else {
+    addContactStatus.textContent = `${name} is already in the contact list.`;
+  }
+
+  lastRemovedContact = null;
+  undoRemoveButton.hidden = true;
 }
 
 function resetContactForm() {

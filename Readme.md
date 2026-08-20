@@ -18,6 +18,7 @@ provides the page styling.
 - Allows saved contacts to be renamed and automatically regrouped
 - Lets users cancel a rename with the Cancel button or `Escape` key
 - Lets users remove contacts they added without changing the built-in directory
+- Restores the most recently removed custom contact with a one-click undo
 - Lets users mark built-in or custom contacts as favorites
 - Remembers favorite contacts between browser visits
 - Displays the current favorite count in the Favorites filter

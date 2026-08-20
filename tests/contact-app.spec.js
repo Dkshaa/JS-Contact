@@ -105,7 +105,7 @@ test('shows how many custom contacts are saved', async ({ page }) => {
   await page.getByRole('button', { name: 'Add', exact: true }).click();
   await expect(page.locator('#savedContactStatus')).toHaveText('1 custom contact saved.');
 
-  await page.getByRole('button', { name: 'Remove Zara' }).click();
+  await page.getByRole('button', { name: 'Remove Zara', exact: true }).click();
   await expect(page.locator('#savedContactStatus')).toHaveText('No custom contacts saved.');
 });
 
@@ -138,4 +138,18 @@ test('shows the contact name character count', async ({ page }) => {
 
   await page.getByRole('button', { name: 'Add', exact: true }).click();
   await expect(page.locator('#contactNameCount')).toHaveText('0 of 60 characters');
+});
+
+test('restores a removed custom contact with undo', async ({ page }) => {
+  await page.getByLabel('Add a contact').fill('Zara');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await page.getByRole('button', { name: 'Add Zara to favorites' }).click();
+  await page.getByRole('button', { name: 'Remove Zara', exact: true }).click();
+
+  await expect(page.getByText('Zara', { exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Undo remove' }).click();
+
+  await expect(page.getByText('Zara', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Remove Zara from favorites' })).toBeVisible();
+  await expect(page.locator('#addContactStatus')).toHaveText('Zara was restored.');
 });

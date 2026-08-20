@@ -5,6 +5,7 @@ const addContactForm = document.getElementById('addContactForm');
 const contactNameInput = document.getElementById('contactName');
 const addContactSubmit = document.getElementById('addContactSubmit');
 const cancelContactEditButton = document.getElementById('cancelContactEdit');
+const contactNameCount = document.getElementById('contactNameCount');
 const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
 const searchStatus = document.getElementById('searchStatus');
@@ -31,6 +32,7 @@ contactNameInput.addEventListener('keydown', (event) => {
     cancelContactEdit();
   }
 });
+contactNameInput.addEventListener('input', updateContactNameCount);
 filterInput.addEventListener('input', () => filterNames());
 filterInput.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && filterInput.value) {
@@ -242,6 +244,7 @@ function handleAddContact(event) {
 
   addContact(name);
   addContactForm.reset();
+  updateContactNameCount();
   addContactStatus.textContent = `${name} was added.`;
 }
 
@@ -415,6 +418,7 @@ function editCustomContact(event) {
 
   contactBeingEdited = contact;
   contactNameInput.value = currentName;
+  updateContactNameCount();
   addContactSubmit.textContent = 'Update';
   cancelContactEditButton.hidden = false;
   addContactStatus.textContent = `Editing ${currentName}.`;
@@ -475,6 +479,11 @@ function resetContactForm() {
   addContactForm.reset();
   addContactSubmit.textContent = 'Add';
   cancelContactEditButton.hidden = true;
+  updateContactNameCount();
+}
+
+function updateContactNameCount() {
+  contactNameCount.textContent = `${contactNameInput.value.length} of 60 characters`;
 }
 
 function findSectionHeader(contact) {

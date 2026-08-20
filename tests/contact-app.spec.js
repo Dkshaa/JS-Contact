@@ -129,3 +129,13 @@ test('shows the number of favorite contacts in the filter', async ({ page }) => 
   await page.locator('#favoritesOnly').click();
   await expect(page.locator('#favoritesOnly')).toHaveText('Show all (1 favorite)');
 });
+
+test('shows the contact name character count', async ({ page }) => {
+  await expect(page.locator('#contactNameCount')).toHaveText('0 of 60 characters');
+
+  await page.getByLabel('Add a contact').fill('Zara');
+  await expect(page.locator('#contactNameCount')).toHaveText('4 of 60 characters');
+
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await expect(page.locator('#contactNameCount')).toHaveText('0 of 60 characters');
+});

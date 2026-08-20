@@ -25,6 +25,7 @@
             type="text"
             placeholder="Contact name"
             maxlength="60"
+            aria-describedby="contactNameCount addContactStatus"
             required
           />
           <button id="addContactSubmit" class="btn" type="submit">Add</button>
@@ -32,6 +33,7 @@
             Cancel
           </button>
         </div>
+        <span id="contactNameCount" class="character-count">0 of 60 characters</span>
         <p id="addContactStatus" class="helper-text" aria-live="polite"></p>
       </form>
       <label for="filterInput">Search contacts</label>

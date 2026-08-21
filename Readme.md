@@ -23,6 +23,7 @@ provides the page styling.
 - Remembers favorite contacts between browser visits
 - Displays the current favorite count in the Favorites filter
 - Filters the directory to favorite contacts while preserving shareable URLs
+- Toggles the favorites filter from the keyboard with `Alt+F`
 - Downloads custom contacts and favorites as a portable JSON backup
 - Shows the number of custom contacts currently saved
 - Restores validated JSON backups without duplicating built-in contacts

@@ -153,3 +153,12 @@ test('restores a removed custom contact with undo', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Remove Zara from favorites' })).toBeVisible();
   await expect(page.locator('#addContactStatus')).toHaveText('Zara was restored.');
 });
+
+test('toggles the favorites filter with Alt+F', async ({ page }) => {
+  await page.getByRole('button', { name: 'Add Anna to favorites' }).click();
+  await page.keyboard.press('Alt+f');
+
+  await expect(page.locator('#favoritesOnly')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#favoritesOnly')).toBeFocused();
+  await expect(page.locator('#searchStatus')).toHaveText('Showing 1 favorite contact.');
+});

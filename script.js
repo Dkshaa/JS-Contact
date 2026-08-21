@@ -366,13 +366,19 @@ function updateFavoriteButton(button, name) {
 function loadFavoriteNames() {
   try {
     const savedFavorites = JSON.parse(localStorage.getItem(favoriteContactsKey) ?? '[]');
-    const availableNames = new Set(
-      [...contactList.querySelectorAll('.contact-name')].map((contact) => contact.textContent.trim()),
+    const availableNames = new Map(
+      [...contactList.querySelectorAll('.contact-name')].map((contact) => {
+        const name = contact.textContent.trim();
+
+        return [name.toLocaleLowerCase(), name];
+      }),
     );
 
     if (Array.isArray(savedFavorites)) {
       savedFavorites
-        .filter((name) => typeof name === 'string' && availableNames.has(name))
+        .filter((name) => typeof name === 'string')
+        .map((name) => availableNames.get(name.trim().toLocaleLowerCase()))
+        .filter(Boolean)
         .forEach((name) => favoriteNames.add(name));
     }
   } catch {

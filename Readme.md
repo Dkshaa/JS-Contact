@@ -21,6 +21,7 @@ provides the page styling.
 - Restores the most recently removed custom contact with a one-click undo
 - Lets users mark built-in or custom contacts as favorites
 - Remembers favorite contacts between browser visits
+- Recovers saved favorites even when stored name capitalization differs
 - Displays the current favorite count in the Favorites filter
 - Filters the directory to favorite contacts while preserving shareable URLs
 - Toggles the favorites filter from the keyboard with `Alt+F`

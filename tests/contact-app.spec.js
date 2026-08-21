@@ -162,3 +162,13 @@ test('toggles the favorites filter with Alt+F', async ({ page }) => {
   await expect(page.locator('#favoritesOnly')).toBeFocused();
   await expect(page.locator('#searchStatus')).toHaveText('Showing 1 favorite contact.');
 });
+
+test('restores saved favorites without case sensitivity', async ({ page }) => {
+  await page.evaluate(() => {
+    localStorage.setItem('mini-contact-app.favorite-contacts', JSON.stringify(['anna']));
+  });
+  await page.reload();
+
+  await expect(page.getByRole('button', { name: 'Remove Anna from favorites' })).toBeVisible();
+  await expect(page.locator('#favoritesOnly')).toHaveText('Favorites (1)');
+});

@@ -252,7 +252,7 @@ function handleAddContact(event) {
 }
 
 function addContact(name, { persist = true } = {}) {
-  const sectionLetter = name[0].toLocaleUpperCase();
+  const sectionLetter = getSectionLetter(name);
   let header = [...contactList.querySelectorAll('.collection-header')].find(
     (item) => item.textContent.trim() === sectionLetter,
   );
@@ -301,6 +301,12 @@ function addContact(name, { persist = true } = {}) {
   }
 
   return contact;
+}
+
+function getSectionLetter(name) {
+  const firstCharacter = normalizeForSearch(name)[0]?.toLocaleUpperCase();
+
+  return /^[A-Z]$/.test(firstCharacter) ? firstCharacter : '#';
 }
 
 function initializeFavoriteControls() {

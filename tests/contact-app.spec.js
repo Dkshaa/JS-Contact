@@ -172,3 +172,14 @@ test('restores saved favorites without case sensitivity', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Remove Anna from favorites' })).toBeVisible();
   await expect(page.locator('#favoritesOnly')).toHaveText('Favorites (1)');
 });
+
+test('groups accented and non-alphabetic contact names predictably', async ({ page }) => {
+  for (const name of ['123 Services', 'Élodie']) {
+    await page.getByLabel('Add a contact').fill(name);
+    await page.getByRole('button', { name: 'Add', exact: true }).click();
+  }
+
+  await expect(page.locator('.collection-header h5')).toHaveText([
+    '#', 'A', 'B', 'C', 'D', 'E', 'V',
+  ]);
+});

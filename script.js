@@ -14,6 +14,10 @@ const emptyState = document.getElementById('emptyState');
 const resetFiltersButton = document.getElementById('resetFilters');
 const exportDataButton = document.getElementById('exportData');
 const importDataInput = document.getElementById('importData');
+const clearFavoritesButton = document.getElementById('clearFavorites');
+const clearFavoritesConfirmation = document.getElementById('clearFavoritesConfirmation');
+const confirmClearFavoritesButton = document.getElementById('confirmClearFavorites');
+const cancelClearFavoritesButton = document.getElementById('cancelClearFavorites');
 const clearSavedDataButton = document.getElementById('clearSavedData');
 const clearDataConfirmation = document.getElementById('clearDataConfirmation');
 const confirmClearDataButton = document.getElementById('confirmClearData');
@@ -47,6 +51,9 @@ resetFiltersButton.addEventListener('click', resetFilters);
 favoritesOnlyButton.addEventListener('click', toggleFavoritesOnly);
 exportDataButton.addEventListener('click', exportContactData);
 importDataInput.addEventListener('change', importContactData);
+clearFavoritesButton.addEventListener('click', showClearFavoritesConfirmation);
+confirmClearFavoritesButton.addEventListener('click', clearFavorites);
+cancelClearFavoritesButton.addEventListener('click', hideClearFavoritesConfirmation);
 clearSavedDataButton.addEventListener('click', showClearDataConfirmation);
 confirmClearDataButton.addEventListener('click', clearSavedData);
 cancelClearDataButton.addEventListener('click', hideClearDataConfirmation);
@@ -199,6 +206,28 @@ function showClearDataConfirmation() {
   clearSavedDataButton.hidden = true;
   clearDataConfirmation.hidden = false;
   confirmClearDataButton.focus();
+}
+
+function showClearFavoritesConfirmation() {
+  clearFavoritesButton.hidden = true;
+  clearFavoritesConfirmation.hidden = false;
+  confirmClearFavoritesButton.focus();
+}
+
+function hideClearFavoritesConfirmation() {
+  clearFavoritesConfirmation.hidden = true;
+  clearFavoritesButton.hidden = false;
+  clearFavoritesButton.focus();
+}
+
+function clearFavorites() {
+  favoriteNames.clear();
+  showFavoritesOnly = false;
+  updateAllFavoriteButtons();
+  saveFavoriteNames();
+  filterNames();
+  hideClearFavoritesConfirmation();
+  dataStatus.textContent = 'All favorites were cleared. Custom contacts were kept.';
 }
 
 function hideClearDataConfirmation() {

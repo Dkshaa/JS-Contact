@@ -30,6 +30,7 @@ provides the page styling.
 - Shows the number of custom contacts currently saved
 - Restores validated JSON backups without duplicating built-in contacts
 - Clears saved contacts and favorites through an explicit confirmation step
+- Clears favorites separately without deleting custom contacts
 - Hides alphabetic sections that have no matching contacts
 - Displays a clear message when no contacts match
 - Offers a one-click filter reset when no contacts match

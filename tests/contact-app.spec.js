@@ -183,3 +183,19 @@ test('groups accented and non-alphabetic contact names predictably', async ({ pa
     '#', 'A', 'B', 'C', 'D', 'E', 'V',
   ]);
 });
+
+test('clears favorites without removing custom contacts', async ({ page }) => {
+  await page.getByLabel('Add a contact').fill('Zara');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await page.getByRole('button', { name: 'Add Zara to favorites' }).click();
+  await page.getByText('Backup and restore').click();
+  await page.getByRole('button', { name: 'Clear favorites', exact: true }).click();
+  await page.getByRole('button', { name: 'Confirm clear favorites' }).click();
+
+  await expect(page.getByText('Zara', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Add Zara to favorites' })).toBeVisible();
+  await expect(page.locator('#favoritesOnly')).toHaveText('Favorites (0)');
+  await expect(page.locator('#dataStatus')).toHaveText(
+    'All favorites were cleared. Custom contacts were kept.',
+  );
+});

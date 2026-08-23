@@ -244,3 +244,22 @@ test('discards stale undo actions when saved data is cleared', async ({ page }) 
 
   await expect(page.getByRole('button', { name: 'Undo remove' })).toBeHidden();
 });
+
+test('copies a shareable link with the active filters', async ({ page }) => {
+  await page.evaluate(() => {
+    window.copiedContactLink = '';
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: {
+        writeText: async (value) => {
+          window.copiedContactLink = value;
+        },
+      },
+    });
+  });
+  await page.getByRole('searchbox', { name: 'Search contacts' }).fill('chris');
+  await page.getByRole('button', { name: 'Copy link' }).click();
+
+  await expect(page.locator('#shareStatus')).toHaveText('Filtered contact link copied.');
+  await expect.poll(() => page.evaluate(() => window.copiedContactLink)).toBe(page.url());
+});

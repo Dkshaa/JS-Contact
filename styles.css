@@ -93,7 +93,7 @@ body {
 
 .search-controls {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto auto auto;
   align-items: center;
   gap: 0.75rem;
 }
@@ -119,6 +119,12 @@ body {
 .search-status {
   min-height: 1.5rem;
   margin: 0.75rem 0;
+  color: #546e7a;
+}
+
+.share-status {
+  min-height: 1.25rem;
+  margin: -0.5rem 0 0.75rem;
   color: #546e7a;
 }
 
@@ -288,6 +294,10 @@ body {
   }
 
   #favoritesOnly {
+    grid-column: 1 / -1;
+  }
+
+  #copySearchLink {
     grid-column: 1 / -1;
   }
 }

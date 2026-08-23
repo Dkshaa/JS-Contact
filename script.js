@@ -1,6 +1,7 @@
 const filterInput = document.getElementById('filterInput');
 const clearFilter = document.getElementById('clearFilter');
 const favoritesOnlyButton = document.getElementById('favoritesOnly');
+const copySearchLinkButton = document.getElementById('copySearchLink');
 const addContactForm = document.getElementById('addContactForm');
 const contactNameInput = document.getElementById('contactName');
 const addContactSubmit = document.getElementById('addContactSubmit');
@@ -10,6 +11,7 @@ const undoRemoveButton = document.getElementById('undoRemove');
 const addContactStatus = document.getElementById('addContactStatus');
 const contactList = document.getElementById('names');
 const searchStatus = document.getElementById('searchStatus');
+const shareStatus = document.getElementById('shareStatus');
 const emptyState = document.getElementById('emptyState');
 const resetFiltersButton = document.getElementById('resetFilters');
 const exportDataButton = document.getElementById('exportData');
@@ -50,6 +52,7 @@ filterInput.addEventListener('keydown', (event) => {
 clearFilter.addEventListener('click', clearSearch);
 resetFiltersButton.addEventListener('click', resetFilters);
 favoritesOnlyButton.addEventListener('click', toggleFavoritesOnly);
+copySearchLinkButton.addEventListener('click', copySearchLink);
 exportDataButton.addEventListener('click', exportContactData);
 importDataInput.addEventListener('change', importContactData);
 clearFavoritesButton.addEventListener('click', showClearFavoritesConfirmation);
@@ -758,6 +761,15 @@ function toggleFavoritesOnly() {
   showFavoritesOnly = !showFavoritesOnly;
   updateFavoritesFilterButton();
   filterNames();
+}
+
+async function copySearchLink() {
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    shareStatus.textContent = 'Filtered contact link copied.';
+  } catch {
+    shareStatus.textContent = 'The link could not be copied. Copy it from the address bar instead.';
+  }
 }
 
 function updateFavoritesFilterButton() {

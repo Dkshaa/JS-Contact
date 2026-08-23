@@ -231,3 +231,16 @@ test('enables the clear favorites action only when needed', async ({ page }) => 
   await page.getByRole('button', { name: 'Add Anna to favorites' }).click();
   await expect(clearFavorites).toBeEnabled();
 });
+
+test('discards stale undo actions when saved data is cleared', async ({ page }) => {
+  await page.getByLabel('Add a contact').fill('Zara');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await page.getByRole('button', { name: 'Remove Zara', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Undo remove' })).toBeVisible();
+
+  await page.getByText('Backup and restore').click();
+  await page.getByRole('button', { name: 'Clear saved data' }).click();
+  await page.getByRole('button', { name: 'Confirm clear' }).click();
+
+  await expect(page.getByRole('button', { name: 'Undo remove' })).toBeHidden();
+});

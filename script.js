@@ -148,6 +148,7 @@ function validateBackup(value) {
 }
 
 function restoreBackup(backup) {
+  clearUndoState();
   removeCustomContactsFromPage();
 
   const existingNames = new Set(
@@ -238,6 +239,7 @@ function hideClearDataConfirmation() {
 }
 
 function clearSavedData() {
+  clearUndoState();
   removeCustomContactsFromPage();
   favoriteNames.clear();
   showFavoritesOnly = false;
@@ -547,6 +549,10 @@ function undoRemovedContact() {
     addContactStatus.textContent = `${name} is already in the contact list.`;
   }
 
+  clearUndoState();
+}
+
+function clearUndoState() {
   lastRemovedContact = null;
   undoRemoveButton.hidden = true;
 }

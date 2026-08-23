@@ -21,6 +21,7 @@ provides the page styling.
 - Lets users cancel a rename with the Cancel button or `Escape` key
 - Lets users remove contacts they added without changing the built-in directory
 - Restores the most recently removed custom contact with a one-click undo
+- Discards stale undo actions after clearing or restoring saved data
 - Lets users mark built-in or custom contacts as favorites
 - Remembers favorite contacts between browser visits
 - Recovers saved favorites even when stored name capitalization differs

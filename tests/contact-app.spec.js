@@ -199,3 +199,16 @@ test('clears favorites without removing custom contacts', async ({ page }) => {
     'All favorites were cleared. Custom contacts were kept.',
   );
 });
+
+test('synchronizes the native search clear action', async ({ page }) => {
+  const search = page.getByRole('searchbox', { name: 'Search contacts' });
+
+  await search.fill('chris');
+  await search.evaluate((input) => {
+    input.value = '';
+    input.dispatchEvent(new Event('search'));
+  });
+
+  await expect(page.locator('#searchStatus')).toHaveText('Showing all 25 contacts.');
+  await expect(page).not.toHaveURL(/\?q=/);
+});

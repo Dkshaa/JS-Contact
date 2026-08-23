@@ -41,6 +41,7 @@ contactNameInput.addEventListener('keydown', (event) => {
 contactNameInput.addEventListener('input', updateContactNameCount);
 undoRemoveButton.addEventListener('click', undoRemovedContact);
 filterInput.addEventListener('input', () => filterNames());
+filterInput.addEventListener('search', () => filterNames());
 filterInput.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && filterInput.value) {
     clearSearch();

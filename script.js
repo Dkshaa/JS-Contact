@@ -679,6 +679,11 @@ function filterNames(syncUrl = true) {
     : query
       ? `${visibleCount} contact${visibleCount === 1 ? '' : 's'} found.`
       : `Showing all ${visibleCount} contacts.`;
+  document.title = query
+    ? `${visibleCount} found — My Contacts`
+    : showFavoritesOnly
+      ? `${visibleCount} favorite${visibleCount === 1 ? '' : 's'} — My Contacts`
+      : 'My Contacts';
   clearFilter.disabled = query.length === 0;
   emptyState.hidden = visibleCount !== 0;
 

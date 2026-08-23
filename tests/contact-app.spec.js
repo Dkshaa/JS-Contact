@@ -212,3 +212,13 @@ test('synchronizes the native search clear action', async ({ page }) => {
   await expect(page.locator('#searchStatus')).toHaveText('Showing all 25 contacts.');
   await expect(page).not.toHaveURL(/\?q=/);
 });
+
+test('shows filtered result counts in the browser tab title', async ({ page }) => {
+  await expect(page).toHaveTitle('My Contacts');
+
+  await page.getByRole('searchbox', { name: 'Search contacts' }).fill('chris');
+  await expect(page).toHaveTitle('2 found — My Contacts');
+
+  await page.getByRole('button', { name: 'Clear', exact: true }).click();
+  await expect(page).toHaveTitle('My Contacts');
+});

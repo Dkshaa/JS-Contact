@@ -13,6 +13,7 @@ provides the page styling.
 - Matches names even when accent marks are omitted
 - Highlights the matching part of each visible name
 - Announces the number of visible results as the search changes
+- Shows filtered result counts in the browser tab title
 - Saves contacts added in the browser for future visits
 - Shows a live character count while entering contact names
 - Normalizes saved names and safely ignores malformed browser data

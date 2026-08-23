@@ -765,6 +765,7 @@ function updateFavoritesFilterButton() {
       ? `Show all contacts; ${favoriteNames.size} favorite${favoriteNames.size === 1 ? '' : 's'} selected`
       : `Show ${favoriteNames.size} favorite contact${favoriteNames.size === 1 ? '' : 's'}`,
   );
+  clearFavoritesButton.disabled = favoriteNames.size === 0;
 }
 
 function updateSearchUrl(query) {

@@ -222,3 +222,12 @@ test('shows filtered result counts in the browser tab title', async ({ page }) =
   await page.getByRole('button', { name: 'Clear', exact: true }).click();
   await expect(page).toHaveTitle('My Contacts');
 });
+
+test('enables the clear favorites action only when needed', async ({ page }) => {
+  await page.getByText('Backup and restore').click();
+  const clearFavorites = page.getByRole('button', { name: 'Clear favorites', exact: true });
+
+  await expect(clearFavorites).toBeDisabled();
+  await page.getByRole('button', { name: 'Add Anna to favorites' }).click();
+  await expect(clearFavorites).toBeEnabled();
+});

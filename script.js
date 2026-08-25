@@ -765,6 +765,13 @@ function focusSearchWithShortcut(event) {
   const target = event.target;
   const isTyping = target.matches('input, textarea, select, [contenteditable="true"]');
 
+  if (event.key.toLocaleLowerCase() === 's' && event.altKey && !event.metaKey && !event.ctrlKey) {
+    event.preventDefault();
+    toggleSortOrder();
+    sortOrderButton.focus();
+    return;
+  }
+
   if (event.key.toLocaleLowerCase() === 'f' && event.altKey && !event.metaKey && !event.ctrlKey) {
     event.preventDefault();
     toggleFavoritesOnly();

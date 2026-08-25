@@ -47,6 +47,7 @@
           placeholder="Search names"
           autocomplete="off"
           aria-describedby="searchStatus"
+          aria-keyshortcuts="/"
         />
         <button id="clearFilter" class="btn-flat" type="button" disabled>
           Clear
@@ -56,11 +57,18 @@
           class="btn-flat"
           type="button"
           aria-pressed="false"
+          aria-keyshortcuts="Alt+F"
         >
           Favorites
         </button>
         <button id="copySearchLink" class="btn-flat" type="button">Copy link</button>
-        <button id="sortOrder" class="btn-flat" type="button">Order: A–Z</button>
+        <button
+          id="sortOrder"
+          class="btn-flat"
+          type="button"
+          aria-pressed="false"
+          aria-keyshortcuts="Alt+S"
+        >Order: A–Z</button>
       </div>
       <p id="searchStatus" class="search-status" aria-live="polite"></p>
       <p id="shareStatus" class="share-status" aria-live="polite"></p>

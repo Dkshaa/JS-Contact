@@ -285,3 +285,11 @@ test('restores descending order from a shared URL', async ({ page }) => {
   await page.getByRole('button', { name: 'Order: Z–A' }).click();
   await expect(page).not.toHaveURL(/sort=desc/);
 });
+
+test('toggles sort order with Alt+S', async ({ page }) => {
+  await page.keyboard.press('Alt+s');
+
+  await expect(page.getByRole('button', { name: 'Order: Z–A' })).toBeFocused();
+  await expect(page.locator('.collection-header h5').first()).toHaveText('V');
+  await expect(page).toHaveURL(/sort=desc/);
+});

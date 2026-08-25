@@ -42,6 +42,7 @@ provides the page styling.
 - Clears a search with either the Clear button or the Escape key
 - Synchronizes native browser search-field clear controls
 - Stores the current search in the URL so filtered views can be bookmarked or shared
+- Preserves descending sort order in bookmarked and shared URLs
 - Copies the current filtered view as a shareable link
 - Focuses search from anywhere on the page with the `/` keyboard shortcut
 

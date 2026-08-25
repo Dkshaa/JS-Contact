@@ -275,3 +275,13 @@ test('toggles contact sections between ascending and descending order', async ({
   await expect(headers.last()).toHaveText('A');
   await expect(page.getByRole('button', { name: 'Order: Z–A' })).toBeVisible();
 });
+
+test('restores descending order from a shared URL', async ({ page }) => {
+  await page.goto('/?sort=desc');
+
+  await expect(page.locator('.collection-header h5').first()).toHaveText('V');
+  await expect(page.getByRole('button', { name: 'Order: Z–A' })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Order: Z–A' }).click();
+  await expect(page).not.toHaveURL(/sort=desc/);
+});

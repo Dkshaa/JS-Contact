@@ -660,9 +660,14 @@ function compareContactNames(first, second) {
 
 function toggleSortOrder() {
   sortDescending = !sortDescending;
+  updateSortOrderButton();
+  sortContactSections();
+  filterNames();
+}
+
+function updateSortOrderButton() {
   sortOrderButton.textContent = sortDescending ? 'Order: Z–A' : 'Order: A–Z';
   sortOrderButton.setAttribute('aria-pressed', String(sortDescending));
-  sortContactSections();
 }
 
 function filterNames(syncUrl = true) {
@@ -817,6 +822,12 @@ function updateSearchUrl(query) {
     url.searchParams.delete('favorites');
   }
 
+  if (sortDescending) {
+    url.searchParams.set('sort', 'desc');
+  } else {
+    url.searchParams.delete('sort');
+  }
+
   window.history.replaceState({}, '', url);
 }
 
@@ -825,6 +836,9 @@ function restoreSearchFromUrl() {
 
   filterInput.value = params.get('q') ?? '';
   showFavoritesOnly = params.get('favorites') === '1';
+  sortDescending = params.get('sort') === 'desc';
   updateFavoritesFilterButton();
+  updateSortOrderButton();
+  sortContactSections();
   filterNames(false);
 }

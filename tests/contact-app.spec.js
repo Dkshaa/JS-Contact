@@ -263,3 +263,15 @@ test('copies a shareable link with the active filters', async ({ page }) => {
   await expect(page.locator('#shareStatus')).toHaveText('Filtered contact link copied.');
   await expect.poll(() => page.evaluate(() => window.copiedContactLink)).toBe(page.url());
 });
+
+test('toggles contact sections between ascending and descending order', async ({ page }) => {
+  const headers = page.locator('.collection-header h5');
+
+  await expect(headers.first()).toHaveText('A');
+  await expect(headers.last()).toHaveText('V');
+  await page.getByRole('button', { name: 'Order: A–Z' }).click();
+
+  await expect(headers.first()).toHaveText('V');
+  await expect(headers.last()).toHaveText('A');
+  await expect(page.getByRole('button', { name: 'Order: Z–A' })).toBeVisible();
+});

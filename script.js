@@ -2,6 +2,7 @@ const filterInput = document.getElementById('filterInput');
 const clearFilter = document.getElementById('clearFilter');
 const favoritesOnlyButton = document.getElementById('favoritesOnly');
 const copySearchLinkButton = document.getElementById('copySearchLink');
+const sortOrderButton = document.getElementById('sortOrder');
 const addContactForm = document.getElementById('addContactForm');
 const contactNameInput = document.getElementById('contactName');
 const addContactSubmit = document.getElementById('addContactSubmit');
@@ -31,6 +32,7 @@ const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
 const favoriteNames = new Set();
 let contactBeingEdited = null;
 let showFavoritesOnly = false;
+let sortDescending = false;
 let lastRemovedContact = null;
 
 addContactForm.addEventListener('submit', handleAddContact);
@@ -53,6 +55,7 @@ clearFilter.addEventListener('click', clearSearch);
 resetFiltersButton.addEventListener('click', resetFilters);
 favoritesOnlyButton.addEventListener('click', toggleFavoritesOnly);
 copySearchLinkButton.addEventListener('click', copySearchLink);
+sortOrderButton.addEventListener('click', toggleSortOrder);
 exportDataButton.addEventListener('click', exportContactData);
 importDataInput.addEventListener('change', importContactData);
 clearFavoritesButton.addEventListener('click', showClearFavoritesConfirmation);
@@ -620,11 +623,12 @@ function sortContactSections() {
     }
 
     contacts
-      .sort((first, second) =>
-        first.textContent.trim().localeCompare(second.textContent.trim(), undefined, {
-          sensitivity: 'base',
-        }),
-      )
+      .sort((first, second) => compareContactNames(
+        first.querySelector('.contact-name').dataset.name
+          ?? first.querySelector('.contact-name').textContent.trim(),
+        second.querySelector('.contact-name').dataset.name
+          ?? second.querySelector('.contact-name').textContent.trim(),
+      ))
       .forEach((contact) => contactList.insertBefore(contact, item));
   });
 
@@ -641,12 +645,24 @@ function sortContactSections() {
   });
 
   sections
-    .sort((first, second) =>
-      first[0].textContent.trim().localeCompare(second[0].textContent.trim(), undefined, {
-        sensitivity: 'base',
-      }),
-    )
+    .sort((first, second) => compareContactNames(
+      first[0].textContent.trim(),
+      second[0].textContent.trim(),
+    ))
     .forEach((section) => contactList.append(...section));
+}
+
+function compareContactNames(first, second) {
+  const comparison = first.localeCompare(second, undefined, { sensitivity: 'base' });
+
+  return sortDescending ? -comparison : comparison;
+}
+
+function toggleSortOrder() {
+  sortDescending = !sortDescending;
+  sortOrderButton.textContent = sortDescending ? 'Order: Z–A' : 'Order: A–Z';
+  sortOrderButton.setAttribute('aria-pressed', String(sortDescending));
+  sortContactSections();
 }
 
 function filterNames(syncUrl = true) {

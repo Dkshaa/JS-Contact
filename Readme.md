@@ -8,6 +8,7 @@ provides the page styling.
 
 - Filters contacts as you type
 - Sorts contact sections and the names within them alphabetically
+- Toggles the contact directory between A–Z and Z–A order
 - Groups accented names by their base letter and other names under `#`
 - Matches names without case sensitivity
 - Matches names even when accent marks are omitted

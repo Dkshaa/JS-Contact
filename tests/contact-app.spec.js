@@ -302,3 +302,17 @@ test('limits search queries restored from shared URLs', async ({ page }) => {
   await expect(page.getByRole('searchbox', { name: 'Search contacts' })).toHaveValue('x'.repeat(60));
   await expect(page).toHaveURL(new RegExp(`q=${'x'.repeat(60)}$`));
 });
+
+test('rejects contact names containing control characters', async ({ page }) => {
+  const input = page.getByLabel('Add a contact');
+
+  await input.evaluate((element) => {
+    element.value = 'Zara\u0001Admin';
+  });
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+
+  await expect(page.locator('#addContactStatus')).toHaveText(
+    'Contact names cannot contain control characters.',
+  );
+  await expect(page.locator('[data-custom="true"]')).toHaveCount(0);
+});

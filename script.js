@@ -261,7 +261,12 @@ function clearSavedData() {
 function handleAddContact(event) {
   event.preventDefault();
 
-  const name = contactNameInput.value.trim().replace(/\s+/g, ' ');
+  if (containsControlCharacters(contactNameInput.value)) {
+    addContactStatus.textContent = 'Contact names cannot contain control characters.';
+    return;
+  }
+
+  const name = normalizeContactName(contactNameInput.value);
   const isDuplicate = [...contactList.querySelectorAll('.contact-name')].some(
     (nameElement) =>
       nameElement.closest('.collection-item') !== contactBeingEdited &&
@@ -287,6 +292,14 @@ function handleAddContact(event) {
   addContactForm.reset();
   updateContactNameCount();
   addContactStatus.textContent = `${name} was added.`;
+}
+
+function normalizeContactName(value) {
+  return value.trim().replace(/\s+/g, ' ');
+}
+
+function containsControlCharacters(value) {
+  return /[\p{Cc}\p{Cf}]/u.test(value);
 }
 
 function addContact(name, { persist = true } = {}) {

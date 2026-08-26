@@ -19,6 +19,7 @@ provides the page styling.
 - Saves contacts added in the browser for future visits
 - Shows a live character count while entering contact names
 - Normalizes saved names and safely ignores malformed browser data
+- Rejects invisible control characters in contact names
 - Allows saved contacts to be renamed and automatically regrouped
 - Lets users cancel a rename with the Cancel button or `Escape` key
 - Lets users remove contacts they added without changing the built-in directory

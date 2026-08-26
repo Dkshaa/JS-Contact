@@ -35,6 +35,7 @@ provides the page styling.
 - Downloads custom contacts and favorites as a portable JSON backup
 - Shows the number of custom contacts currently saved
 - Restores validated JSON backups without duplicating built-in contacts
+- Rejects backup uploads larger than 1 MB
 - Clears saved contacts and favorites through an explicit confirmation step
 - Clears favorites separately without deleting custom contacts
 - Disables the clear-favorites action when there is nothing to clear

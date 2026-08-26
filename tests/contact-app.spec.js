@@ -328,3 +328,17 @@ test('prevents duplicate contacts that differ only by accent marks', async ({ pa
   );
   await expect(page.locator('[data-custom="true"]')).toHaveCount(1);
 });
+
+test('rejects oversized contact backup files', async ({ page }) => {
+  await page.getByText('Backup and restore').click();
+  await page.locator('#importData').setInputFiles({
+    name: 'large-backup.json',
+    mimeType: 'application/json',
+    buffer: Buffer.alloc(1_000_001, 'x'),
+  });
+
+  await expect(page.locator('#dataStatus')).toHaveText(
+    'Contact backups must be 1 MB or smaller.',
+  );
+  await expect(page.locator('[data-custom="true"]')).toHaveCount(0);
+});

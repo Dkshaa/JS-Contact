@@ -29,6 +29,7 @@ const dataStatus = document.getElementById('dataStatus');
 const savedContactStatus = document.getElementById('savedContactStatus');
 const customContactsKey = 'mini-contact-app.custom-contacts';
 const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
+const maxBackupBytes = 1_000_000;
 const favoriteNames = new Set();
 let contactBeingEdited = null;
 let showFavoritesOnly = false;
@@ -103,6 +104,12 @@ async function importContactData() {
   const [file] = importDataInput.files;
 
   if (!file) {
+    return;
+  }
+
+  if (file.size > maxBackupBytes) {
+    dataStatus.textContent = 'Contact backups must be 1 MB or smaller.';
+    importDataInput.value = '';
     return;
   }
 

@@ -342,3 +342,28 @@ test('rejects oversized contact backup files', async ({ page }) => {
   );
   await expect(page.locator('[data-custom="true"]')).toHaveCount(0);
 });
+
+test('exports contacts and favorites in stable alphabetical order', async ({ page }) => {
+  for (const name of ['Zara', 'Aaron']) {
+    await page.getByLabel('Add a contact').fill(name);
+    await page.getByRole('button', { name: 'Add', exact: true }).click();
+  }
+  await page.getByRole('button', { name: 'Add Bob to favorites' }).click();
+  await page.getByRole('button', { name: 'Add Anna to favorites' }).click();
+  await page.getByRole('button', { name: 'Order: A–Z' }).click();
+  await page.evaluate(() => {
+    window.exportedBackupBlob = null;
+    URL.createObjectURL = (blob) => {
+      window.exportedBackupBlob = blob;
+      return 'blob:test-backup';
+    };
+    URL.revokeObjectURL = () => {};
+    HTMLAnchorElement.prototype.click = () => {};
+  });
+  await page.getByText('Backup and restore').click();
+  await page.getByRole('button', { name: 'Download backup' }).click();
+
+  const backup = await page.evaluate(async () => JSON.parse(await window.exportedBackupBlob.text()));
+  expect(backup.customContacts).toEqual(['Aaron', 'Zara']);
+  expect(backup.favorites).toEqual(['Anna', 'Bob']);
+});

@@ -78,12 +78,12 @@ restoreSearchFromUrl();
 function exportContactData() {
   const customContacts = [...contactList.querySelectorAll('[data-custom="true"]')].map(
     (contact) => contact.querySelector('.contact-name').dataset.name,
-  );
+  ).sort(compareNamesAscending);
   const backup = {
     version: 1,
     exportedAt: new Date().toISOString(),
     customContacts,
-    favorites: [...favoriteNames],
+    favorites: [...favoriteNames].sort(compareNamesAscending),
   };
   const file = new Blob([`${JSON.stringify(backup, null, 2)}\n`], {
     type: 'application/json',
@@ -98,6 +98,10 @@ function exportContactData() {
   downloadLink.remove();
   window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 0);
   dataStatus.textContent = `Backup downloaded with ${customContacts.length} custom contact${customContacts.length === 1 ? '' : 's'}.`;
+}
+
+function compareNamesAscending(first, second) {
+  return first.localeCompare(second, undefined, { sensitivity: 'base' });
 }
 
 async function importContactData() {

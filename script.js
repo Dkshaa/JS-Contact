@@ -270,7 +270,7 @@ function handleAddContact(event) {
   const isDuplicate = [...contactList.querySelectorAll('.contact-name')].some(
     (nameElement) =>
       nameElement.closest('.collection-item') !== contactBeingEdited &&
-      nameElement.textContent.trim().toLocaleLowerCase() === name.toLocaleLowerCase(),
+      normalizeForSearch(nameElement.textContent.trim()) === normalizeForSearch(name),
   );
 
   if (!name) {

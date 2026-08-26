@@ -316,3 +316,15 @@ test('rejects contact names containing control characters', async ({ page }) => 
   );
   await expect(page.locator('[data-custom="true"]')).toHaveCount(0);
 });
+
+test('prevents duplicate contacts that differ only by accent marks', async ({ page }) => {
+  await page.getByLabel('Add a contact').fill('José');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await page.getByLabel('Add a contact').fill('Jose');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+
+  await expect(page.locator('#addContactStatus')).toHaveText(
+    'Jose is already in the contact list.',
+  );
+  await expect(page.locator('[data-custom="true"]')).toHaveCount(1);
+});

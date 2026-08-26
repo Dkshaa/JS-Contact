@@ -13,6 +13,7 @@ provides the page styling.
 - Groups accented names by their base letter and other names under `#`
 - Matches names without case sensitivity
 - Matches names even when accent marks are omitted
+- Prevents duplicate contacts that differ only by case or accent marks
 - Highlights the matching part of each visible name
 - Announces the number of visible results as the search changes
 - Shows filtered result counts in the browser tab title

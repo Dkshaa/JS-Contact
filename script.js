@@ -841,11 +841,11 @@ function updateSearchUrl(query) {
 function restoreSearchFromUrl() {
   const params = new URLSearchParams(window.location.search);
 
-  filterInput.value = params.get('q') ?? '';
+  filterInput.value = (params.get('q') ?? '').slice(0, 60);
   showFavoritesOnly = params.get('favorites') === '1';
   sortDescending = params.get('sort') === 'desc';
   updateFavoritesFilterButton();
   updateSortOrderButton();
   sortContactSections();
-  filterNames(false);
+  filterNames();
 }

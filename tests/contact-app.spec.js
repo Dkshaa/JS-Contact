@@ -293,3 +293,12 @@ test('toggles sort order with Alt+S', async ({ page }) => {
   await expect(page.locator('.collection-header h5').first()).toHaveText('V');
   await expect(page).toHaveURL(/sort=desc/);
 });
+
+test('limits search queries restored from shared URLs', async ({ page }) => {
+  const longQuery = 'x'.repeat(80);
+
+  await page.goto(`/?q=${longQuery}`);
+
+  await expect(page.getByRole('searchbox', { name: 'Search contacts' })).toHaveValue('x'.repeat(60));
+  await expect(page).toHaveURL(new RegExp(`q=${'x'.repeat(60)}$`));
+});

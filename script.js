@@ -699,6 +699,7 @@ function updateSortOrderButton() {
 }
 
 function filterNames(syncUrl = true) {
+  shareStatus.textContent = '';
   const query = normalizeForSearch(filterInput.value.trim());
   const contacts = contactList.querySelectorAll('.collection-item');
   const headers = contactList.querySelectorAll('.collection-header');

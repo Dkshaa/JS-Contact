@@ -375,3 +375,17 @@ test('announces favorite changes to assistive technology', async ({ page }) => {
   await page.getByRole('button', { name: 'Remove Anna from favorites' }).click();
   await expect(page.locator('#addContactStatus')).toHaveText('Anna was removed from favorites.');
 });
+
+test('clears copied-link confirmation when filters change', async ({ page }) => {
+  await page.evaluate(() => {
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText: async () => {} },
+    });
+  });
+  await page.getByRole('button', { name: 'Copy link' }).click();
+  await expect(page.locator('#shareStatus')).toHaveText('Filtered contact link copied.');
+
+  await page.getByRole('searchbox', { name: 'Search contacts' }).fill('anna');
+  await expect(page.locator('#shareStatus')).toBeEmpty();
+});

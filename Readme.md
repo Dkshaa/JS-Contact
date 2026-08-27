@@ -27,6 +27,7 @@ provides the page styling.
 - Restores the most recently removed custom contact with a one-click undo
 - Discards stale undo actions after clearing or restoring saved data
 - Lets users mark built-in or custom contacts as favorites
+- Announces favorite changes through an accessible live status
 - Remembers favorite contacts between browser visits
 - Recovers saved favorites even when stored name capitalization differs
 - Displays the current favorite count in the Favorites filter

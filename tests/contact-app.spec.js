@@ -367,3 +367,11 @@ test('exports contacts and favorites in stable alphabetical order', async ({ pag
   expect(backup.customContacts).toEqual(['Aaron', 'Zara']);
   expect(backup.favorites).toEqual(['Anna', 'Bob']);
 });
+
+test('announces favorite changes to assistive technology', async ({ page }) => {
+  await page.getByRole('button', { name: 'Add Anna to favorites' }).click();
+  await expect(page.locator('#addContactStatus')).toHaveText('Anna was added to favorites.');
+
+  await page.getByRole('button', { name: 'Remove Anna from favorites' }).click();
+  await expect(page.locator('#addContactStatus')).toHaveText('Anna was removed from favorites.');
+});

@@ -405,15 +405,19 @@ function attachFavoriteButton(contact) {
 function toggleFavorite(event) {
   const contact = event.currentTarget.closest('.collection-item');
   const name = contact.querySelector('.contact-name').dataset.name;
+  let action;
 
   if (favoriteNames.has(name)) {
     favoriteNames.delete(name);
+    action = 'removed from';
   } else {
     favoriteNames.add(name);
+    action = 'added to';
   }
 
   updateFavoriteButton(event.currentTarget, name);
   saveFavoriteNames();
+  addContactStatus.textContent = `${name} was ${action} favorites.`;
 
   if (showFavoritesOnly) {
     filterNames();

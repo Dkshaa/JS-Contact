@@ -141,11 +141,11 @@ function validateBackup(value) {
 
   const normalizeNames = (names) =>
     names.map((name) => {
-      if (typeof name !== 'string') {
+      if (typeof name !== 'string' || containsControlCharacters(name)) {
         throw new Error('Invalid contact name');
       }
 
-      const normalizedName = name.trim().replace(/\s+/g, ' ');
+      const normalizedName = normalizeContactName(name);
 
       if (!normalizedName || normalizedName.length > 60) {
         throw new Error('Invalid contact name');
@@ -154,13 +154,23 @@ function validateBackup(value) {
       return normalizedName;
     });
 
+  const dedupeNames = (names) => {
+    const uniqueNames = new Map();
+
+    normalizeNames(names).forEach((name) => {
+      const key = normalizeForSearch(name);
+
+      if (!uniqueNames.has(key)) {
+        uniqueNames.set(key, name);
+      }
+    });
+
+    return [...uniqueNames.values()];
+  };
+
   return {
-    customContacts: [...new Map(
-      normalizeNames(value.customContacts).map((name) => [name.toLocaleLowerCase(), name]),
-    ).values()],
-    favorites: [...new Map(
-      normalizeNames(value.favorites).map((name) => [name.toLocaleLowerCase(), name]),
-    ).values()],
+    customContacts: dedupeNames(value.customContacts),
+    favorites: dedupeNames(value.favorites),
   };
 }
 
@@ -170,27 +180,27 @@ function restoreBackup(backup) {
 
   const existingNames = new Set(
     [...contactList.querySelectorAll('.contact-name')].map((contact) =>
-      contact.dataset.name.toLocaleLowerCase(),
+      normalizeForSearch(contact.dataset.name),
     ),
   );
 
   backup.customContacts.forEach((name) => {
-    if (!existingNames.has(name.toLocaleLowerCase())) {
+    if (!existingNames.has(normalizeForSearch(name))) {
       addContact(name, { persist: false });
-      existingNames.add(name.toLocaleLowerCase());
+      existingNames.add(normalizeForSearch(name));
     }
   });
 
   const availableNames = new Map(
     [...contactList.querySelectorAll('.contact-name')].map((contact) => [
-      contact.dataset.name.toLocaleLowerCase(),
+      normalizeForSearch(contact.dataset.name),
       contact.dataset.name,
     ]),
   );
 
   favoriteNames.clear();
   backup.favorites.forEach((name) => {
-    const availableName = availableNames.get(name.toLocaleLowerCase());
+    const availableName = availableNames.get(normalizeForSearch(name));
 
     if (availableName) {
       favoriteNames.add(availableName);

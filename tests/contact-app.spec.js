@@ -389,3 +389,36 @@ test('clears copied-link confirmation when filters change', async ({ page }) => 
   await page.getByRole('searchbox', { name: 'Search contacts' }).fill('anna');
   await expect(page.locator('#shareStatus')).toBeEmpty();
 });
+
+test('deduplicates accent-equivalent names in restored backups', async ({ page }) => {
+  await page.getByText('Backup and restore').click();
+  await page.locator('#importData').setInputFiles({
+    name: 'contacts.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify({
+      version: 1,
+      customContacts: ['José', 'Jose'],
+      favorites: ['jose'],
+    })),
+  });
+
+  await expect(page.getByText('José', { exact: true })).toHaveCount(1);
+  await expect(page.getByText('Jose', { exact: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Remove José from favorites' })).toBeVisible();
+});
+
+test('rejects control characters in restored backup names', async ({ page }) => {
+  await page.getByText('Backup and restore').click();
+  await page.locator('#importData').setInputFiles({
+    name: 'invalid-contacts.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify({
+      version: 1,
+      customContacts: ['Zara\u0001Admin'],
+      favorites: [],
+    })),
+  });
+
+  await expect(page.locator('#dataStatus')).toHaveText('This file is not a valid contact backup.');
+  await expect(page.locator('[data-custom="true"]')).toHaveCount(0);
+});

@@ -847,10 +847,34 @@ function toggleFavoritesOnly() {
 
 async function copySearchLink() {
   try {
-    await navigator.clipboard.writeText(window.location.href);
+    await writeTextToClipboard(window.location.href);
     shareStatus.textContent = 'Filtered contact link copied.';
   } catch {
     shareStatus.textContent = 'The link could not be copied. Copy it from the address bar instead.';
+  }
+}
+
+async function writeTextToClipboard(value) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+
+  const temporaryInput = document.createElement('textarea');
+
+  temporaryInput.value = value;
+  temporaryInput.setAttribute('readonly', '');
+  temporaryInput.style.position = 'fixed';
+  temporaryInput.style.opacity = '0';
+  document.body.append(temporaryInput);
+  temporaryInput.select();
+
+  const copied = document.execCommand('copy');
+
+  temporaryInput.remove();
+
+  if (!copied) {
+    throw new Error('Copy command failed');
   }
 }
 

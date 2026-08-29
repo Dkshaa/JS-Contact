@@ -420,6 +420,25 @@ test('clears copied-link confirmation when filters change', async ({ page }) => 
   await expect(page.locator('#shareStatus')).toBeEmpty();
 });
 
+test('copies filtered links when the Clipboard API is unavailable', async ({ page }) => {
+  await page.evaluate(() => {
+    window.fallbackCopiedLink = '';
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: undefined,
+    });
+    document.execCommand = (command) => {
+      window.fallbackCopiedLink = document.querySelector('textarea').value;
+      return command === 'copy';
+    };
+  });
+  await page.getByRole('searchbox', { name: 'Search contacts' }).fill('anna');
+  await page.getByRole('button', { name: 'Copy link' }).click();
+
+  await expect(page.locator('#shareStatus')).toHaveText('Filtered contact link copied.');
+  await expect.poll(() => page.evaluate(() => window.fallbackCopiedLink)).toBe(page.url());
+});
+
 test('deduplicates accent-equivalent names in restored backups', async ({ page }) => {
   await page.getByText('Backup and restore').click();
   await page.locator('#importData').setInputFiles({

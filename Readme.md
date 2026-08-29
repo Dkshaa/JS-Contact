@@ -54,6 +54,7 @@ provides the page styling.
 - Limits search and shared-URL queries to 60 characters
 - Preserves descending sort order in bookmarked and shared URLs
 - Copies the current filtered view as a shareable link
+- Falls back to legacy clipboard support when the modern API is unavailable
 - Clears copied-link confirmation when the shared filters become outdated
 - Focuses search from anywhere on the page with the `/` keyboard shortcut
 

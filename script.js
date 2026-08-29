@@ -39,8 +39,16 @@ let lastRemovedContact = null;
 addContactForm.addEventListener('submit', handleAddContact);
 cancelContactEditButton.addEventListener('click', cancelContactEdit);
 contactNameInput.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && contactBeingEdited) {
+  if (event.key !== 'Escape') {
+    return;
+  }
+
+  if (contactBeingEdited) {
     cancelContactEdit();
+  } else if (contactNameInput.value) {
+    contactNameInput.value = '';
+    updateContactNameCount();
+    addContactStatus.textContent = 'Contact entry cleared.';
   }
 });
 contactNameInput.addEventListener('input', updateContactNameCount);

@@ -68,6 +68,17 @@ test('cancels contact editing with the Escape key', async ({ page }) => {
   await expect(page.locator('#addContactStatus')).toHaveText('Editing Zara was canceled.');
 });
 
+test('clears a new contact draft with the Escape key', async ({ page }) => {
+  const input = page.getByLabel('Add a contact');
+
+  await input.fill('Zara');
+  await input.press('Escape');
+
+  await expect(input).toHaveValue('');
+  await expect(page.locator('#contactNameCount')).toHaveText('0 of 60 characters');
+  await expect(page.locator('#addContactStatus')).toHaveText('Contact entry cleared.');
+});
+
 test('keeps letter sections alphabetized when a new section is added', async ({ page }) => {
   await page.getByLabel('Add a contact').fill('Maria');
   await page.getByRole('button', { name: 'Add', exact: true }).click();

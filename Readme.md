@@ -24,6 +24,7 @@ provides the page styling.
 - Rejects invisible control characters in contact names
 - Allows saved contacts to be renamed and automatically regrouped
 - Lets users cancel a rename with the Cancel button or `Escape` key
+- Clears an unfinished new-contact entry with `Escape`
 - Lets users remove contacts they added without changing the built-in directory
 - Restores the most recently removed custom contact with a one-click undo
 - Discards stale undo actions after clearing or restoring saved data

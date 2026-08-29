@@ -485,19 +485,26 @@ function loadSavedContacts() {
       return;
     }
 
-    savedContacts.forEach((name) => {
-      const normalizedName = typeof name === 'string'
-        ? name.trim().replace(/\s+/g, ' ')
-        : '';
-      const alreadyExists = [...contactList.querySelectorAll('.contact-name')].some(
-        (contact) =>
-          contact.textContent.trim().toLocaleLowerCase() === normalizedName.toLocaleLowerCase(),
-      );
+    const existingNames = new Set(
+      [...contactList.querySelectorAll('.contact-name')].map((contact) =>
+        normalizeForSearch(contact.textContent.trim()),
+      ),
+    );
 
-      if (normalizedName && normalizedName.length <= 60 && !alreadyExists) {
+    savedContacts.forEach((name) => {
+      if (typeof name !== 'string' || containsControlCharacters(name)) {
+        return;
+      }
+
+      const normalizedName = normalizeContactName(name);
+      const normalizedKey = normalizeForSearch(normalizedName);
+
+      if (normalizedName && normalizedName.length <= 60 && !existingNames.has(normalizedKey)) {
         addContact(normalizedName, { persist: false });
+        existingNames.add(normalizedKey);
       }
     });
+    saveCustomContacts();
   } catch {
     addContactStatus.textContent = 'Saved contacts could not be loaded.';
   }

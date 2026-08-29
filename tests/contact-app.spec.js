@@ -95,6 +95,25 @@ test('normalizes saved contacts and ignores invalid entries', async ({ page }) =
 
   await expect(page.getByText('Zara Jane', { exact: true })).toHaveCount(1);
   await expect(page.locator('[data-custom="true"]')).toHaveCount(1);
+  await expect.poll(() => page.evaluate(() => (
+    localStorage.getItem('mini-contact-app.custom-contacts')
+  ))).toBe('["Zara Jane"]');
+});
+
+test('removes accent-equivalent and unsafe contacts from browser storage', async ({ page }) => {
+  await page.evaluate(() => {
+    localStorage.setItem(
+      'mini-contact-app.custom-contacts',
+      JSON.stringify(['José', 'Jose', 'Zara\u0001Admin']),
+    );
+  });
+  await page.reload();
+
+  await expect(page.getByText('José', { exact: true })).toHaveCount(1);
+  await expect(page.getByText('Jose', { exact: true })).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => (
+    localStorage.getItem('mini-contact-app.custom-contacts')
+  ))).toBe('["José"]');
 });
 
 test('shows how many custom contacts are saved', async ({ page }) => {

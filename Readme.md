@@ -56,6 +56,7 @@ provides the page styling.
 - Preserves descending sort order in bookmarked and shared URLs
 - Copies the current filtered view as a shareable link
 - Falls back to legacy clipboard support when the modern API is unavailable
+- Recovers with the clipboard fallback when modern copy permission is denied
 - Clears copied-link confirmation when the shared filters become outdated
 - Focuses search from anywhere on the page with the `/` keyboard shortcut
 

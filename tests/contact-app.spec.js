@@ -456,6 +456,24 @@ test('copies filtered links when the Clipboard API is unavailable', async ({ pag
   await expect.poll(() => page.evaluate(() => window.fallbackCopiedLink)).toBe(page.url());
 });
 
+test('falls back when the Clipboard API rejects a copy request', async ({ page }) => {
+  await page.evaluate(() => {
+    window.recoveredCopiedLink = '';
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText: async () => { throw new Error('Permission denied'); } },
+    });
+    document.execCommand = () => {
+      window.recoveredCopiedLink = document.querySelector('textarea').value;
+      return true;
+    };
+  });
+  await page.getByRole('button', { name: 'Copy link' }).click();
+
+  await expect(page.locator('#shareStatus')).toHaveText('Filtered contact link copied.');
+  await expect.poll(() => page.evaluate(() => window.recoveredCopiedLink)).toBe(page.url());
+});
+
 test('deduplicates accent-equivalent names in restored backups', async ({ page }) => {
   await page.getByText('Backup and restore').click();
   await page.locator('#importData').setInputFiles({

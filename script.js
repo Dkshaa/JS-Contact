@@ -857,8 +857,12 @@ async function copySearchLink() {
 
 async function writeTextToClipboard(value) {
   if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(value);
-    return;
+    try {
+      await navigator.clipboard.writeText(value);
+      return;
+    } catch {
+      // Continue with the browser-compatible fallback below.
+    }
   }
 
   const temporaryInput = document.createElement('textarea');

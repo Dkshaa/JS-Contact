@@ -460,16 +460,17 @@ function loadFavoriteNames() {
       [...contactList.querySelectorAll('.contact-name')].map((contact) => {
         const name = contact.textContent.trim();
 
-        return [name.toLocaleLowerCase(), name];
+        return [normalizeForSearch(name), name];
       }),
     );
 
     if (Array.isArray(savedFavorites)) {
       savedFavorites
-        .filter((name) => typeof name === 'string')
-        .map((name) => availableNames.get(name.trim().toLocaleLowerCase()))
+        .filter((name) => typeof name === 'string' && !containsControlCharacters(name))
+        .map((name) => availableNames.get(normalizeForSearch(name.trim())))
         .filter(Boolean)
         .forEach((name) => favoriteNames.add(name));
+      saveFavoriteNames();
     }
   } catch {
     addContactStatus.textContent = 'Saved favorites could not be loaded.';

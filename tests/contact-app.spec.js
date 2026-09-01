@@ -195,12 +195,29 @@ test('toggles the favorites filter with Alt+F', async ({ page }) => {
 
 test('restores saved favorites without case sensitivity', async ({ page }) => {
   await page.evaluate(() => {
-    localStorage.setItem('mini-contact-app.favorite-contacts', JSON.stringify(['anna']));
+    localStorage.setItem(
+      'mini-contact-app.favorite-contacts',
+      JSON.stringify(['anna', 'ANNA', 'Zara\u0001Admin']),
+    );
   });
   await page.reload();
 
   await expect(page.getByRole('button', { name: 'Remove Anna from favorites' })).toBeVisible();
   await expect(page.locator('#favoritesOnly')).toHaveText('Favorites (1)');
+  await expect.poll(() => page.evaluate(() => (
+    localStorage.getItem('mini-contact-app.favorite-contacts')
+  ))).toBe('["Anna"]');
+});
+
+test('restores saved favorites without accent sensitivity', async ({ page }) => {
+  await page.getByLabel('Add a contact').fill('José');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await page.evaluate(() => {
+    localStorage.setItem('mini-contact-app.favorite-contacts', JSON.stringify(['jose']));
+  });
+  await page.reload();
+
+  await expect(page.getByRole('button', { name: 'Remove José from favorites' })).toBeVisible();
 });
 
 test('groups accented and non-alphabetic contact names predictably', async ({ page }) => {

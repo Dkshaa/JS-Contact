@@ -32,6 +32,7 @@ provides the page styling.
 - Announces favorite changes through an accessible live status
 - Remembers favorite contacts between browser visits
 - Recovers saved favorites even when stored name capitalization differs
+- Self-heals saved favorites with accent-aware matching and unsafe-data removal
 - Displays the current favorite count in the Favorites filter
 - Filters the directory to favorite contacts while preserving shareable URLs
 - Toggles the favorites filter from the keyboard with `Alt+F`

@@ -43,6 +43,7 @@ provides the page styling.
 - Applies control-character and accent-aware duplicate checks to restored backups
 - Rejects backup uploads larger than 1 MB
 - Clears saved contacts and favorites through an explicit confirmation step
+- Disables the clear-saved-data action when no browser data exists
 - Clears favorites separately without deleting custom contacts
 - Disables the clear-favorites action when there is nothing to clear
 - Hides alphabetic sections that have no matching contacts

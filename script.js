@@ -481,6 +481,7 @@ function saveFavoriteNames() {
   try {
     localStorage.setItem(favoriteContactsKey, JSON.stringify([...favoriteNames]));
     updateFavoritesFilterButton();
+    updateDataActionAvailability();
   } catch {
     addContactStatus.textContent = 'Favorite changes could not be saved.';
   }
@@ -653,9 +654,16 @@ function saveCustomContacts() {
   try {
     localStorage.setItem(customContactsKey, JSON.stringify(customContacts));
     updateSavedContactStatus(customContacts.length);
+    updateDataActionAvailability();
   } catch {
     addContactStatus.textContent = 'This contact could not be saved for your next visit.';
   }
+}
+
+function updateDataActionAvailability() {
+  const hasCustomContacts = contactList.querySelector('[data-custom="true"]') !== null;
+
+  clearSavedDataButton.disabled = !hasCustomContacts && favoriteNames.size === 0;
 }
 
 function updateSavedContactStatus(count = contactList.querySelectorAll('[data-custom="true"]').length) {

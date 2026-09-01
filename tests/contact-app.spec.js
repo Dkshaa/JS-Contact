@@ -489,6 +489,20 @@ test('dismisses copy confirmation with Escape', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Copy link' })).toBeFocused();
 });
 
+test('enables clearing saved data only when data exists', async ({ page }) => {
+  await page.getByText('Backup and restore').click();
+  const clearSavedData = page.getByRole('button', { name: 'Clear saved data' });
+
+  await expect(clearSavedData).toBeDisabled();
+  await page.getByLabel('Add a contact').fill('Zara');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await expect(clearSavedData).toBeEnabled();
+
+  await clearSavedData.click();
+  await page.getByRole('button', { name: 'Confirm clear' }).click();
+  await expect(clearSavedData).toBeDisabled();
+});
+
 test('deduplicates accent-equivalent names in restored backups', async ({ page }) => {
   await page.getByText('Backup and restore').click();
   await page.locator('#importData').setInputFiles({

@@ -503,6 +503,23 @@ test('enables clearing saved data only when data exists', async ({ page }) => {
   await expect(clearSavedData).toBeDisabled();
 });
 
+test('cancels destructive confirmations with Escape', async ({ page }) => {
+  await page.getByRole('button', { name: 'Add Anna to favorites' }).click();
+  await page.getByText('Backup and restore').click();
+
+  const clearFavorites = page.getByRole('button', { name: 'Clear favorites', exact: true });
+  await clearFavorites.click();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#clearFavoritesConfirmation')).toBeHidden();
+  await expect(clearFavorites).toBeFocused();
+
+  const clearSavedData = page.getByRole('button', { name: 'Clear saved data' });
+  await clearSavedData.click();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#clearDataConfirmation')).toBeHidden();
+  await expect(clearSavedData).toBeFocused();
+});
+
 test('deduplicates accent-equivalent names in restored backups', async ({ page }) => {
   await page.getByText('Backup and restore').click();
   await page.locator('#importData').setInputFiles({

@@ -474,6 +474,21 @@ test('falls back when the Clipboard API rejects a copy request', async ({ page }
   await expect.poll(() => page.evaluate(() => window.recoveredCopiedLink)).toBe(page.url());
 });
 
+test('dismisses copy confirmation with Escape', async ({ page }) => {
+  await page.evaluate(() => {
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText: async () => {} },
+    });
+  });
+  await page.getByRole('button', { name: 'Copy link' }).click();
+  await expect(page.locator('#shareStatus')).toHaveText('Filtered contact link copied.');
+
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#shareStatus')).toBeEmpty();
+  await expect(page.getByRole('button', { name: 'Copy link' })).toBeFocused();
+});
+
 test('deduplicates accent-equivalent names in restored backups', async ({ page }) => {
   await page.getByText('Backup and restore').click();
   await page.locator('#importData').setInputFiles({

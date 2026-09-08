@@ -45,6 +45,15 @@ test('remembers the selected color theme', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Light mode' })).toBeVisible();
 });
 
+test('uses the system color preference when no theme is saved', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.evaluate(() => localStorage.removeItem('mini-contact-app.theme'));
+  await page.reload();
+
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.getByRole('button', { name: 'Light mode' })).toBeVisible();
+});
+
 test('persists favorites and edited custom contacts', async ({ page }) => {
   await page.getByLabel('Add a contact').fill('Zara');
   await page.getByRole('button', { name: 'Add', exact: true }).click();

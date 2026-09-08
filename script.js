@@ -106,10 +106,17 @@ function applyTheme() {
 
 function loadThemePreference() {
   try {
-    darkThemeEnabled = localStorage.getItem(themePreferenceKey) === 'dark';
+    const savedTheme = localStorage.getItem(themePreferenceKey);
+
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+      darkThemeEnabled = savedTheme === 'dark';
+      return;
+    }
   } catch {
-    darkThemeEnabled = false;
+    // Fall through to the operating-system preference when storage is unavailable.
   }
+
+  darkThemeEnabled = window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
 function saveThemePreference() {

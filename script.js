@@ -30,6 +30,7 @@ const savedContactStatus = document.getElementById('savedContactStatus');
 const themeToggleButton = document.getElementById('themeToggle');
 const customContactsKey = 'mini-contact-app.custom-contacts';
 const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
+const themePreferenceKey = 'mini-contact-app.theme';
 const maxBackupBytes = 1_000_000;
 const favoriteNames = new Set();
 let contactBeingEdited = null;
@@ -79,6 +80,7 @@ cancelClearDataButton.addEventListener('click', hideClearDataConfirmation);
 window.addEventListener('popstate', restoreSearchFromUrl);
 document.addEventListener('keydown', focusSearchWithShortcut);
 
+loadThemePreference();
 applyTheme();
 loadSavedContacts();
 updateSavedContactStatus();
@@ -90,6 +92,7 @@ restoreSearchFromUrl();
 function toggleTheme() {
   darkThemeEnabled = !darkThemeEnabled;
   applyTheme();
+  saveThemePreference();
 }
 
 function applyTheme() {
@@ -99,6 +102,22 @@ function applyTheme() {
   document.documentElement.style.colorScheme = theme;
   themeToggleButton.textContent = darkThemeEnabled ? 'Light mode' : 'Dark mode';
   themeToggleButton.setAttribute('aria-pressed', String(darkThemeEnabled));
+}
+
+function loadThemePreference() {
+  try {
+    darkThemeEnabled = localStorage.getItem(themePreferenceKey) === 'dark';
+  } catch {
+    darkThemeEnabled = false;
+  }
+}
+
+function saveThemePreference() {
+  try {
+    localStorage.setItem(themePreferenceKey, darkThemeEnabled ? 'dark' : 'light');
+  } catch {
+    // The selected theme still applies for this visit when storage is unavailable.
+  }
 }
 
 function exportContactData() {

@@ -37,6 +37,14 @@ test('toggles a dark color theme', async ({ page }) => {
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
 });
 
+test('remembers the selected color theme', async ({ page }) => {
+  await page.getByRole('button', { name: 'Dark mode' }).click();
+  await page.reload();
+
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.getByRole('button', { name: 'Light mode' })).toBeVisible();
+});
+
 test('persists favorites and edited custom contacts', async ({ page }) => {
   await page.getByLabel('Add a contact').fill('Zara');
   await page.getByRole('button', { name: 'Add', exact: true }).click();

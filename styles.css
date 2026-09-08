@@ -20,9 +20,22 @@ body {
 }
 
 .contact-app h1 {
-  margin: 0 0 1.5rem;
+  margin: 0;
   color: #17324d;
   font-size: clamp(2rem, 6vw, 3.25rem);
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+#themeToggle {
+  flex: none;
+  color: #1565c0;
 }
 
 .contact-app label {
@@ -278,10 +291,65 @@ body {
   background: #fff59d;
 }
 
+:root[data-theme="dark"] {
+  background: #101820;
+}
+
+:root[data-theme="dark"] body {
+  background: linear-gradient(145deg, #102a24, #102638);
+}
+
+:root[data-theme="dark"] .contact-app {
+  color: #e6edf3;
+  background: #17212b;
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 30%);
+}
+
+:root[data-theme="dark"] .contact-app h1,
+:root[data-theme="dark"] .contact-app label,
+:root[data-theme="dark"] .data-tools summary,
+:root[data-theme="dark"] .contact-app .collection-header,
+:root[data-theme="dark"] .contact-app .contact-name {
+  color: #e6edf3;
+}
+
+:root[data-theme="dark"] .add-contact-form,
+:root[data-theme="dark"] .empty-state,
+:root[data-theme="dark"] .data-tools,
+:root[data-theme="dark"] .contact-app .collection-header {
+  background: #202d3a;
+}
+
+:root[data-theme="dark"] .data-tools,
+:root[data-theme="dark"] .contact-app .collection,
+:root[data-theme="dark"] .contact-app .collection-item {
+  border-color: #3b4d5f;
+}
+
+:root[data-theme="dark"] .contact-app .collection-item {
+  background: #17212b;
+}
+
+:root[data-theme="dark"] input {
+  color: #f4f7fb;
+}
+
+:root[data-theme="dark"] .search-status,
+:root[data-theme="dark"] .share-status,
+:root[data-theme="dark"] .saved-contact-status,
+:root[data-theme="dark"] .character-count,
+:root[data-theme="dark"] .empty-state {
+  color: #b8c7d4;
+}
+
 @media (max-width: 37.5rem) {
   body {
     padding: 0;
     background: #fff;
+  }
+
+  :root[data-theme="dark"] body {
+    background: #17212b;
   }
 
   .contact-app {

@@ -27,6 +27,7 @@ const confirmClearDataButton = document.getElementById('confirmClearData');
 const cancelClearDataButton = document.getElementById('cancelClearData');
 const dataStatus = document.getElementById('dataStatus');
 const savedContactStatus = document.getElementById('savedContactStatus');
+const themeToggleButton = document.getElementById('themeToggle');
 const customContactsKey = 'mini-contact-app.custom-contacts';
 const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
 const maxBackupBytes = 1_000_000;
@@ -35,6 +36,7 @@ let contactBeingEdited = null;
 let showFavoritesOnly = false;
 let sortDescending = false;
 let lastRemovedContact = null;
+let darkThemeEnabled = false;
 
 addContactForm.addEventListener('submit', handleAddContact);
 cancelContactEditButton.addEventListener('click', cancelContactEdit);
@@ -65,6 +67,7 @@ resetFiltersButton.addEventListener('click', resetFilters);
 favoritesOnlyButton.addEventListener('click', toggleFavoritesOnly);
 copySearchLinkButton.addEventListener('click', copySearchLink);
 sortOrderButton.addEventListener('click', toggleSortOrder);
+themeToggleButton.addEventListener('click', toggleTheme);
 exportDataButton.addEventListener('click', exportContactData);
 importDataInput.addEventListener('change', importContactData);
 clearFavoritesButton.addEventListener('click', showClearFavoritesConfirmation);
@@ -76,12 +79,27 @@ cancelClearDataButton.addEventListener('click', hideClearDataConfirmation);
 window.addEventListener('popstate', restoreSearchFromUrl);
 document.addEventListener('keydown', focusSearchWithShortcut);
 
+applyTheme();
 loadSavedContacts();
 updateSavedContactStatus();
 loadFavoriteNames();
 initializeFavoriteControls();
 sortContactSections();
 restoreSearchFromUrl();
+
+function toggleTheme() {
+  darkThemeEnabled = !darkThemeEnabled;
+  applyTheme();
+}
+
+function applyTheme() {
+  const theme = darkThemeEnabled ? 'dark' : 'light';
+
+  document.documentElement.dataset.theme = theme;
+  document.documentElement.style.colorScheme = theme;
+  themeToggleButton.textContent = darkThemeEnabled ? 'Light mode' : 'Dark mode';
+  themeToggleButton.setAttribute('aria-pressed', String(darkThemeEnabled));
+}
 
 function exportContactData() {
   const customContacts = [...contactList.querySelectorAll('[data-custom="true"]')].map(

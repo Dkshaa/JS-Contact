@@ -6,6 +6,7 @@ provides the page styling.
 
 ## Features
 
+- Switches between light and dark color themes
 - Filters contacts as you type
 - Sorts contact sections and the names within them alphabetically
 - Toggles the contact directory between A–Z and Z–A order

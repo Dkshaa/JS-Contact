@@ -23,6 +23,20 @@ test('focuses search with the slash keyboard shortcut', async ({ page }) => {
   await expect(page.getByRole('searchbox', { name: 'Search contacts' })).toBeFocused();
 });
 
+test('toggles a dark color theme', async ({ page }) => {
+  const themeToggle = page.getByRole('button', { name: 'Dark mode' });
+
+  await themeToggle.click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.getByRole('button', { name: 'Light mode' })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+
+  await page.getByRole('button', { name: 'Light mode' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+});
+
 test('persists favorites and edited custom contacts', async ({ page }) => {
   await page.getByLabel('Add a contact').fill('Zara');
   await page.getByRole('button', { name: 'Add', exact: true }).click();

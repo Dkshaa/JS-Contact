@@ -906,6 +906,13 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if (event.key.toLocaleLowerCase() === 't' && event.altKey && !event.metaKey && !event.ctrlKey) {
+    event.preventDefault();
+    toggleTheme();
+    themeToggleButton.focus();
+    return;
+  }
+
   if (event.key === '/' && !isTyping && !event.metaKey && !event.ctrlKey && !event.altKey) {
     event.preventDefault();
     filterInput.focus();

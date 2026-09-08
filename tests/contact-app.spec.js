@@ -54,6 +54,13 @@ test('uses the system color preference when no theme is saved', async ({ page })
   await expect(page.getByRole('button', { name: 'Light mode' })).toBeVisible();
 });
 
+test('toggles the color theme with Alt+T', async ({ page }) => {
+  await page.keyboard.press('Alt+t');
+
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.getByRole('button', { name: 'Light mode' })).toBeFocused();
+});
+
 test('persists favorites and edited custom contacts', async ({ page }) => {
   await page.getByLabel('Add a contact').fill('Zara');
   await page.getByRole('button', { name: 'Add', exact: true }).click();

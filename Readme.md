@@ -9,6 +9,7 @@ provides the page styling.
 - Switches between light and dark color themes
 - Remembers the selected color theme between visits
 - Uses the operating system's color preference when no theme is saved
+- Follows operating-system theme changes while using the system preference
 - Toggles the color theme from the keyboard with `Alt+T`
 - Filters contacts as you type
 - Sorts contact sections and the names within them alphabetically

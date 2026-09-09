@@ -54,6 +54,16 @@ test('uses the system color preference when no theme is saved', async ({ page })
   await expect(page.getByRole('button', { name: 'Light mode' })).toBeVisible();
 });
 
+test('follows system color preference changes when no theme is saved', async ({ page }) => {
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+
+  await page.emulateMedia({ colorScheme: 'light' });
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+});
+
 test('toggles the color theme with Alt+T', async ({ page }) => {
   await page.keyboard.press('Alt+t');
 

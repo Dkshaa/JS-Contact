@@ -31,6 +31,7 @@ const themeToggleButton = document.getElementById('themeToggle');
 const customContactsKey = 'mini-contact-app.custom-contacts';
 const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
 const themePreferenceKey = 'mini-contact-app.theme';
+const systemThemePreference = window.matchMedia('(prefers-color-scheme: dark)');
 const maxBackupBytes = 1_000_000;
 const favoriteNames = new Set();
 let contactBeingEdited = null;
@@ -38,6 +39,7 @@ let showFavoritesOnly = false;
 let sortDescending = false;
 let lastRemovedContact = null;
 let darkThemeEnabled = false;
+let followsSystemTheme = true;
 
 addContactForm.addEventListener('submit', handleAddContact);
 cancelContactEditButton.addEventListener('click', cancelContactEdit);
@@ -69,6 +71,7 @@ favoritesOnlyButton.addEventListener('click', toggleFavoritesOnly);
 copySearchLinkButton.addEventListener('click', copySearchLink);
 sortOrderButton.addEventListener('click', toggleSortOrder);
 themeToggleButton.addEventListener('click', toggleTheme);
+systemThemePreference.addEventListener('change', applySystemThemeChange);
 exportDataButton.addEventListener('click', exportContactData);
 importDataInput.addEventListener('change', importContactData);
 clearFavoritesButton.addEventListener('click', showClearFavoritesConfirmation);
@@ -90,6 +93,7 @@ sortContactSections();
 restoreSearchFromUrl();
 
 function toggleTheme() {
+  followsSystemTheme = false;
   darkThemeEnabled = !darkThemeEnabled;
   applyTheme();
   saveThemePreference();
@@ -109,6 +113,7 @@ function loadThemePreference() {
     const savedTheme = localStorage.getItem(themePreferenceKey);
 
     if (savedTheme === 'dark' || savedTheme === 'light') {
+      followsSystemTheme = false;
       darkThemeEnabled = savedTheme === 'dark';
       return;
     }
@@ -116,7 +121,17 @@ function loadThemePreference() {
     // Fall through to the operating-system preference when storage is unavailable.
   }
 
-  darkThemeEnabled = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  followsSystemTheme = true;
+  darkThemeEnabled = systemThemePreference.matches;
+}
+
+function applySystemThemeChange(event) {
+  if (!followsSystemTheme) {
+    return;
+  }
+
+  darkThemeEnabled = event.matches;
+  applyTheme();
 }
 
 function saveThemePreference() {

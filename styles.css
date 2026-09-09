@@ -38,6 +38,17 @@ body {
   color: #1565c0;
 }
 
+.theme-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+
+.theme-controls .btn-flat {
+  color: #1565c0;
+}
+
 .contact-app label {
   color: #455a64;
   font-size: 1rem;

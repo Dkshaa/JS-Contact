@@ -64,6 +64,20 @@ test('follows system color preference changes when no theme is saved', async ({ 
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
 });
 
+test('returns a manual theme choice to the system preference', async ({ page }) => {
+  await page.getByRole('button', { name: 'Dark mode' }).click();
+  await expect(page.getByRole('button', { name: 'Use system theme' })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Use system theme' }).click();
+
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(page.getByRole('button', { name: 'Use system theme' })).toBeHidden();
+  await expect(page.getByRole('button', { name: 'Dark mode' })).toBeFocused();
+  await expect.poll(
+    () => page.evaluate(() => localStorage.getItem('mini-contact-app.theme')),
+  ).toBeNull();
+});
+
 test('toggles the color theme with Alt+T', async ({ page }) => {
   await page.keyboard.press('Alt+t');
 

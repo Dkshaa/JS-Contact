@@ -10,6 +10,7 @@ provides the page styling.
 - Remembers the selected color theme between visits
 - Uses the operating system's color preference when no theme is saved
 - Follows operating-system theme changes while using the system preference
+- Restores the system theme after a manual override with one click
 - Toggles the color theme from the keyboard with `Alt+T`
 - Filters contacts as you type
 - Sorts contact sections and the names within them alphabetically

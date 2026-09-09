@@ -28,6 +28,7 @@ const cancelClearDataButton = document.getElementById('cancelClearData');
 const dataStatus = document.getElementById('dataStatus');
 const savedContactStatus = document.getElementById('savedContactStatus');
 const themeToggleButton = document.getElementById('themeToggle');
+const useSystemThemeButton = document.getElementById('useSystemTheme');
 const customContactsKey = 'mini-contact-app.custom-contacts';
 const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
 const themePreferenceKey = 'mini-contact-app.theme';
@@ -71,6 +72,7 @@ favoritesOnlyButton.addEventListener('click', toggleFavoritesOnly);
 copySearchLinkButton.addEventListener('click', copySearchLink);
 sortOrderButton.addEventListener('click', toggleSortOrder);
 themeToggleButton.addEventListener('click', toggleTheme);
+useSystemThemeButton.addEventListener('click', useSystemTheme);
 systemThemePreference.addEventListener('change', applySystemThemeChange);
 exportDataButton.addEventListener('click', exportContactData);
 importDataInput.addEventListener('change', importContactData);
@@ -106,6 +108,7 @@ function applyTheme() {
   document.documentElement.style.colorScheme = theme;
   themeToggleButton.textContent = darkThemeEnabled ? 'Light mode' : 'Dark mode';
   themeToggleButton.setAttribute('aria-pressed', String(darkThemeEnabled));
+  useSystemThemeButton.hidden = followsSystemTheme;
 }
 
 function loadThemePreference() {
@@ -132,6 +135,19 @@ function applySystemThemeChange(event) {
 
   darkThemeEnabled = event.matches;
   applyTheme();
+}
+
+function useSystemTheme() {
+  try {
+    localStorage.removeItem(themePreferenceKey);
+  } catch {
+    // The system preference still applies for this visit when storage is unavailable.
+  }
+
+  followsSystemTheme = true;
+  darkThemeEnabled = systemThemePreference.matches;
+  applyTheme();
+  themeToggleButton.focus();
 }
 
 function saveThemePreference() {

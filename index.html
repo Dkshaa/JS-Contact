@@ -17,15 +17,20 @@
     <main class="container contact-app">
       <header class="app-header">
         <h1>My Contacts</h1>
-        <button
-          id="themeToggle"
-          class="btn-flat"
-          type="button"
-          aria-pressed="false"
-          aria-keyshortcuts="Alt+T"
-        >
-          Dark mode
-        </button>
+        <div class="theme-controls">
+          <button id="useSystemTheme" class="btn-flat" type="button" hidden>
+            Use system theme
+          </button>
+          <button
+            id="themeToggle"
+            class="btn-flat"
+            type="button"
+            aria-pressed="false"
+            aria-keyshortcuts="Alt+T"
+          >
+            Dark mode
+          </button>
+        </div>
       </header>
       <form id="addContactForm" class="add-contact-form">
         <label for="contactName">Add a contact</label>

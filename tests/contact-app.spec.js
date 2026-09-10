@@ -29,6 +29,13 @@ test('focuses contact entry with Alt+A', async ({ page }) => {
   await expect(page.getByLabel('Add a contact')).toBeFocused();
 });
 
+test('opens backup tools with Alt+B', async ({ page }) => {
+  await page.keyboard.press('Alt+b');
+
+  await expect(page.locator('#dataTools')).toHaveAttribute('open', '');
+  await expect(page.locator('#dataToolsSummary')).toBeFocused();
+});
+
 test('toggles a dark color theme', async ({ page }) => {
   const themeToggle = page.getByRole('button', { name: 'Dark mode' });
 

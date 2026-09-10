@@ -15,6 +15,8 @@ const searchStatus = document.getElementById('searchStatus');
 const shareStatus = document.getElementById('shareStatus');
 const emptyState = document.getElementById('emptyState');
 const resetFiltersButton = document.getElementById('resetFilters');
+const dataTools = document.getElementById('dataTools');
+const dataToolsSummary = document.getElementById('dataToolsSummary');
 const exportDataButton = document.getElementById('exportData');
 const importDataInput = document.getElementById('importData');
 const clearFavoritesButton = document.getElementById('clearFavorites');
@@ -926,6 +928,13 @@ function focusSearchWithShortcut(event) {
   if (event.key.toLocaleLowerCase() === 'a' && event.altKey && !event.metaKey && !event.ctrlKey) {
     event.preventDefault();
     contactNameInput.focus();
+    return;
+  }
+
+  if (event.key.toLocaleLowerCase() === 'b' && event.altKey && !event.metaKey && !event.ctrlKey) {
+    event.preventDefault();
+    dataTools.open = true;
+    dataToolsSummary.focus();
     return;
   }
 

@@ -23,6 +23,12 @@ test('focuses search with the slash keyboard shortcut', async ({ page }) => {
   await expect(page.getByRole('searchbox', { name: 'Search contacts' })).toBeFocused();
 });
 
+test('focuses contact entry with Alt+A', async ({ page }) => {
+  await page.keyboard.press('Alt+a');
+
+  await expect(page.getByLabel('Add a contact')).toBeFocused();
+});
+
 test('toggles a dark color theme', async ({ page }) => {
   const themeToggle = page.getByRole('button', { name: 'Dark mode' });
 

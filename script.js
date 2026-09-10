@@ -923,6 +923,12 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if (event.key.toLocaleLowerCase() === 'a' && event.altKey && !event.metaKey && !event.ctrlKey) {
+    event.preventDefault();
+    contactNameInput.focus();
+    return;
+  }
+
   if (event.key.toLocaleLowerCase() === 's' && event.altKey && !event.metaKey && !event.ctrlKey) {
     event.preventDefault();
     toggleSortOrder();

@@ -24,6 +24,7 @@ provides the page styling.
 - Announces the number of visible results as the search changes
 - Shows filtered result counts in the browser tab title
 - Saves contacts added in the browser for future visits
+- Focuses contact entry from anywhere with `Alt+A`
 - Shows a live character count while entering contact names
 - Normalizes saved names and safely ignores malformed browser data
 - Self-heals browser storage by removing unsafe or accent-equivalent duplicates

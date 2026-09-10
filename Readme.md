@@ -70,6 +70,7 @@ provides the page styling.
 - Clears copied-link confirmation when the shared filters become outdated
 - Dismisses copied-link confirmation with `Escape`
 - Focuses search from anywhere on the page with the `/` keyboard shortcut
+- Provides an in-app reference for every keyboard shortcut
 
 ## Run locally
 

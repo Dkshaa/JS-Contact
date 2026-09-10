@@ -18,6 +18,9 @@
       <header class="app-header">
         <h1>My Contacts</h1>
         <div class="theme-controls">
+          <button id="showShortcuts" class="btn-flat" type="button">
+            Shortcuts
+          </button>
           <button id="useSystemTheme" class="btn-flat" type="button" hidden>
             Use system theme
           </button>
@@ -32,6 +35,20 @@
           </button>
         </div>
       </header>
+      <dialog id="shortcutsDialog" aria-labelledby="shortcutsTitle">
+        <h2 id="shortcutsTitle">Keyboard shortcuts</h2>
+        <dl class="shortcut-list">
+          <div><dt><kbd>/</kbd></dt><dd>Focus search</dd></div>
+          <div><dt><kbd>Alt</kbd> + <kbd>A</kbd></dt><dd>Add a contact</dd></div>
+          <div><dt><kbd>Alt</kbd> + <kbd>B</kbd></dt><dd>Open backup tools</dd></div>
+          <div><dt><kbd>Alt</kbd> + <kbd>F</kbd></dt><dd>Toggle favorites</dd></div>
+          <div><dt><kbd>Alt</kbd> + <kbd>S</kbd></dt><dd>Reverse sort order</dd></div>
+          <div><dt><kbd>Alt</kbd> + <kbd>T</kbd></dt><dd>Toggle color theme</dd></div>
+        </dl>
+        <form method="dialog">
+          <button class="btn" type="submit">Close</button>
+        </form>
+      </dialog>
       <form id="addContactForm" class="add-contact-form">
         <label for="contactName">Add a contact</label>
         <div class="add-contact-controls">

@@ -49,6 +49,53 @@ body {
   color: #1565c0;
 }
 
+#shortcutsDialog {
+  width: min(90vw, 26rem);
+  padding: 1.5rem;
+  border: 0;
+  border-radius: 0.9rem;
+  color: #263238;
+  background: #fff;
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 25%);
+}
+
+#shortcutsDialog::backdrop {
+  background: rgb(15 23 32 / 60%);
+}
+
+#shortcutsDialog h2 {
+  margin: 0 0 1rem;
+  font-size: 1.7rem;
+}
+
+.shortcut-list {
+  margin: 0 0 1.25rem;
+}
+
+.shortcut-list div {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 1rem;
+  padding: 0.45rem 0;
+}
+
+.shortcut-list dt,
+.shortcut-list dd {
+  margin: 0;
+}
+
+.shortcut-list kbd {
+  padding: 0.15rem 0.35rem;
+  border: 1px solid #b0bec5;
+  border-radius: 0.25rem;
+  background: #f5f7f9;
+  box-shadow: 0 1px 0 #b0bec5;
+}
+
+#shortcutsDialog form {
+  text-align: right;
+}
+
 .contact-app label {
   color: #455a64;
   font-size: 1rem;
@@ -351,6 +398,17 @@ body {
 :root[data-theme="dark"] .character-count,
 :root[data-theme="dark"] .empty-state {
   color: #b8c7d4;
+}
+
+:root[data-theme="dark"] #shortcutsDialog {
+  color: #e6edf3;
+  background: #202d3a;
+}
+
+:root[data-theme="dark"] .shortcut-list kbd {
+  border-color: #607d8b;
+  background: #17212b;
+  box-shadow: 0 1px 0 #607d8b;
 }
 
 @media (max-width: 37.5rem) {

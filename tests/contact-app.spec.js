@@ -36,6 +36,19 @@ test('opens backup tools with Alt+B', async ({ page }) => {
   await expect(page.locator('#dataToolsSummary')).toBeFocused();
 });
 
+test('shows a keyboard shortcut reference', async ({ page }) => {
+  const shortcutsButton = page.getByRole('button', { name: 'Shortcuts' });
+
+  await shortcutsButton.click();
+  await expect(page.getByRole('dialog', { name: 'Keyboard shortcuts' })).toBeVisible();
+  await expect(page.getByText('Focus search')).toBeVisible();
+  await expect(page.getByText('Toggle color theme')).toBeVisible();
+
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog', { name: 'Keyboard shortcuts' })).toBeHidden();
+  await expect(shortcutsButton).toBeFocused();
+});
+
 test('toggles a dark color theme', async ({ page }) => {
   const themeToggle = page.getByRole('button', { name: 'Dark mode' });
 

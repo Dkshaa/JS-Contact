@@ -917,6 +917,16 @@ function focusSearchWithShortcut(event) {
   const target = event.target;
   const isTyping = target.matches('input, textarea, select, [contenteditable="true"]');
 
+  if (
+    event.key.toLocaleLowerCase() === 'k' &&
+    (event.metaKey || event.ctrlKey) &&
+    !event.altKey
+  ) {
+    event.preventDefault();
+    filterInput.focus();
+    return;
+  }
+
   if (event.key === 'Escape' && !clearFavoritesConfirmation.hidden) {
     hideClearFavoritesConfirmation();
     return;

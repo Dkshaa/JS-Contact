@@ -23,6 +23,12 @@ test('focuses search with the slash keyboard shortcut', async ({ page }) => {
   await expect(page.getByRole('searchbox', { name: 'Search contacts' })).toBeFocused();
 });
 
+test('focuses search with Ctrl+K', async ({ page }) => {
+  await page.keyboard.press('Control+k');
+
+  await expect(page.getByRole('searchbox', { name: 'Search contacts' })).toBeFocused();
+});
+
 test('focuses contact entry with Alt+A', async ({ page }) => {
   await page.keyboard.press('Alt+a');
 

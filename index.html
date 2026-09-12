@@ -50,6 +50,7 @@
           <div><dt><kbd>Alt</kbd> + <kbd>B</kbd></dt><dd>Open backup tools</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>F</kbd></dt><dd>Toggle favorites</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>H</kbd></dt><dd>Show this shortcut reference</dd></div>
+          <div><dt><kbd>Alt</kbd> + <kbd>R</kbd></dt><dd>Reset search and favorites</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>S</kbd></dt><dd>Reverse sort order</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>T</kbd></dt><dd>Toggle color theme</dd></div>
         </dl>
@@ -117,7 +118,12 @@
       <p id="shareStatus" class="share-status" aria-live="polite"></p>
       <div id="emptyState" class="empty-state" hidden>
         <p>No contacts match the current filters.</p>
-        <button id="resetFilters" class="btn-flat" type="button">Reset filters</button>
+        <button
+          id="resetFilters"
+          class="btn-flat"
+          type="button"
+          aria-keyshortcuts="Alt+R"
+        >Reset filters</button>
       </div>
       <details id="dataTools" class="data-tools">
         <summary id="dataToolsSummary" aria-keyshortcuts="Alt+B">Backup and restore</summary>

@@ -59,6 +59,7 @@ provides the page styling.
 - Hides alphabetic sections that have no matching contacts
 - Displays a clear message when no contacts match
 - Offers a one-click filter reset when no contacts match
+- Resets search and favorites from anywhere with `Alt+R`
 - Adapts the layout for phones, tablets, and desktop screens
 - Clears a search with either the Clear button or the Escape key
 - Synchronizes native browser search-field clear controls

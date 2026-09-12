@@ -965,6 +965,12 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if (event.key.toLocaleLowerCase() === 'r' && event.altKey && !event.metaKey && !event.ctrlKey) {
+    event.preventDefault();
+    resetFilters();
+    return;
+  }
+
   if (event.key.toLocaleLowerCase() === 's' && event.altKey && !event.metaKey && !event.ctrlKey) {
     event.preventDefault();
     toggleSortOrder();

@@ -42,6 +42,20 @@ test('opens backup tools with Alt+B', async ({ page }) => {
   await expect(page.locator('#dataToolsSummary')).toBeFocused();
 });
 
+test('resets search and favorites with Alt+R', async ({ page }) => {
+  const favoritesFilter = page.locator('#favoritesOnly');
+
+  await page.getByRole('searchbox', { name: 'Search contacts' }).fill('anna');
+  await favoritesFilter.click();
+
+  await page.keyboard.press('Alt+r');
+
+  await expect(page.getByRole('searchbox', { name: 'Search contacts' })).toHaveValue('');
+  await expect(favoritesFilter).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('#searchStatus')).toHaveText('Showing all 25 contacts.');
+  await expect(page).toHaveURL(/\/$/);
+});
+
 test('shows a keyboard shortcut reference', async ({ page }) => {
   const shortcutsButton = page.getByRole('button', { name: 'Shortcuts' });
 

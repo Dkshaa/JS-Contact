@@ -11,6 +11,17 @@ body {
   background: linear-gradient(145deg, #e8f5e9, #e3f2fd);
 }
 
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 .contact-app {
   width: min(100%, 46rem);
   padding: clamp(1.25rem, 4vw, 2.5rem);

@@ -12,6 +12,7 @@ provides the page styling.
 - Follows operating-system theme changes while using the system preference
 - Restores the system theme after a manual override with one click
 - Toggles the color theme from the keyboard with `Alt+T`
+- Announces color-theme changes to assistive technology
 - Filters contacts as you type
 - Sorts contact sections and the names within them alphabetically
 - Toggles the contact directory between A–Z and Z–A order

@@ -33,6 +33,7 @@ const themeToggleButton = document.getElementById('themeToggle');
 const useSystemThemeButton = document.getElementById('useSystemTheme');
 const showShortcutsButton = document.getElementById('showShortcuts');
 const shortcutsDialog = document.getElementById('shortcutsDialog');
+const themeStatus = document.getElementById('themeStatus');
 const customContactsKey = 'mini-contact-app.custom-contacts';
 const favoriteContactsKey = 'mini-contact-app.favorite-contacts';
 const themePreferenceKey = 'mini-contact-app.theme';
@@ -104,6 +105,7 @@ function toggleTheme() {
   followsSystemTheme = false;
   darkThemeEnabled = !darkThemeEnabled;
   applyTheme();
+  themeStatus.textContent = `${darkThemeEnabled ? 'Dark' : 'Light'} theme enabled.`;
   saveThemePreference();
 }
 
@@ -141,6 +143,7 @@ function applySystemThemeChange(event) {
 
   darkThemeEnabled = event.matches;
   applyTheme();
+  themeStatus.textContent = `System theme changed to ${darkThemeEnabled ? 'dark' : 'light'}.`;
 }
 
 function useSystemTheme() {
@@ -153,6 +156,7 @@ function useSystemTheme() {
   followsSystemTheme = true;
   darkThemeEnabled = systemThemePreference.matches;
   applyTheme();
+  themeStatus.textContent = `Using the system ${darkThemeEnabled ? 'dark' : 'light'} theme.`;
   themeToggleButton.focus();
 }
 

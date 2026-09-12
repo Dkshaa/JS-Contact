@@ -70,6 +70,16 @@ test('toggles a dark color theme', async ({ page }) => {
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
 });
 
+test('announces color theme changes to assistive technology', async ({ page }) => {
+  const themeStatus = page.locator('#themeStatus');
+
+  await page.getByRole('button', { name: 'Dark mode' }).click();
+  await expect(themeStatus).toHaveText('Dark theme enabled.');
+
+  await page.getByRole('button', { name: 'Use system theme' }).click();
+  await expect(themeStatus).toHaveText('Using the system light theme.');
+});
+
 test('remembers the selected color theme', async ({ page }) => {
   await page.getByRole('button', { name: 'Dark mode' }).click();
   await page.reload();

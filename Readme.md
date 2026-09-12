@@ -71,6 +71,7 @@ provides the page styling.
 - Dismisses copied-link confirmation with `Escape`
 - Focuses search from anywhere on the page with the `/` keyboard shortcut
 - Provides an in-app reference for every keyboard shortcut
+- Opens the keyboard shortcut reference with `Alt+H`
 
 ## Run locally
 

@@ -49,6 +49,13 @@ test('shows a keyboard shortcut reference', async ({ page }) => {
   await expect(shortcutsButton).toBeFocused();
 });
 
+test('opens the shortcut reference with Alt+H', async ({ page }) => {
+  await page.keyboard.press('Alt+h');
+
+  await expect(page.getByRole('dialog', { name: 'Keyboard shortcuts' })).toBeVisible();
+  await expect(page.getByText('Show this shortcut reference')).toBeVisible();
+});
+
 test('toggles a dark color theme', async ({ page }) => {
   const themeToggle = page.getByRole('button', { name: 'Dark mode' });
 

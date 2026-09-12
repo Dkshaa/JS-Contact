@@ -929,6 +929,15 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if (event.key.toLocaleLowerCase() === 'h' && event.altKey && !event.metaKey && !event.ctrlKey) {
+    event.preventDefault();
+
+    if (!shortcutsDialog.open) {
+      shortcutsDialog.showModal();
+    }
+    return;
+  }
+
   if (event.key.toLocaleLowerCase() === 'a' && event.altKey && !event.metaKey && !event.ctrlKey) {
     event.preventDefault();
     contactNameInput.focus();

@@ -75,6 +75,7 @@ provides the page styling.
 - Supports the familiar `Ctrl+K` or `Command+K` search shortcut
 - Provides an in-app reference for every keyboard shortcut
 - Opens the keyboard shortcut reference with `Alt+H`
+- Keeps global app shortcuts inactive while keyboard help is open
 
 ## Run locally
 

@@ -61,7 +61,7 @@ test('shows a keyboard shortcut reference', async ({ page }) => {
 
   await shortcutsButton.click();
   await expect(page.getByRole('dialog', { name: 'Keyboard shortcuts' })).toBeVisible();
-  await expect(page.getByText('Focus search')).toBeVisible();
+  await expect(page.getByText('Focus search').first()).toBeVisible();
   await expect(page.getByText('Toggle color theme')).toBeVisible();
 
   await page.keyboard.press('Escape');
@@ -74,6 +74,17 @@ test('opens the shortcut reference with Alt+H', async ({ page }) => {
 
   await expect(page.getByRole('dialog', { name: 'Keyboard shortcuts' })).toBeVisible();
   await expect(page.getByText('Show this shortcut reference')).toBeVisible();
+});
+
+test('keeps global shortcuts from changing controls behind keyboard help', async ({ page }) => {
+  await page.getByRole('button', { name: 'Shortcuts' }).click();
+
+  await page.keyboard.press('Alt+t');
+  await page.keyboard.press('Alt+a');
+
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(page.getByLabel('Add a contact')).not.toBeFocused();
+  await expect(page.getByRole('dialog', { name: 'Keyboard shortcuts' })).toBeVisible();
 });
 
 test('toggles a dark color theme', async ({ page }) => {

@@ -917,6 +917,10 @@ function focusSearchWithShortcut(event) {
   const target = event.target;
   const isTyping = target.matches('input, textarea, select, [contenteditable="true"]');
 
+  if (shortcutsDialog.open) {
+    return;
+  }
+
   if (
     event.key.toLocaleLowerCase() === 'k' &&
     (event.metaKey || event.ctrlKey) &&

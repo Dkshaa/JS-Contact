@@ -80,6 +80,7 @@ themeToggleButton.addEventListener('click', toggleTheme);
 useSystemThemeButton.addEventListener('click', useSystemTheme);
 showShortcutsButton.addEventListener('click', () => shortcutsDialog.showModal());
 shortcutsDialog.addEventListener('close', () => showShortcutsButton.focus());
+shortcutsDialog.addEventListener('click', closeShortcutsFromBackdrop);
 systemThemePreference.addEventListener('change', applySystemThemeChange);
 exportDataButton.addEventListener('click', exportContactData);
 importDataInput.addEventListener('change', importContactData);
@@ -100,6 +101,19 @@ loadFavoriteNames();
 initializeFavoriteControls();
 sortContactSections();
 restoreSearchFromUrl();
+
+function closeShortcutsFromBackdrop(event) {
+  const bounds = shortcutsDialog.getBoundingClientRect();
+  const clickedOutsideDialog =
+    event.clientX < bounds.left ||
+    event.clientX > bounds.right ||
+    event.clientY < bounds.top ||
+    event.clientY > bounds.bottom;
+
+  if (clickedOutsideDialog) {
+    shortcutsDialog.close();
+  }
+}
 
 function toggleTheme() {
   followsSystemTheme = false;

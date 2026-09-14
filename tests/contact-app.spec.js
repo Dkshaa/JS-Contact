@@ -81,6 +81,16 @@ test('shows a keyboard shortcut reference', async ({ page }) => {
   await expect(shortcutsButton).toBeFocused();
 });
 
+test('closes keyboard help when the backdrop is clicked', async ({ page }) => {
+  const shortcutsButton = page.getByRole('button', { name: 'Shortcuts' });
+
+  await shortcutsButton.click();
+  await page.mouse.click(5, 5);
+
+  await expect(page.getByRole('dialog', { name: 'Keyboard shortcuts' })).toBeHidden();
+  await expect(shortcutsButton).toBeFocused();
+});
+
 test('opens the shortcut reference with Alt+H', async ({ page }) => {
   await page.keyboard.press('Alt+h');
 

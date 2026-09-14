@@ -77,6 +77,7 @@ provides the page styling.
 - Provides an in-app reference for every keyboard shortcut
 - Opens the keyboard shortcut reference with `Alt+H`
 - Keeps global app shortcuts inactive while keyboard help is open
+- Closes keyboard help when its shaded backdrop is clicked
 
 ## Run locally
 

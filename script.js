@@ -927,7 +927,7 @@ function focusSearchWithShortcut(event) {
     !event.altKey
   ) {
     event.preventDefault();
-    filterInput.focus();
+    focusAndSelectSearch();
     return;
   }
 
@@ -998,8 +998,13 @@ function focusSearchWithShortcut(event) {
 
   if (event.key === '/' && !isTyping && !event.metaKey && !event.ctrlKey && !event.altKey) {
     event.preventDefault();
-    filterInput.focus();
+    focusAndSelectSearch();
   }
+}
+
+function focusAndSelectSearch() {
+  filterInput.focus();
+  filterInput.select();
 }
 
 function toggleFavoritesOnly() {

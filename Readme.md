@@ -73,6 +73,7 @@ provides the page styling.
 - Dismisses copied-link confirmation with `Escape`
 - Focuses search from anywhere on the page with the `/` keyboard shortcut
 - Supports the familiar `Ctrl+K` or `Command+K` search shortcut
+- Selects the current search query when a focus shortcut is used for quick replacement
 - Provides an in-app reference for every keyboard shortcut
 - Opens the keyboard shortcut reference with `Alt+H`
 - Keeps global app shortcuts inactive while keyboard help is open

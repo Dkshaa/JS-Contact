@@ -29,6 +29,18 @@ test('focuses search with Ctrl+K', async ({ page }) => {
   await expect(page.getByRole('searchbox', { name: 'Search contacts' })).toBeFocused();
 });
 
+test('selects the current query when focusing search with a shortcut', async ({ page }) => {
+  const searchInput = page.getByRole('searchbox', { name: 'Search contacts' });
+
+  await searchInput.fill('chris');
+  await page.getByRole('heading', { name: 'My Contacts' }).click();
+  await page.keyboard.press('Control+k');
+  await page.keyboard.type('bob');
+
+  await expect(searchInput).toHaveValue('bob');
+  await expect(page.locator('#searchStatus')).toHaveText('1 contact found.');
+});
+
 test('focuses contact entry with Alt+A', async ({ page }) => {
   await page.keyboard.press('Alt+a');
 

@@ -82,6 +82,27 @@ test('downloads a contact backup with Alt+E', async ({ page }) => {
   await expect.poll(() => page.evaluate(() => window.backupDownloadClicked)).toBe(true);
 });
 
+test('copies the filtered contact link with Alt+C', async ({ page }) => {
+  await page.evaluate(() => {
+    window.copiedContactLink = '';
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: {
+        writeText: async (value) => {
+          window.copiedContactLink = value;
+        },
+      },
+    });
+  });
+  await page.getByRole('searchbox', { name: 'Search contacts' }).fill('chris');
+
+  await page.keyboard.press('Alt+c');
+
+  await expect(page.getByRole('button', { name: 'Copy link' })).toBeFocused();
+  await expect(page.locator('#shareStatus')).toHaveText('Filtered contact link copied.');
+  await expect.poll(() => page.evaluate(() => window.copiedContactLink)).toBe(page.url());
+});
+
 test('resets search and favorites with Alt+R', async ({ page }) => {
   const favoritesFilter = page.locator('#favoritesOnly');
 

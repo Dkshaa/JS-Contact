@@ -69,6 +69,7 @@ provides the page styling.
 - Limits search and shared-URL queries to 60 characters
 - Preserves descending sort order in bookmarked and shared URLs
 - Copies the current filtered view as a shareable link
+- Copies the current filtered link from the keyboard with `Alt+C`
 - Falls back to legacy clipboard support when the modern API is unavailable
 - Recovers with the clipboard fallback when modern copy permission is denied
 - Clears copied-link confirmation when the shared filters become outdated

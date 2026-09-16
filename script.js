@@ -989,6 +989,13 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if (event.key.toLocaleLowerCase() === 'c' && event.altKey && !event.metaKey && !event.ctrlKey) {
+    event.preventDefault();
+    copySearchLinkButton.focus();
+    copySearchLink();
+    return;
+  }
+
   if (event.key.toLocaleLowerCase() === 'e' && event.altKey && !event.metaKey && !event.ctrlKey) {
     event.preventDefault();
     dataTools.open = true;

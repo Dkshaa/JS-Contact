@@ -57,6 +57,14 @@ test('toggles backup tools with Alt+B', async ({ page }) => {
   await expect(page.locator('#dataTools')).not.toHaveAttribute('open', '');
 });
 
+test('closes focused backup tools with Escape', async ({ page }) => {
+  await page.keyboard.press('Alt+b');
+  await page.keyboard.press('Escape');
+
+  await expect(page.locator('#dataTools')).not.toHaveAttribute('open', '');
+  await expect(page.locator('#dataToolsSummary')).toBeFocused();
+});
+
 test('resets search and favorites with Alt+R', async ({ page }) => {
   const favoritesFilter = page.locator('#favoritesOnly');
 

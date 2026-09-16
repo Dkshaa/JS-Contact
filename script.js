@@ -961,6 +961,12 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if (event.key === 'Escape' && dataTools.open && dataTools.contains(target)) {
+    dataTools.open = false;
+    dataToolsSummary.focus();
+    return;
+  }
+
   if (event.key.toLocaleLowerCase() === 'h' && event.altKey && !event.metaKey && !event.ctrlKey) {
     event.preventDefault();
 

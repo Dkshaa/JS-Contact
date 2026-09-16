@@ -47,11 +47,14 @@ test('focuses contact entry with Alt+A', async ({ page }) => {
   await expect(page.getByLabel('Add a contact')).toBeFocused();
 });
 
-test('opens backup tools with Alt+B', async ({ page }) => {
+test('toggles backup tools with Alt+B', async ({ page }) => {
   await page.keyboard.press('Alt+b');
 
   await expect(page.locator('#dataTools')).toHaveAttribute('open', '');
   await expect(page.locator('#dataToolsSummary')).toBeFocused();
+
+  await page.keyboard.press('Alt+b');
+  await expect(page.locator('#dataTools')).not.toHaveAttribute('open', '');
 });
 
 test('resets search and favorites with Alt+R', async ({ page }) => {

@@ -978,7 +978,7 @@ function focusSearchWithShortcut(event) {
 
   if (event.key.toLocaleLowerCase() === 'b' && event.altKey && !event.metaKey && !event.ctrlKey) {
     event.preventDefault();
-    dataTools.open = true;
+    dataTools.open = !dataTools.open;
     dataToolsSummary.focus();
     return;
   }

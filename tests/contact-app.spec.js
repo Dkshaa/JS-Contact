@@ -65,6 +65,23 @@ test('closes focused backup tools with Escape', async ({ page }) => {
   await expect(page.locator('#dataToolsSummary')).toBeFocused();
 });
 
+test('downloads a contact backup with Alt+E', async ({ page }) => {
+  await page.evaluate(() => {
+    window.backupDownloadClicked = false;
+    URL.createObjectURL = () => 'blob:test-backup';
+    URL.revokeObjectURL = () => {};
+    HTMLAnchorElement.prototype.click = () => {
+      window.backupDownloadClicked = true;
+    };
+  });
+
+  await page.keyboard.press('Alt+e');
+
+  await expect(page.locator('#dataTools')).toHaveAttribute('open', '');
+  await expect(page.getByRole('button', { name: 'Download backup' })).toBeFocused();
+  await expect.poll(() => page.evaluate(() => window.backupDownloadClicked)).toBe(true);
+});
+
 test('resets search and favorites with Alt+R', async ({ page }) => {
   const favoritesFilter = page.locator('#favoritesOnly');
 

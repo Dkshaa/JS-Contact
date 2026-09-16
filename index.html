@@ -48,6 +48,7 @@
           <div><dt><kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>K</kbd></dt><dd>Focus search</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>A</kbd></dt><dd>Add a contact</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>B</kbd></dt><dd>Toggle backup tools</dd></div>
+          <div><dt><kbd>Alt</kbd> + <kbd>E</kbd></dt><dd>Download a backup</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>F</kbd></dt><dd>Toggle favorites</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>H</kbd></dt><dd>Show this shortcut reference</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>R</kbd></dt><dd>Reset search and favorites</dd></div>
@@ -129,7 +130,7 @@
         <summary id="dataToolsSummary" aria-keyshortcuts="Alt+B">Backup and restore</summary>
         <p id="savedContactStatus" class="saved-contact-status"></p>
         <div class="data-tool-actions">
-          <button id="exportData" class="btn-flat" type="button">
+          <button id="exportData" class="btn-flat" type="button" aria-keyshortcuts="Alt+E">
             Download backup
           </button>
           <label class="btn-flat file-button" for="importData">Restore backup</label>

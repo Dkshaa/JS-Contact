@@ -989,6 +989,14 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if (event.key.toLocaleLowerCase() === 'e' && event.altKey && !event.metaKey && !event.ctrlKey) {
+    event.preventDefault();
+    dataTools.open = true;
+    exportDataButton.focus();
+    exportContactData();
+    return;
+  }
+
   if (event.key.toLocaleLowerCase() === 'r' && event.altKey && !event.metaKey && !event.ctrlKey) {
     event.preventDefault();
     resetFilters();

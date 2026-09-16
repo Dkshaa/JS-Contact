@@ -45,6 +45,7 @@ provides the page styling.
 - Filters the directory to favorite contacts while preserving shareable URLs
 - Toggles the favorites filter from the keyboard with `Alt+F`
 - Downloads custom contacts and favorites as a portable JSON backup
+- Downloads a contact backup from anywhere with `Alt+E`
 - Toggles backup and restore tools from the keyboard with `Alt+B`
 - Closes focused backup tools with `Escape`
 - Sorts exported backup names consistently for stable, readable files

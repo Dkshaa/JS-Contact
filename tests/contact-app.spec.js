@@ -41,6 +41,17 @@ test('selects the current query when focusing search with a shortcut', async ({ 
   await expect(page.locator('#searchStatus')).toHaveText('1 contact found.');
 });
 
+test('clears the current search with Alt+X', async ({ page }) => {
+  const searchInput = page.getByRole('searchbox', { name: 'Search contacts' });
+
+  await searchInput.fill('chris');
+  await page.keyboard.press('Alt+x');
+
+  await expect(searchInput).toHaveValue('');
+  await expect(searchInput).toBeFocused();
+  await expect(page.locator('#searchStatus')).toHaveText('Showing all 25 contacts.');
+});
+
 test('focuses contact entry with Alt+A', async ({ page }) => {
   await page.keyboard.press('Alt+a');
 

@@ -56,6 +56,7 @@
           <div><dt><kbd>Alt</kbd> + <kbd>S</kbd></dt><dd>Reverse sort order</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>T</kbd></dt><dd>Toggle color theme</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>U</kbd></dt><dd>Undo the last removal</dd></div>
+          <div><dt><kbd>Alt</kbd> + <kbd>X</kbd></dt><dd>Clear search</dd></div>
         </dl>
         <form method="dialog">
           <button class="btn" type="submit">Close</button>
@@ -102,7 +103,13 @@
           aria-describedby="searchStatus"
           aria-keyshortcuts="/ Control+K Meta+K"
         />
-        <button id="clearFilter" class="btn-flat" type="button" disabled>
+        <button
+          id="clearFilter"
+          class="btn-flat"
+          type="button"
+          aria-keyshortcuts="Alt+X"
+          disabled
+        >
           Clear
         </button>
         <button

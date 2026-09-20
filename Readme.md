@@ -65,6 +65,7 @@ provides the page styling.
 - Resets search and favorites from anywhere with `Alt+R`
 - Adapts the layout for phones, tablets, and desktop screens
 - Clears a search with either the Clear button or the Escape key
+- Clears the current search from anywhere with `Alt+X`
 - Synchronizes native browser search-field clear controls
 - Stores the current search in the URL so filtered views can be bookmarked or shared
 - Limits search and shared-URL queries to 60 characters

@@ -1043,6 +1043,12 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if (event.key.toLocaleLowerCase() === 'x' && event.altKey && !event.metaKey && !event.ctrlKey) {
+    event.preventDefault();
+    clearSearch();
+    return;
+  }
+
   if (event.key === '/' && !isTyping && !event.metaKey && !event.ctrlKey && !event.altKey) {
     event.preventDefault();
     focusAndSelectSearch();

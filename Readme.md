@@ -52,6 +52,7 @@ provides the page styling.
 - Sorts exported backup names consistently for stable, readable files
 - Shows the number of custom contacts currently saved
 - Restores validated JSON backups without duplicating built-in contacts
+- Opens the backup restore picker from anywhere with `Alt+I`
 - Applies control-character and accent-aware duplicate checks to restored backups
 - Rejects backup uploads larger than 1 MB
 - Clears saved contacts and favorites through an explicit confirmation step

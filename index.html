@@ -52,6 +52,7 @@
           <div><dt><kbd>Alt</kbd> + <kbd>E</kbd></dt><dd>Download a backup</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>F</kbd></dt><dd>Toggle favorites</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>H</kbd></dt><dd>Show this shortcut reference</dd></div>
+          <div><dt><kbd>Alt</kbd> + <kbd>I</kbd></dt><dd>Choose a backup to restore</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>R</kbd></dt><dd>Reset search and favorites</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>S</kbd></dt><dd>Reverse sort order</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>T</kbd></dt><dd>Toggle color theme</dd></div>
@@ -153,7 +154,13 @@
           <button id="exportData" class="btn-flat" type="button" aria-keyshortcuts="Alt+E">
             Download backup
           </button>
-          <label class="btn-flat file-button" for="importData">Restore backup</label>
+          <label
+            id="importDataLabel"
+            class="btn-flat file-button"
+            for="importData"
+            tabindex="0"
+            aria-keyshortcuts="Alt+I"
+          >Restore backup</label>
           <input
             id="importData"
             type="file"

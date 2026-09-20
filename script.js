@@ -19,6 +19,7 @@ const dataTools = document.getElementById('dataTools');
 const dataToolsSummary = document.getElementById('dataToolsSummary');
 const exportDataButton = document.getElementById('exportData');
 const importDataInput = document.getElementById('importData');
+const importDataLabel = document.getElementById('importDataLabel');
 const clearFavoritesButton = document.getElementById('clearFavorites');
 const clearFavoritesConfirmation = document.getElementById('clearFavoritesConfirmation');
 const confirmClearFavoritesButton = document.getElementById('confirmClearFavorites');
@@ -1001,6 +1002,14 @@ function focusSearchWithShortcut(event) {
     dataTools.open = true;
     exportDataButton.focus();
     exportContactData();
+    return;
+  }
+
+  if (event.key.toLocaleLowerCase() === 'i' && event.altKey && !event.metaKey && !event.ctrlKey) {
+    event.preventDefault();
+    dataTools.open = true;
+    importDataLabel.focus();
+    importDataInput.click();
     return;
   }
 

@@ -104,6 +104,21 @@ test('downloads a contact backup with Alt+E', async ({ page }) => {
   await expect.poll(() => page.evaluate(() => window.backupDownloadClicked)).toBe(true);
 });
 
+test('opens the backup restore picker with Alt+I', async ({ page }) => {
+  await page.evaluate(() => {
+    window.restorePickerOpened = false;
+    HTMLInputElement.prototype.click = () => {
+      window.restorePickerOpened = true;
+    };
+  });
+
+  await page.keyboard.press('Alt+i');
+
+  await expect(page.locator('#dataTools')).toHaveAttribute('open', '');
+  await expect(page.locator('#importDataLabel')).toBeFocused();
+  await expect.poll(() => page.evaluate(() => window.restorePickerOpened)).toBe(true);
+});
+
 test('copies the filtered contact link with Alt+C', async ({ page }) => {
   await page.evaluate(() => {
     window.copiedContactLink = '';

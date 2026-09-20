@@ -82,6 +82,7 @@ provides the page styling.
 - Selects the current search query when a focus shortcut is used for quick replacement
 - Provides an in-app reference for every keyboard shortcut
 - Opens the keyboard shortcut reference with `Alt+H`
+- Opens keyboard help with the familiar `?` key when not typing
 - Keeps global app shortcuts inactive while keyboard help is open
 - Closes keyboard help when its shaded backdrop is clicked
 

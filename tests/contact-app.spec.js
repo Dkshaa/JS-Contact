@@ -184,6 +184,12 @@ test('opens the shortcut reference with Alt+H', async ({ page }) => {
   await expect(page.getByText('Show this shortcut reference')).toBeVisible();
 });
 
+test('opens the shortcut reference with the question-mark key', async ({ page }) => {
+  await page.keyboard.type('?');
+
+  await expect(page.getByRole('dialog', { name: 'Keyboard shortcuts' })).toBeVisible();
+});
+
 test('keeps global shortcuts from changing controls behind keyboard help', async ({ page }) => {
   await page.getByRole('button', { name: 'Shortcuts' }).click();
 

@@ -181,7 +181,7 @@ test('opens the shortcut reference with Alt+H', async ({ page }) => {
   await page.keyboard.press('Alt+h');
 
   await expect(page.getByRole('dialog', { name: 'Keyboard shortcuts' })).toBeVisible();
-  await expect(page.getByText('Show this shortcut reference')).toBeVisible();
+  await expect(page.getByText('Show this shortcut reference').first()).toBeVisible();
 });
 
 test('opens the shortcut reference with the question-mark key', async ({ page }) => {
@@ -264,6 +264,15 @@ test('returns a manual theme choice to the system preference', async ({ page }) 
   await expect.poll(
     () => page.evaluate(() => localStorage.getItem('mini-contact-app.theme')),
   ).toBeNull();
+});
+
+test('returns to the system theme with Alt+M', async ({ page }) => {
+  await page.getByRole('button', { name: 'Dark mode' }).click();
+  await page.keyboard.press('Alt+m');
+
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(page.locator('#themeStatus')).toHaveText('Using the system light theme.');
+  await expect(page.getByRole('button', { name: 'Use system theme' })).toBeHidden();
 });
 
 test('toggles the color theme with Alt+T', async ({ page }) => {

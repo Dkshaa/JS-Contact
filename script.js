@@ -1019,6 +1019,18 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if (
+    event.key.toLocaleLowerCase() === 'm' &&
+    event.altKey &&
+    !event.metaKey &&
+    !event.ctrlKey &&
+    !useSystemThemeButton.hidden
+  ) {
+    event.preventDefault();
+    useSystemTheme();
+    return;
+  }
+
   if (event.key.toLocaleLowerCase() === 'r' && event.altKey && !event.metaKey && !event.ctrlKey) {
     event.preventDefault();
     resetFilters();

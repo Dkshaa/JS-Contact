@@ -11,6 +11,7 @@ provides the page styling.
 - Uses the operating system's color preference when no theme is saved
 - Follows operating-system theme changes while using the system preference
 - Restores the system theme after a manual override with one click
+- Restores the system theme from the keyboard with `Alt+M`
 - Toggles the color theme from the keyboard with `Alt+T`
 - Announces color-theme changes to assistive technology
 - Filters contacts as you type

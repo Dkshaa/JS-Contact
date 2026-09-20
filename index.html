@@ -55,6 +55,7 @@
           <div><dt><kbd>Alt</kbd> + <kbd>R</kbd></dt><dd>Reset search and favorites</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>S</kbd></dt><dd>Reverse sort order</dd></div>
           <div><dt><kbd>Alt</kbd> + <kbd>T</kbd></dt><dd>Toggle color theme</dd></div>
+          <div><dt><kbd>Alt</kbd> + <kbd>U</kbd></dt><dd>Undo the last removal</dd></div>
         </dl>
         <form method="dialog">
           <button class="btn" type="submit">Close</button>
@@ -81,7 +82,13 @@
         <span id="contactNameCount" class="character-count">0 of 60 characters</span>
         <div class="form-feedback">
           <p id="addContactStatus" class="helper-text" aria-live="polite"></p>
-          <button id="undoRemove" class="btn-flat" type="button" hidden>Undo remove</button>
+          <button
+            id="undoRemove"
+            class="btn-flat"
+            type="button"
+            aria-keyshortcuts="Alt+U"
+            hidden
+          >Undo remove</button>
         </div>
       </form>
       <label for="filterInput">Search contacts</label>

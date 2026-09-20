@@ -47,6 +47,17 @@ test('focuses contact entry with Alt+A', async ({ page }) => {
   await expect(page.getByLabel('Add a contact')).toBeFocused();
 });
 
+test('restores the last removed contact with Alt+U', async ({ page }) => {
+  await page.getByLabel('Add a contact').fill('Zara');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await page.getByRole('button', { name: 'Remove Zara', exact: true }).click();
+
+  await page.keyboard.press('Alt+u');
+
+  await expect(page.getByText('Zara', { exact: true })).toBeVisible();
+  await expect(page.locator('#addContactStatus')).toHaveText('Zara was restored.');
+});
+
 test('toggles backup tools with Alt+B', async ({ page }) => {
   await page.keyboard.press('Alt+b');
 

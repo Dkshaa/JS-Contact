@@ -1031,6 +1031,18 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if (
+    event.key.toLocaleLowerCase() === 'u' &&
+    event.altKey &&
+    !event.metaKey &&
+    !event.ctrlKey &&
+    !undoRemoveButton.hidden
+  ) {
+    event.preventDefault();
+    undoRemovedContact();
+    return;
+  }
+
   if (event.key === '/' && !isTyping && !event.metaKey && !event.ctrlKey && !event.altKey) {
     event.preventDefault();
     focusAndSelectSearch();

@@ -35,6 +35,7 @@ provides the page styling.
 - Clears an unfinished new-contact entry with `Escape`
 - Lets users remove contacts they added without changing the built-in directory
 - Restores the most recently removed custom contact with a one-click undo
+- Restores the most recently removed contact from the keyboard with `Alt+U`
 - Discards stale undo actions after clearing or restoring saved data
 - Lets users mark built-in or custom contacts as favorites
 - Announces favorite changes through an accessible live status

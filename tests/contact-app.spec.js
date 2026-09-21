@@ -119,6 +119,25 @@ test('opens the backup restore picker with Alt+I', async ({ page }) => {
   await expect.poll(() => page.evaluate(() => window.restorePickerOpened)).toBe(true);
 });
 
+test('opens the backup restore picker from the keyboard', async ({ page }) => {
+  await page.evaluate(() => {
+    window.restorePickerOpened = false;
+    HTMLInputElement.prototype.click = () => {
+      window.restorePickerOpened = true;
+    };
+  });
+
+  await page.getByText('Backup and restore').click();
+  await page.locator('#importDataLabel').focus();
+  await page.keyboard.press('Enter');
+
+  await expect.poll(() => page.evaluate(() => window.restorePickerOpened)).toBe(true);
+
+  await page.evaluate(() => { window.restorePickerOpened = false; });
+  await page.keyboard.press('Space');
+  await expect.poll(() => page.evaluate(() => window.restorePickerOpened)).toBe(true);
+});
+
 test('copies the filtered contact link with Alt+C', async ({ page }) => {
   await page.evaluate(() => {
     window.copiedContactLink = '';

@@ -85,6 +85,14 @@ shortcutsDialog.addEventListener('click', closeShortcutsFromBackdrop);
 systemThemePreference.addEventListener('change', applySystemThemeChange);
 exportDataButton.addEventListener('click', exportContactData);
 importDataInput.addEventListener('change', importContactData);
+importDataLabel.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') {
+    return;
+  }
+
+  event.preventDefault();
+  importDataInput.click();
+});
 clearFavoritesButton.addEventListener('click', showClearFavoritesConfirmation);
 confirmClearFavoritesButton.addEventListener('click', clearFavorites);
 cancelClearFavoritesButton.addEventListener('click', hideClearFavoritesConfirmation);

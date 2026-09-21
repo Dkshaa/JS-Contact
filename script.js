@@ -945,6 +945,15 @@ function focusSearchWithShortcut(event) {
   }
 
   if (
+    (event.key === 'ArrowDown' || event.key === 'ArrowUp') &&
+    target.matches('.collection-item')
+  ) {
+    event.preventDefault();
+    focusAdjacentVisibleContact(target, event.key === 'ArrowDown' ? 1 : -1);
+    return;
+  }
+
+  if (
     event.key.toLocaleLowerCase() === 'k' &&
     (event.metaKey || event.ctrlKey) &&
     !event.altKey
@@ -1105,6 +1114,20 @@ function focusFirstVisibleContact() {
 
   firstVisibleContact.tabIndex = -1;
   firstVisibleContact.focus();
+}
+
+function focusAdjacentVisibleContact(currentContact, offset) {
+  const visibleContacts = [...contactList.querySelectorAll('.collection-item:not([hidden])')];
+  const currentIndex = visibleContacts.indexOf(currentContact);
+  const nextIndex = Math.min(Math.max(currentIndex + offset, 0), visibleContacts.length - 1);
+  const nextContact = visibleContacts[nextIndex];
+
+  if (nextContact === currentContact) {
+    return;
+  }
+
+  nextContact.tabIndex = -1;
+  nextContact.focus();
 }
 
 function focusAndSelectSearch() {

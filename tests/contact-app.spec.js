@@ -58,6 +58,14 @@ test('focuses contact entry with Alt+A', async ({ page }) => {
   await expect(page.getByLabel('Add a contact')).toBeFocused();
 });
 
+test('focuses the first visible contact with Alt+L', async ({ page }) => {
+  await page.getByRole('searchbox', { name: 'Search contacts' }).fill('chris');
+  await page.keyboard.press('Alt+l');
+
+  await expect(page.locator('.collection-item:not([hidden])').first()).toBeFocused();
+  await expect(page.locator('.collection-item:not([hidden]) .contact-name').first()).toHaveText('Chris');
+});
+
 test('restores the last removed contact with Alt+U', async ({ page }) => {
   await page.getByLabel('Add a contact').fill('Zara');
   await page.getByRole('button', { name: 'Add', exact: true }).click();

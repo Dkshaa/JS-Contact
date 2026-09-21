@@ -1027,6 +1027,12 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if (event.key.toLocaleLowerCase() === 'l' && event.altKey && !event.metaKey && !event.ctrlKey) {
+    event.preventDefault();
+    focusFirstVisibleContact();
+    return;
+  }
+
   if (
     event.key.toLocaleLowerCase() === 'm' &&
     event.altKey &&
@@ -1088,6 +1094,17 @@ function focusSearchWithShortcut(event) {
     event.preventDefault();
     focusAndSelectSearch();
   }
+}
+
+function focusFirstVisibleContact() {
+  const firstVisibleContact = contactList.querySelector('.collection-item:not([hidden])');
+
+  if (!firstVisibleContact) {
+    return;
+  }
+
+  firstVisibleContact.tabIndex = -1;
+  firstVisibleContact.focus();
 }
 
 function focusAndSelectSearch() {

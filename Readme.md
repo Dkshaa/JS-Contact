@@ -82,6 +82,7 @@ provides the page styling.
 - Focuses search from anywhere on the page with the `/` keyboard shortcut
 - Supports the familiar `Ctrl+K` or `Command+K` search shortcut
 - Selects the current search query when a focus shortcut is used for quick replacement
+- Focuses the first visible contact from anywhere with `Alt+L`
 - Provides an in-app reference for every keyboard shortcut
 - Opens the keyboard shortcut reference with `Alt+H`
 - Opens keyboard help with the familiar `?` key when not typing

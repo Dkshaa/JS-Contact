@@ -87,6 +87,7 @@ provides the page styling.
 - Moves between visible contacts with the Up and Down Arrow keys
 - Jumps to the first or last visible contact with Home and End
 - Toggles a focused contact as a favorite with Enter or Space
+- Returns from a focused contact to search with Escape
 - Provides an in-app reference for every keyboard shortcut
 - Opens the keyboard shortcut reference with `Alt+H`
 - Opens keyboard help with the familiar `?` key when not typing

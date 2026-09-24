@@ -944,6 +944,12 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if (event.key === 'Escape' && target.matches('.collection-item')) {
+    event.preventDefault();
+    focusAndSelectSearch();
+    return;
+  }
+
   if (
     (event.key === 'ArrowDown' || event.key === 'ArrowUp') &&
     target.matches('.collection-item')

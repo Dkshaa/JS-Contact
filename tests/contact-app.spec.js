@@ -114,6 +114,18 @@ test('toggles a focused contact as a favorite with Enter or Space', async ({ pag
   );
 });
 
+test('returns from a focused contact to search with Escape', async ({ page }) => {
+  const searchInput = page.getByRole('searchbox', { name: 'Search contacts' });
+
+  await searchInput.fill('chris');
+  await page.keyboard.press('Alt+l');
+  await page.keyboard.press('Escape');
+  await page.keyboard.type('bob');
+
+  await expect(searchInput).toBeFocused();
+  await expect(searchInput).toHaveValue('bob');
+});
+
 test('restores the last removed contact with Alt+U', async ({ page }) => {
   await page.getByLabel('Add a contact').fill('Zara');
   await page.getByRole('button', { name: 'Add', exact: true }).click();

@@ -953,6 +953,12 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if ((event.key === 'Home' || event.key === 'End') && target.matches('.collection-item')) {
+    event.preventDefault();
+    focusEdgeVisibleContact(event.key === 'Home' ? 'first' : 'last');
+    return;
+  }
+
   if (
     event.key.toLocaleLowerCase() === 'k' &&
     (event.metaKey || event.ctrlKey) &&
@@ -1129,6 +1135,18 @@ function focusAdjacentVisibleContact(currentContact, offset) {
 
   nextContact.tabIndex = -1;
   nextContact.focus();
+}
+
+function focusEdgeVisibleContact(edge) {
+  const visibleContacts = [...contactList.querySelectorAll('.collection-item:not([hidden])')];
+  const contact = edge === 'first' ? visibleContacts[0] : visibleContacts.at(-1);
+
+  if (!contact) {
+    return;
+  }
+
+  contact.tabIndex = -1;
+  contact.focus();
 }
 
 function focusAndSelectSearch() {

@@ -85,6 +85,7 @@ provides the page styling.
 - Focuses the first visible contact from anywhere with `Alt+L`
 - Focuses Reset filters with `Alt+L` when no contacts match
 - Moves between visible contacts with the Up and Down Arrow keys
+- Jumps to the first or last visible contact with Home and End
 - Provides an in-app reference for every keyboard shortcut
 - Opens the keyboard shortcut reference with `Alt+H`
 - Opens keyboard help with the familiar `?` key when not typing

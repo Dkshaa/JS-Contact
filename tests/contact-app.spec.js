@@ -85,6 +85,18 @@ test('moves through visible contacts with the arrow keys', async ({ page }) => {
   await expect(visibleContacts.first()).toBeFocused();
 });
 
+test('jumps to the edges of visible contacts with Home and End', async ({ page }) => {
+  const visibleContacts = page.locator('.collection-item:not([hidden])');
+
+  await page.getByRole('searchbox', { name: 'Search contacts' }).fill('chris');
+  await page.keyboard.press('Alt+l');
+  await page.keyboard.press('End');
+  await expect(visibleContacts.last()).toBeFocused();
+
+  await page.keyboard.press('Home');
+  await expect(visibleContacts.first()).toBeFocused();
+});
+
 test('restores the last removed contact with Alt+U', async ({ page }) => {
   await page.getByLabel('Add a contact').fill('Zara');
   await page.getByRole('button', { name: 'Add', exact: true }).click();

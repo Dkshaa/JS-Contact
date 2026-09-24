@@ -1109,6 +1109,7 @@ function focusFirstVisibleContact() {
   const firstVisibleContact = contactList.querySelector('.collection-item:not([hidden])');
 
   if (!firstVisibleContact) {
+    resetFiltersButton.focus();
     return;
   }
 

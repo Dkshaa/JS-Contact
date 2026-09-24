@@ -66,6 +66,13 @@ test('focuses the first visible contact with Alt+L', async ({ page }) => {
   await expect(page.locator('.collection-item:not([hidden]) .contact-name').first()).toHaveText('Chris');
 });
 
+test('focuses reset filters with Alt+L when no contacts are visible', async ({ page }) => {
+  await page.getByRole('searchbox', { name: 'Search contacts' }).fill('no matching contact');
+  await page.keyboard.press('Alt+l');
+
+  await expect(page.getByRole('button', { name: 'Reset filters' })).toBeFocused();
+});
+
 test('moves through visible contacts with the arrow keys', async ({ page }) => {
   const visibleContacts = page.locator('.collection-item:not([hidden])');
 

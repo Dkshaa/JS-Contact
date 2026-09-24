@@ -83,6 +83,7 @@ provides the page styling.
 - Supports the familiar `Ctrl+K` or `Command+K` search shortcut
 - Selects the current search query when a focus shortcut is used for quick replacement
 - Focuses the first visible contact from anywhere with `Alt+L`
+- Focuses Reset filters with `Alt+L` when no contacts match
 - Moves between visible contacts with the Up and Down Arrow keys
 - Provides an in-app reference for every keyboard shortcut
 - Opens the keyboard shortcut reference with `Alt+H`

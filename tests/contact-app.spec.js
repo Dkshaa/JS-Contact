@@ -97,6 +97,23 @@ test('jumps to the edges of visible contacts with Home and End', async ({ page }
   await expect(visibleContacts.first()).toBeFocused();
 });
 
+test('toggles a focused contact as a favorite with Enter or Space', async ({ page }) => {
+  await page.getByRole('searchbox', { name: 'Search contacts' }).fill('chris');
+  await page.keyboard.press('Alt+l');
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByRole('button', { name: 'Remove Chris from favorites' })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+
+  await page.keyboard.press('Space');
+  await expect(page.getByRole('button', { name: 'Add Chris to favorites' })).toHaveAttribute(
+    'aria-pressed',
+    'false',
+  );
+});
+
 test('restores the last removed contact with Alt+U', async ({ page }) => {
   await page.getByLabel('Add a contact').fill('Zara');
   await page.getByRole('button', { name: 'Add', exact: true }).click();

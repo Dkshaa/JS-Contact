@@ -959,6 +959,12 @@ function focusSearchWithShortcut(event) {
     return;
   }
 
+  if ((event.key === 'Enter' || event.key === ' ') && target.matches('.collection-item')) {
+    event.preventDefault();
+    target.querySelector('.favorite-contact')?.click();
+    return;
+  }
+
   if (
     event.key.toLocaleLowerCase() === 'k' &&
     (event.metaKey || event.ctrlKey) &&
